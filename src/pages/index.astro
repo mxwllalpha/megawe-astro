@@ -1,0 +1,325 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { SITE_TITLE, SITE_DESCRIPTION, JOB_TYPES, JOB_CATEGORIES, LOCATIONS } from '../lib/constants'
+
+// Optimized: Pre-build static data at build time
+const featuredJobs = [
+  {
+    id: '1',
+    title: 'Senior Frontend Developer',
+    company: 'Tech Company Indonesia',
+    location: 'Jakarta',
+    type: 'full-time',
+    description: 'Kami mencari Senior Frontend Developer untuk bergabung dengan tim kami...',
+    postedAt: new Date().toISOString(),
+    logo: '/images/companies/tech-company.jpg',
+    category: 'Teknologi'
+  },
+  {
+    id: '2',
+    title: 'Product Manager',
+    company: 'Digital Agency',
+    location: 'Remote',
+    type: 'remote',
+    description: 'Product Manager dengan pengalaman dalam digital products...',
+    postedAt: new Date().toISOString(),
+    logo: '/images/companies/digital-agency.jpg',
+    category: 'Marketing'
+  },
+  {
+    id: '3',
+    title: 'UI/UX Designer',
+    company: 'Creative Studio',
+    location: 'Bandung',
+    type: 'full-time',
+    description: 'Creative UI/UX Designer untuk membuat pengalaman digital yang menakjubkan...',
+    postedAt: new Date().toISOString(),
+    logo: '/images/companies/creative-studio.jpg',
+    category: 'Design'
+  }
+]
+
+const stats = [
+  { label: 'Lowongan Aktif', value: '1,234', suffix: '+' },
+  { label: 'Perusahaan', value: '567', suffix: '+' },
+  { label: 'Pencari Kerja', value: '45,678', suffix: '+' },
+  { label: 'Penempatan', value: '89', suffix: ' Kota' }
+]
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  url: 'https://megawe.net',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://megawe.net/jobs/search?q={search_term_string}',
+    'query-input': 'required name=search_term_string'
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: featuredJobs.length,
+    itemListElement: featuredJobs.map((job, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'JobPosting',
+        title: job.title,
+        description: job.description,
+        datePosted: job.postedAt,
+        employmentType: job.type.toUpperCase().replace('-', '_'),
+        hiringOrganization: {
+          '@type': 'Organization',
+          name: job.company,
+          logo: job.logo
+        },
+        jobLocation: {
+          '@type': 'Place',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: job.location
+          }
+        }
+      }
+    }))
+  }
+}
+---
+
+<Layout
+  title="Lowongan Kerja Indonesia - Temukan Pekerjaan Impian Anda"
+  description="Platform aggregator lowongan kerja terpercaya di Indonesia. Temukan ribuan lowongan dari berbagai perusahaan ternama dengan mudah dan cepat."
+  image="/images/homepage-og.jpg"
+  type="website"
+>
+  <!-- Hero Section dengan Critical CSS -->
+  <section class="bg-gradient-to-br from-cyan-50 to-blue-50 py-20 lg:py-32">
+    <div class="container">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 text-balance">
+          Temukan <span class="text-cyan-600">Lowongan Kerja</span> Terbaik di Indonesia
+        </h1>
+        <p class="text-xl text-gray-600 mb-8 text-pretty max-w-2xl mx-auto">
+          Platform aggregator lowongan kerja terpercaya dengan ribuan peluang karir dari perusahaan ternama
+        </p>
+
+        <!-- Search Form - Critical for user interaction -->
+        <form action="/jobs/search" method="GET" class="max-w-2xl mx-auto mb-12">
+          <div class="bg-white rounded-lg shadow-lg p-2 flex flex-col sm:flex-row gap-2">
+            <div class="flex-1 relative">
+              <label for="search-query" class="sr-only">Cari lowongan kerja</label>
+              <input
+                type="search"
+                id="search-query"
+                name="q"
+                placeholder="Cari posisi, perusahaan, atau kata kunci..."
+                class="w-full px-4 py-3 border-0 focus:ring-2 focus:ring-cyan-500 rounded-md"
+                autocomplete="off"
+                required
+                aria-describedby="search-help"
+              />
+              <div id="search-help" class="sr-only">
+                Masukkan kata kunci untuk mencari lowongan kerja
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <select
+                name="location"
+                class="px-4 py-3 border-0 focus:ring-2 focus:ring-cyan-500 rounded-md bg-gray-50"
+                aria-label="Lokasi"
+              >
+                <option value="">Semua Lokasi</option>
+                {LOCATIONS.map(location => (
+                  <option value={location}>{location}</option>
+                ))}
+              </select>
+              <button
+                type="submit"
+                class="px-6 py-3 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 transition-colors focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                aria-label="Cari lowongan kerja"
+              >
+                <span class="flex items-center gap-2">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  Cari
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Stats Section -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-3xl mx-auto">
+          {stats.map(stat => (
+            <div class="text-center">
+              <div class="text-3xl lg:text-4xl font-bold text-cyan-600 mb-1">
+                {stat.value}{stat.suffix}
+              </div>
+              <div class="text-gray-600 text-sm">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Jobs Section -->
+  <section class="py-20 bg-white">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+          Lowongan Terbaru
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Peluang karir menarik dari perusahaan-perusahaan terkemuka
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        {featuredJobs.map(job => (
+          <article class="job-card card-hover" key={job.id}>
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                  {job.logo ? (
+                    <img
+                      src={job.logo}
+                      alt={`${job.company} logo`}
+                      width="48"
+                      height="48"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div class="w-6 h-6 bg-gray-300 rounded"></div>
+                  )}
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900 mb-1">
+                    <a
+                      href={`/jobs/${job.id}`}
+                      class="hover:text-cyan-600 transition-colors"
+                      aria-label={`Lihat detail lowongan ${job.title}`}
+                    >
+                      {job.title}
+                    </a>
+                  </h3>
+                  <p class="text-sm text-gray-600">{job.company}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+              <span class="flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {job.location}
+              </span>
+              <span class={`job-type-badge job-type-${job.type}`}>
+                {JOB_TYPES.find(t => t.value === job.type)?.label || job.type}
+              </span>
+            </div>
+
+            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+              {job.description}
+            </p>
+
+            <div class="flex items-center justify-between">
+              <time class="text-xs text-gray-500">
+                {new Date(job.postedAt).toLocaleDateString('id-ID', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric'
+                })}
+              </time>
+              <a
+                href={`/jobs/${job.id}`}
+                class="text-cyan-600 hover:text-cyan-700 text-sm font-medium transition-colors"
+                aria-label={`Lihat detail dan apply untuk ${job.title}`}
+              >
+                Lihat Detail →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="text-center">
+        <a
+          href="/jobs"
+          class="btn btn-primary px-8 py-3 text-lg"
+          aria-label="Lihat semua lowongan kerja"
+        >
+          Lihat Semua Lowongan
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+          Jelajahi Kategori
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Temukan lowongan berdasarkan kategori yang sesuai dengan keahlian Anda
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {JOB_CATEGORIES.map(category => (
+          <a
+            href={`/jobs/category/${category.toLowerCase().replace(' ', '-')}`}
+            class="block p-6 bg-white rounded-lg border border-gray-200 hover:border-cyan-300 hover:shadow-md transition-all duration-200 text-center"
+            aria-label={`Lihat lowongan kategori ${category}`}
+          >
+            <div class="text-2xl mb-2">🏢</div>
+            <h3 class="font-semibold text-gray-900">{category}</h3>
+            <p class="text-sm text-gray-500 mt-1">
+              {Math.floor(Math.random() * 100 + 50)} lowongan
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-cyan-600">
+    <div class="container">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">
+          Siap Memulai Karir Baru?
+        </h2>
+        <p class="text-xl text-cyan-100 mb-8">
+          Bergabung dengan ribuan profesional yang telah menemukan pekerjaan impian mereka melalui Megawe
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/jobs"
+            class="btn bg-white text-cyan-600 hover:bg-gray-50 px-8 py-3 text-lg"
+            aria-label="Cari lowongan kerja sekarang"
+          >
+            Cari Lowongan
+          </a>
+          <a
+            href="/employers/add"
+            class="btn border-2 border-white text-white hover:bg-white hover:text-cyan-600 px-8 py-3 text-lg"
+            aria-label="Pasang lowongan kerja untuk perusahaan"
+          >
+            Pasang Lowongan
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />

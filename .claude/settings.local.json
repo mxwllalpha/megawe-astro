@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:pagespeed.web.dev)",
+      "mcp__cf-build__accounts_list",
+      "mcp__cf-build__set_active_account",
+      "Bash(npm create:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm run preview:*)",
+      "Bash(git add:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run type-check:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

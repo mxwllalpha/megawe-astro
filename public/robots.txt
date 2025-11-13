@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+Allow: /jobs
+Allow: /employers
+Allow: /about
+
+# Block admin and private pages
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_astro/
+Disallow: /.well-known/
+
+# Sitemaps
+Sitemap: https://megawe.net/sitemap-index.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Host (for Yandex)
+Host: https://megawe.net

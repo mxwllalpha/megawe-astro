@@ -1,0 +1,9 @@
+# Custom domain redirects
+/api/* https://api.megawe.net/:splat 302
+
+# Legacy redirects if needed
+/home / 301
+/index.html / 301
+
+# Error pages
+/* /404.html 404
