@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+export const prerender = false
+
+export interface Props {
+  title?: string
+}
+
+const { title = 'Halaman Tidak Ditemukan - Megawe' } = Astro.props
+---
+
+<Layout
+  title={title}
+  description="Halaman yang Anda cari tidak ditemukan. Temukan lowongan kerja terbaik di Indonesia."
+  noIndex={true}
+>
+  <main class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+    <div class="max-w-md w-full text-center">
+      <div class="mb-8">
+        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.707.293L19.078 15.071A2 2 0 0117.915 16H9z" />
+          </svg>
+        </div>
+        <h1 class="text-6xl font-bold text-gray-900 mb-4">404</h1>
+        <p class="text-xl text-gray-600 mb-2">Halaman Tidak Ditemukan</p>
+        <p class="text-gray-500 mb-8">Maaf, halaman yang Anda cari tidak dapat ditemukan.</p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <h2 class="text-lg font-semibold text-gray-900 mb-2">Coba yang berikut:</h2>
+          <ul class="text-left text-gray-600 space-y-2">
+            <li>• Periksa ejaan URL Anda</li>
+            <li>• Kembali ke halaman utama</li>
+            <li>• Gunakan fitur pencarian</li>
+            <li>• Hubungi kami jika masalah berlanjut</li>
+          </ul>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a
+            href="/"
+            class="btn btn-primary px-6 py-3 text-lg w-full sm:w-auto"
+            aria-label="Kembali ke halaman utama"
+          >
+            Kembali ke Beranda
+          </a>
+          <a
+            href="/jobs"
+            class="btn btn-outline px-6 py-3 text-lg w-full sm:w-auto"
+            aria-label="Cari lowongan kerja"
+          >
+            Cari Lowongan
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center">
+        <p class="text-sm text-gray-500 mb-2">Butuh bantuan?</p>
+        <a
+          href="mailto:info@megawe.net"
+          class="text-cyan-600 hover:text-cyan-700 font-medium transition-colors"
+          aria-label="Hubungi tim Megawe"
+        >
+          info@megawe.net
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Structured Data for 404 page -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "404 - Halaman Tidak Ditemukan",
+      "description": "Halaman yang Anda cari tidak ditemukan. Temukan lowongan kerja terbaik di Indonesia.",
+      "url": "https://megawe.net/404",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Megawe",
+        "url": "https://megawe.net"
+      }
+    }
+  </script>
+</Layout>

@@ -2,6 +2,7 @@ import js from '@eslint/js'
 import typescript from '@typescript-eslint/eslint-plugin'
 import typescriptParser from '@typescript-eslint/parser'
 import globals from 'globals'
+import pluginAstro from 'eslint-plugin-astro'
 
 export default [
   // Base JavaScript configuration
@@ -70,26 +71,8 @@ export default [
     }
   },
 
-  
-  
-  // Astro files - simplified configuration
-  {
-    files: ['**/*.astro'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: {
-        ...globals.browser,
-        console: 'readonly',
-        Astro: 'readonly'
-      }
-    },
-    rules: {
-      'no-var': 'error',
-      'no-unused-vars': 'off', // Disable for Astro files due to template variables
-      'prefer-const': 'error'
-    }
-  },
+  // Astro files configuration
+  ...pluginAstro.configs.recommended,
 
   // Configuration files
   {
@@ -101,7 +84,7 @@ export default [
     rules: {}
   },
 
-  // Ignore patterns
+  // Ignore patterns (excluding Astro files now)
   {
     ignores: [
       'dist/**',
@@ -112,8 +95,7 @@ export default [
       'coverage/**',
       '*.min.js',
       '*.bundle.js',
-      'package-lock.json',
-      '**/*.astro'  // Astro files require special parser, ignore for now
+      'package-lock.json'
     ]
   }
 ]

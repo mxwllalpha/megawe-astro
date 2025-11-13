@@ -25,13 +25,14 @@
     "astro": "^5.15.5",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-astro": "^1.5.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "globals": "^16.5.0",
     "prettier": "^3.6.2",
     "tailwindcss": "^3.4.18"
   },
   "devDependencies": {
+    "@astrojs/cloudflare": "^12.6.10",
+    "eslint-plugin-astro": "^1.5.0",
     "sharp": "^0.34.5",
     "typescript": "^5.9.3"
   }

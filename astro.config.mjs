@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
+import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,6 +21,9 @@ export default defineConfig({
       priority: 1.0,
     }),
   ],
+  adapter: cloudflare({
+    mode: 'directory'
+  }),
   vite: {
     build: {
       minify: 'terser',
@@ -30,7 +34,7 @@ export default defineConfig({
       },
     },
   },
-  // Native image optimization with Sharp (Astro 5.x)
+  // Native image optimization with Sharp for Cloudflare Pages
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp',

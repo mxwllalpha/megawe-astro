@@ -1,8 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import { Image } from 'astro:assets'
+import defaultLogo from '../assets/images/default-company-logo.svg'
 import { SITE_TITLE, SITE_DESCRIPTION, JOB_TYPES, JOB_CATEGORIES, LOCATIONS } from '../lib/constants'
 
-// Optimized: Pre-build static data at build time
+// Optimized: Pre-build static data at build time with optimized local logos
 const featuredJobs = [
   {
     id: '1',
@@ -12,7 +14,7 @@ const featuredJobs = [
     type: 'full-time',
     description: 'Kami mencari Senior Frontend Developer untuk bergabung dengan tim kami...',
     postedAt: new Date().toISOString(),
-    logo: '/images/companies/tech-company.jpg',
+    logo: defaultLogo,
     category: 'Teknologi'
   },
   {
@@ -23,7 +25,7 @@ const featuredJobs = [
     type: 'remote',
     description: 'Product Manager dengan pengalaman dalam digital products...',
     postedAt: new Date().toISOString(),
-    logo: '/images/companies/digital-agency.jpg',
+    logo: defaultLogo,
     category: 'Marketing'
   },
   {
@@ -34,7 +36,7 @@ const featuredJobs = [
     type: 'full-time',
     description: 'Creative UI/UX Designer untuk membuat pengalaman digital yang menakjubkan...',
     postedAt: new Date().toISOString(),
-    logo: '/images/companies/creative-studio.jpg',
+    logo: defaultLogo,
     category: 'Design'
   }
 ]
@@ -182,19 +184,18 @@ const structuredData = {
           <article class="job-card card-hover" key={job.id}>
             <div class="flex items-start justify-between mb-4">
               <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                  {job.logo ? (
-                    <img
-                      src={job.logo}
-                      alt={`${job.company} logo`}
-                      width="48"
-                      height="48"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div class="w-6 h-6 bg-gray-300 rounded"></div>
-                  )}
+                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <Image
+                    src={job.logo}
+                    alt={`${job.company} logo`}
+                    width={48}
+                    height={48}
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full h-full object-cover"
+                    format="webp"
+                    quality={85}
+                  />
                 </div>
                 <div>
                   <h3 class="font-semibold text-gray-900 mb-1">
