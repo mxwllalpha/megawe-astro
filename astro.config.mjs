@@ -30,15 +30,17 @@ export default defineConfig({
       },
     },
   },
+  // Native image optimization with Sharp (Astro 5.x)
   image: {
-    domains: ['megawe.net', 'api.megawe.net'],
     service: {
       entrypoint: 'astro/assets/services/sharp',
       config: {
         format: ['webp', 'avif', 'jpg'],
-        quality: 85
+        quality: 85,
+        fallbackFormat: 'jpg'
       }
-    }
+    },
+    domains: ['megawe.net', 'api.megawe.net', 'images.unsplash.com'],
   },
   devToolbar: {
     enabled: false,

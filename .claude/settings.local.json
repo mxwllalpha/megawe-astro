@@ -11,7 +11,14 @@
       "Bash(npm run preview:*)",
       "Bash(git add:*)",
       "Bash(npm run lint)",
-      "Bash(npm run type-check:*)"
+      "Bash(npm run type-check:*)",
+      "Bash(git commit:*)",
+      "Bash(git config:*)",
+      "Bash(gh auth status:*)",
+      "Bash(gh repo create:*)",
+      "mcp__cf-docs__search_cloudflare_documentation",
+      "Bash(npm ls:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

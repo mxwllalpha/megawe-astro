@@ -72,6 +72,35 @@ export default [
 
   
   
+  // Astro files - simplified configuration
+  {
+    files: ['**/*.astro'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.browser,
+        console: 'readonly',
+        Astro: 'readonly'
+      }
+    },
+    rules: {
+      'no-var': 'error',
+      'no-unused-vars': 'off', // Disable for Astro files due to template variables
+      'prefer-const': 'error'
+    }
+  },
+
+  // Configuration files
+  {
+    files: ['*.config.*', '*.config.*'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module'
+    },
+    rules: {}
+  },
+
   // Ignore patterns
   {
     ignores: [
@@ -84,7 +113,7 @@ export default [
       '*.min.js',
       '*.bundle.js',
       'package-lock.json',
-      '**/*.astro'  // Ignore Astro files from ESLint for now
+      '**/*.astro'  // Astro files require special parser, ignore for now
     ]
   }
 ]

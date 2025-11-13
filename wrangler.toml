@@ -2,24 +2,15 @@ name = "megawe-astro"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
-[env.production]
-name = "megawe-astro"
-
-# Build configuration for Astro static export
+# Build configuration for Astro static site
 [build]
 command = "npm run build"
-cwd = "."
-watch_dir = "src"
 
-# Static site configuration
-[env.production.pages]
-project_name = "megawe-astro"
-
-[[env.production.domains]]
-binding = "megawe.net"
-custom_domain = true
+# Pages configuration
+pages_build_output_dir = "dist"
 
 # Environment variables
-[env.production.vars]
+[vars]
 NODE_ENV = "production"
 SITE_URL = "https://megawe.net"
+API_URL = "https://api.megawe.net"
