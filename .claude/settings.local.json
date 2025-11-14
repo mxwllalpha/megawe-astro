@@ -18,7 +18,12 @@
       "Bash(gh repo create:*)",
       "mcp__cf-docs__search_cloudflare_documentation",
       "Bash(npm ls:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(git push:*)",
+      "WebFetch(domain:megawe-astro.pages.dev)",
+      "Bash(npm run dev:*)",
+      "WebFetch(domain:api.megawe.net)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
