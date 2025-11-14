@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro'
 import { fetchJobs, transformJobForDisplay } from '../../lib/api/fetchers'
 import type { Job, JobFilter } from '../../lib/types/jobs'
+import { getJobUrlFromJob } from '../../lib/utils'
 
 // Get search parameters from URL
 const url = new URL(Astro.url.pathname + Astro.url.search, Astro.url.origin)
@@ -113,7 +114,7 @@ const pageDescription = `Temukan ${jobsData.total} lowongan kerja untuk "${searc
                       <div>
                         <h3 class="font-semibold text-gray-900 mb-1">
                           <a
-                            href={`/jobs/${job.id}`}
+                            href={getJobUrlFromJob(job)}
                             class="hover:text-cyan-600 transition-colors"
                           >
                             {job.title}
@@ -150,7 +151,7 @@ const pageDescription = `Temukan ${jobsData.total} lowongan kerja untuk "${searc
                       })}
                     </time>
                     <a
-                      href={`/jobs/${job.id}`}
+                      href={getJobUrlFromJob(job)}
                       class="text-cyan-600 hover:text-cyan-700 text-sm font-medium transition-colors"
                     >
                       Lihat Detail →

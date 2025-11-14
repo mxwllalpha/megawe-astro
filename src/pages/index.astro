@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro'
 import { SITE_TITLE, SITE_DESCRIPTION, JOB_TYPES, JOB_CATEGORIES, LOCATIONS } from '../lib/constants'
 import { fetchFeaturedJobs, transformJobForDisplay } from '../lib/api/fetchers'
 import type { Job } from '../lib/types/jobs'
+import { getJobUrlFromJob } from '../lib/utils'
 
 // Lazy load heavy components
 import { Image } from 'astro:assets'
@@ -241,7 +242,7 @@ const structuredData = {
                 <div class="flex-1">
                   <h3 class="text-lg font-bold text-gray-900 mb-1 group-hover:text-red-600 transition-colors duration-200">
                     <a
-                      href={`/jobs/${job.id}`}
+                      href={getJobUrlFromJob(job)}
                       aria-label={`Lihat detail lowongan ${job.title}`}
                     >
                       {job.title}
@@ -293,7 +294,7 @@ const structuredData = {
                 })}
               </time>
               <a
-                href={`/jobs/${job.id}`}
+                href={getJobUrlFromJob(job)}
                 class="text-red-600 hover:text-red-700 text-sm font-bold transition-colors duration-200 flex items-center gap-1 group"
                 aria-label={`Lihat detail dan apply untuk ${job.title}`}
               >

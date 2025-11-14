@@ -7,19 +7,41 @@ import type { Job } from '../../lib/types/jobs'
 
 export const prerender = false
 
-// Get job ID from URL params
+// Get slug from URL params (could be /{slug}-{id} or just /{id})
 const { id } = Astro.params
 
 if (!id) {
   return Astro.redirect('/jobs')
 }
 
-// Fetch job details
+// Parse slug format: {slug}-{id} or just {id}
+let jobId: string
+let jobSlug: string
+
+if (id.includes('-')) {
+  // Format: {slug}-{id}
+  const parts = id.split('-')
+  jobId = parts[parts.length - 1] // Last part is ID
+  jobSlug = parts.slice(0, -1).join('-') // All except last part
+} else {
+  // Format: {id}
+  jobId = id
+  jobSlug = id
+}
+
+// Try to fetch by slug first, then by ID
 let job: Job | null = null
 let relatedJobs: Job[] = []
 
 try {
-  job = await fetchJob(id)
+  // First, try to find by job slug (new format)
+  if (jobSlug !== jobId) {
+    // In real implementation, you'd search by slug
+    // For now, fallback to ID-based fetching
+    job = await fetchJob(jobId)
+  } else {
+    job = await fetchJob(id)
+  }
 
   if (job) {
     // Fetch related jobs (same category or location)
@@ -29,7 +51,7 @@ try {
         limit: 6
       })
       // Filter out current job from related jobs
-      relatedJobs = relatedData.jobs.filter(relatedJob => relatedJob.id !== id).slice(0, 3)
+      relatedJobs = relatedData.jobs.filter(relatedJob => relatedJob.id !== jobId).slice(0, 3)
     } catch (error) {
       console.error('Failed to fetch related jobs:', error)
     }

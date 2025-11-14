@@ -19,6 +19,12 @@ export interface Job {
   applicationUrl: string
   source: string
   isActive: boolean
+  seo?: {
+    title: string
+    description: string
+    slug: string
+    keywords: string[]
+  }
 }
 
 export interface JobFilter {

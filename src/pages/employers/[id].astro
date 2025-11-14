@@ -3,14 +3,30 @@ import Layout from '../../layouts/Layout.astro'
 import { Image } from 'astro:assets'
 import { fetchEmployer, fetchJobs } from '../../lib/api/fetchers'
 import type { Employer, Job } from '../../lib/types/jobs'
+import { getJobUrlFromJob, getFullMegaweUrl } from '../../lib/utils'
 
 export const prerender = false
 
-// Get employer ID from URL params
+// Get slug from URL params (could be /{slug}-{id} or just /{id})
 const { id } = Astro.params
 
 if (!id) {
   return Astro.redirect('/employers')
+}
+
+// Parse slug format: {slug}-{id} or just {id}
+let employerId: string
+let employerSlug: string
+
+if (id.includes('-')) {
+  // Format: {slug}-{id}
+  const parts = id.split('-')
+  employerId = parts[parts.length - 1] // Last part is ID
+  employerSlug = parts.slice(0, -1).join('-') // All except last part
+} else {
+  // Format: {id}
+  employerId = id
+  employerSlug = id
 }
 
 // Fetch employer details
@@ -18,7 +34,7 @@ let employer: Employer | null = null
 let employerJobs: Job[] = []
 
 try {
-  employer = await fetchEmployer(id)
+  employer = await fetchEmployer(employerId)
 
   if (employer) {
     // Fetch jobs from this employer
@@ -29,11 +45,11 @@ try {
       })
       employerJobs = jobsData.jobs
     } catch (error) {
-      console.error(`Failed to fetch jobs for employer ${id}:`, error)
+      console.error(`Failed to fetch jobs for employer ${employerId}:`, error)
     }
   }
 } catch (error) {
-  console.error(`Failed to fetch employer ${id}:`, error)
+  console.error(`Failed to fetch employer ${employerId}:`, error)
 }
 
 // Handle employer not found
@@ -80,7 +96,7 @@ const structuredData = {
         "addressCountry": "ID"
       }
     },
-    "url": `https://megawe.net/jobs/${job.id}`
+    "url": getFullMegaweUrl(getJobUrlFromJob(job))
   }))
 }
 ---
@@ -230,7 +246,7 @@ const structuredData = {
                           <div>
                             <h3 class="font-semibold text-gray-900 mb-1">
                               <a
-                                href={`/jobs/${job.id}`}
+                                href={getJobUrlFromJob(job)}
                                 class="hover:text-purple-600 transition-colors"
                               >
                                 {job.title}
@@ -265,7 +281,7 @@ const structuredData = {
                         <div class="flex items-center justify-between">
                           <span class="text-xs text-gray-500">{job.category}</span>
                           <a
-                            href={`/jobs/${job.id}`}
+                            href={getJobUrlFromJob(job)}
                             class="text-purple-600 hover:text-purple-700 text-sm font-medium transition-colors"
                           >
                             Lihat Detail →

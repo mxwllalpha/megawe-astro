@@ -4,6 +4,7 @@ import { Image } from 'astro:assets'
 import { SITE_TITLE, JOB_CATEGORIES } from '../../../lib/constants'
 import { fetchJobs, transformJobForDisplay } from '../../../lib/api/fetchers'
 import type { Job, JobFilter } from '../../../lib/types/jobs'
+import { getJobUrlFromJob, getFullMegaweUrl } from '../../../lib/utils'
 
 export const prerender = false
 
@@ -148,7 +149,7 @@ const structuredData = {
     "itemListElement": jobsData.jobs.map((job, index) => ({
       "@type": "ListItem",
       "position": index + 1,
-      "url": `https://megawe.net/jobs/${job.id}`,
+      "url": getFullMegaweUrl(getJobUrlFromJob(job)),
       "name": job.title,
       "description": job.description
     }))
@@ -299,7 +300,7 @@ const structuredData = {
                       <div>
                         <h3 class="font-semibold text-gray-900 mb-1">
                           <a
-                            href={`/jobs/${job.id}`}
+                            href={getJobUrlFromJob(job)}
                             class="hover:text-cyan-600 transition-colors"
                           >
                             {job.title}
@@ -336,7 +337,7 @@ const structuredData = {
                       })}
                     </time>
                     <a
-                      href={`/jobs/${job.id}`}
+                      href={getJobUrlFromJob(job)}
                       class="text-cyan-600 hover:text-cyan-700 text-sm font-medium transition-colors"
                     >
                       Lihat Detail →
