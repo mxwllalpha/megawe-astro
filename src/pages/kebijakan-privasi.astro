@@ -1,0 +1,660 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { SITE_URL } from '../lib/constants'
+
+// SEO Metadata
+const title = "Kebijakan Privasi - Megawe | Agregator Lowongan Kerja Indonesia"
+const description = "Kebijakan privasi Megawe yang sesuai GDPR untuk melindungi data pribadi pengguna. Informasi lengkap tentang pengumpulan, penggunaan, dan perlindungan data."
+const url = `${SITE_URL}/kebijakan-privasi`
+const image = `${SITE_URL}/images/privacy-policy.jpg`
+
+// Structured Data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Kebijakan Privasi - Megawe",
+  "description": "Kebijakan privasi Megawe yang melindungi data pribadi pengguna sesuai standar GDPR",
+  "url": url,
+  "dateModified": new Date().toISOString(),
+  "author": {
+    "@type": "Organization",
+    "name": "Megawe",
+    "url": SITE_URL
+  }
+}
+---
+
+<Layout title={title} description={description} url={url} image={image}>
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-red-50 via-white to-emerald-50 py-16 lg:py-24">
+    <div class="container mx-auto px-6">
+      <div class="text-center max-w-4xl mx-auto">
+        <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+          Kebijakan <span class="bg-gradient-to-r from-red-600 to-emerald-600 bg-clip-text text-transparent">Privasi</span>
+        </h1>
+        <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+          Kebijakan privasi Megawe yang melindungi data pribadi Anda sesuai standar GDPR dan
+          regulasi perlindungan data Indonesia.
+        </p>
+
+        <!-- Quick Links -->
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+          <a href="#data-collection" class="bg-white text-red-600 px-4 py-2 rounded-lg text-sm font-medium border border-red-200 hover:bg-red-50 transition-colors">
+            Data Collection
+          </a>
+          <a href="#data-usage" class="bg-white text-emerald-600 px-4 py-2 rounded-lg text-sm font-medium border border-emerald-200 hover:bg-emerald-50 transition-colors">
+            Data Usage
+          </a>
+          <a href="#user-rights" class="bg-white text-orange-600 px-4 py-2 rounded-lg text-sm font-medium border border-orange-200 hover:bg-orange-50 transition-colors">
+            User Rights
+          </a>
+          <a href="#cookies" class="bg-white text-blue-600 px-4 py-2 rounded-lg text-sm font-medium border border-blue-200 hover:bg-blue-50 transition-colors">
+            Cookies
+          </a>
+          <a href="#contact" class="bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-medium border border-purple-200 hover:bg-purple-50 transition-colors">
+            Contact
+          </a>
+        </div>
+
+        <!-- GDPR Compliance Badge -->
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 inline-flex items-center space-x-3">
+          <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <span class="text-sm font-medium text-gray-700">GDPR Compliant • Updated November 2024</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="py-16">
+    <div class="container mx-auto px-6">
+      <div class="max-w-4xl mx-auto">
+
+        <!-- Last Updated Notice -->
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-12">
+          <div class="flex items-start space-x-3">
+            <svg class="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h3 class="font-semibold text-blue-900 mb-1">Pembaruan Kebijakan</h3>
+              <p class="text-blue-800 text-sm">
+                Kebijakan privasi ini terakhir diperbarui pada <strong>14 November 2024</strong>
+                dan berlaku efektif sejak tanggal tersebut. Kami akan memberitahu Anda jika ada perubahan material.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Introduction -->
+        <div class="prose prose-lg max-w-none mb-12">
+          <p class="text-gray-700 leading-relaxed">
+            Di Megawe, kami berkomitmen untuk melindungi privasi dan data pribadi Anda. Kebijakan privasi ini
+            menjelaskan bagaimana kami mengumpulkan, menggunakan, melindungi, dan membagikan informasi pribadi
+            Anda ketika menggunakan platform aggregator lowongan kerja kami, sesuai dengan GDPR dan regulasi perlindungan data yang berlaku.
+          </p>
+        </div>
+
+        <!-- Data Collection -->
+        <div id="data-collection" class="mb-12 scroll-mt-24">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+            <span class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-red-600 font-bold text-sm">1</span>
+            </span>
+            Informasi yang Kami Kumpulkan
+          </h2>
+
+          <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+            <div class="space-y-8">
+              <!-- Personal Data -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Data Pribadi yang Anda Berikan</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="bg-red-50 rounded-lg p-4">
+                    <h4 class="font-semibold text-red-900 mb-2">Data Identitas</h4>
+                    <ul class="text-gray-700 space-y-1 text-sm">
+                      <li>• Nama lengkap</li>
+                      <li>• Alamat email</li>
+                      <li>• Nomor telepon (opsional)</li>
+                      <li>• Alamat tempat tinggal (opsional)</li>
+                    </ul>
+                  </div>
+                  <div class="bg-emerald-50 rounded-lg p-4">
+                    <h4 class="font-semibold text-emerald-900 mb-2">Data Profesional</h4>
+                    <ul class="text-gray-700 space-y-1 text-sm">
+                      <li>• CV dan resume</li>
+                      <li>• Riwayat pekerjaan</li>
+                      <li>• Pendidikan dan sertifikasi</li>
+                      <li>• Preferensi pekerjaan</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Automatically Collected Data -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Data yang Dikumpulkan Otomatis</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="bg-orange-50 rounded-lg p-4">
+                    <h4 class="font-semibold text-orange-900 mb-2">Usage Data</h4>
+                    <ul class="text-gray-700 space-y-1 text-sm">
+                      <li>• Alamat IP (anonimized)</li>
+                      <li>• Browser dan device information</li>
+                      <li>• Pages yang dikunjungi</li>
+                      <li>• Waktu dan durasi kunjungan</li>
+                    </ul>
+                  </div>
+                  <div class="bg-blue-50 rounded-lg p-4">
+                    <h4 class="font-semibold text-blue-900 mb-2">Cookies & Storage</h4>
+                    <ul class="text-gray-700 space-y-1 text-sm">
+                      <li>• Session cookies</li>
+                      <li>• Preference settings</li>
+                      <li>• Job application tracking</li>
+                      <li>• Search history</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Usage -->
+        <div id="data-usage" class="mb-12 scroll-mt-24">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+            <span class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-emerald-600 font-bold text-sm">2</span>
+            </span>
+            Bagaimana Kami Menggunakan Data Anda
+          </h2>
+
+          <div class="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-xl border border-emerald-200 p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Primary Purposes -->
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Tujuan Utama</h3>
+                <ul class="space-y-3">
+                  <li class="flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-emerald-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <div>
+                      <strong class="text-gray-900">Job Matching:</strong>
+                      <span class="text-gray-600"> Menyediakan rekomendasi lowongan yang relevan</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-emerald-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <div>
+                      <strong class="text-gray-900">Application Processing:</strong>
+                      <span class="text-gray-600"> Memfasilitasi proses aplikasi kerja</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-emerald-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <div>
+                      <strong class="text-gray-900">Communication:</strong>
+                      <span class="text-gray-600"> Mengirim update lowongan dan notifikasi</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Secondary Purposes -->
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Tujuan Pendukung</h3>
+                <ul class="space-y-3">
+                  <li class="flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <div>
+                      <strong class="text-gray-900">Platform Improvement:</strong>
+                      <span class="text-gray-600"> Analisis untuk meningkatkan pengalaman user</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <div>
+                      <strong class="text-gray-900">Security:</strong>
+                      <span class="text-gray-600"> Melindungi dari fraud dan penyalahgunaan</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <div>
+                      <strong class="text-gray-900">Legal Compliance:</strong>
+                      <span class="text-gray-600"> Mematuhi regulasi dan hukum yang berlaku</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Rights -->
+        <div id="user-rights" class="mb-12 scroll-mt-24">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+            <span class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-orange-600 font-bold text-sm">3</span>
+            </span>
+            Hak Anda Pengguna GDPR
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Right Cards -->
+            <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+              <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Right to Access</h3>
+              <p class="text-gray-600 text-sm">
+                Hak untuk mengetahui data pribadi apa yang kami simpan tentang Anda dan bagaimana kami menggunakannya.
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+              <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Right to Rectification</h3>
+              <p class="text-gray-600 text-sm">
+                Hak untuk memperbaiki data pribadi yang tidak akurat atau tidak lengkap.
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+              <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Right to Erasure</h3>
+              <p class="text-gray-600 text-sm">
+                Hak untuk menghapus data pribadi Anda dalam kondisi tertentu ("right to be forgotten").
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Right to Data Portability</h3>
+              <p class="text-gray-600 text-sm">
+                Hak untuk menerima data pribadi Anda dalam format terstruktur dan mesin-readable.
+              </p>
+            </div>
+          </div>
+
+          <!-- How to Exercise Rights -->
+          <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-200 p-8 mt-8">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">🛡️ Cara Melaksanakan Hak Anda</h3>
+            <p class="text-gray-700 mb-4">
+              Untuk melaksanakan hak GDPR Anda, silakan kirim email ke <strong>privacy@megawe.net</strong> dengan:
+            </p>
+            <ul class="space-y-2 text-gray-700">
+              <li>• Nama lengkap dan kontak informasi Anda</li>
+              <li>• Spesifik hak yang ingin Anda laksanakan</li>
+              <li>• Detail data pribadi yang terkait (jika ada)</li>
+              <li>• Bukti identitas (untuk verifikasi)</li>
+            </ul>
+            <p class="text-gray-700 mt-4">
+              Kami akan merespon dalam waktu <strong>30 hari</strong> sesuai regulasi GDPR.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cookies Policy -->
+        <div id="cookies" class="mb-12 scroll-mt-24">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+            <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-bold text-sm">4</span>
+            </span>
+            Kebijakan Cookies
+          </h2>
+
+          <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+            <div class="space-y-8">
+              <!-- Cookie Types -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Jenis Cookies yang Kami Gunakan</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="space-y-4">
+                    <div class="bg-green-50 rounded-lg p-4">
+                      <h4 class="font-semibold text-green-900 mb-2">Essential Cookies</h4>
+                      <p class="text-gray-700 text-sm mb-2">Required for basic functionality</p>
+                      <ul class="text-gray-600 text-xs space-y-1">
+                        <li>• Session management</li>
+                        <li>• Security tokens</li>
+                        <li>• Load balancing</li>
+                      </ul>
+                    </div>
+
+                    <div class="bg-yellow-50 rounded-lg p-4">
+                      <h4 class="font-semibold text-yellow-900 mb-2">Performance Cookies</h4>
+                      <p class="text-gray-700 text-sm mb-2">Collect analytics and usage data</p>
+                      <ul class="text-gray-600 text-xs space-y-1">
+                        <li>• Page views and clicks</li>
+                        <li>• Session duration</li>
+                        <li>• Error tracking</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="space-y-4">
+                    <div class="bg-blue-50 rounded-lg p-4">
+                      <h4 class="font-semibold text-blue-900 mb-2">Functional Cookies</h4>
+                      <p class="text-gray-700 text-sm mb-2">Remember your preferences</p>
+                      <ul class="text-gray-600 text-xs space-y-1">
+                        <li>• Job search filters</li>
+                        <li>• Language preferences</li>
+                        <li>• Login status</li>
+                      </ul>
+                    </div>
+
+                    <div class="bg-purple-50 rounded-lg p-4">
+                      <h4 class="font-semibold text-purple-900 mb-2">Marketing Cookies</h4>
+                      <p class="text-gray-700 text-sm mb-2">Personalized content and ads</p>
+                      <ul class="text-gray-600 text-xs space-y-1">
+                        <li>• Job recommendations</li>
+                        <li>• Email newsletters</li>
+                        <li>• Social media integration</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cookie Management -->
+              <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
+                <h4 class="font-semibold text-gray-900 mb-3">Mengelola Cookies</h4>
+                <p class="text-gray-700 mb-4">
+                  Anda dapat mengelola preferensi cookies melalui:
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li>• <strong>Cookie Consent Banner:</strong> Pengaturan saat pertama kali kunjungan</li>
+                  <li>• <strong>Browser Settings:</strong> Blokir atau hapus cookies di browser Anda</li>
+                  <li>• <strong>Privacy Dashboard:</strong> Kelola preferensi kapan saja</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Sharing -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Pembagian Data dengan Pihak Ketiga</h2>
+
+          <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-8">
+            <div class="space-y-6">
+              <div class="flex items-start space-x-4">
+                <div class="w-8 h-8 bg-yellow-200 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span class="text-yellow-800 font-bold text-sm">!</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-2">PENTING: Posisi Kami sebagai Aggregator</h3>
+                  <p class="text-gray-700">
+                    Megawe <strong>tidak membagikan</strong> data pribadi Anda untuk tujuan marketing.
+                    Kami hanya membagikan data yang relevan untuk proses aplikasi kerja yang Anda ajukan.
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg p-4">
+                  <h4 class="font-semibold text-gray-900 mb-3">✅ Diperbolehkan</h4>
+                  <ul class="text-gray-700 space-y-2 text-sm">
+                    <li>• Data aplikasi ke perusahaan yang Anda apply</li>
+                    <li>• Analytics (anonimized) untuk platform improvement</li>
+                    <li>• Law enforcement jika diwajibkan oleh hukum</li>
+                    <li>• Service providers dengan konfidentiality agreement</li>
+                  </ul>
+                </div>
+
+                <div class="bg-white rounded-lg p-4">
+                  <h4 class="font-semibold text-gray-900 mb-3">❌ Tidak Diperbolehkan</h4>
+                  <ul class="text-gray-700 space-y-2 text-sm">
+                    <li>• Selling data ke pihak ketiga</li>
+                    <li>• Marketing tanpa consent eksplisit</li>
+                    <li>• Sharing dengan affiliates tanpa alasan bisnis</li>
+                    <li>• Profiling untuk tujuan non-job related</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Security -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Keamanan Data</h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-6">
+              <h3 class="font-semibold text-gray-900 mb-4">🔐 Teknologi Keamanan</h3>
+              <ul class="space-y-3 text-gray-700">
+                <li class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>SSL/TLS encryption untuk semua transmisi data</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>AES-256 encryption untuk data storage</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Regular security audits dan penetration testing</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Cloudflare DDoS protection dan WAF</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-xl p-6">
+              <h3 class="font-semibold text-gray-900 mb-4">🛡️ Proses Keamanan</h3>
+              <ul class="space-y-3 text-gray-700">
+                <li class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Data minimization - hanya kumpulkan yang diperlukan</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Access control berdasarkan principle of least privilege</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Regular backup dan disaster recovery procedures</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Compliance dengan ISO 27001 dan SOC 2 standards</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div id="contact" class="mb-12 scroll-mt-24">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Hubungi Kami untuk Privasi</h2>
+
+          <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl border border-purple-200 p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">📧 Kontak Privasi</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                      <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="font-medium text-gray-900">Email Privasi</div>
+                      <div class="text-gray-600">privacy@megawe.net</div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                      <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="font-medium text-gray-900">DPO (Data Protection Officer)</div>
+                      <div class="text-gray-600">dpo@megawe.net</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">⏱️ Waktu Respons</h3>
+                <div class="space-y-2">
+                  <div class="flex justify-between">
+                    <span class="text-gray-700">Permintaan akses data:</span>
+                    <span class="font-medium text-gray-900">30 hari</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-700">Permintaan hapus data:</span>
+                    <span class="font-medium text-gray-900">30 hari</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-700">Keluhan privasi:</span>
+                    <span class="font-medium text-gray-900">14 hari</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-700">Inquiry umum:</span>
+                    <span class="font-medium text-gray-900">7 hari</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-white rounded-lg border border-purple-200">
+              <p class="text-sm text-gray-700">
+                <strong>📍 Legal Address:</strong> Untuk keperluan hukum dan regulator,
+                kantor registered kami berada di Indonesia dengan compliance penuh terhadap UU ITE
+                dan peraturan perlindungan data pribadi Indonesia.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- International Users -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">International Users</h2>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-8">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">🌏 Transfer Data International</h3>
+            <p class="text-gray-700 mb-4">
+              Jika Anda mengakses Megawe dari luar Indonesia, mohon diperhatikan bahwa:
+            </p>
+            <ul class="space-y-3 text-gray-700">
+              <li>• Data Anda mungkin diproses di server yang berlokasi di Indonesia</li>
+              <li>• Kami mematuhi GDPR untuk pengguna EEA</li>
+              <li>• Transfer data dilakukan dengan adequate safeguards (SCCs, BCRs)</li>
+              <li>• Anda memiliki hak yang sama di bawah yurisdeksi lokal Anda</li>
+            </ul>
+
+            <div class="mt-6 p-4 bg-white rounded-lg border border-blue-200">
+              <p class="text-sm text-gray-700">
+                <strong>EU Users:</strong> Untuk pengguna di European Economic Area,
+                kami memiliki European Representative yang dapat dihubungi untuk keperluan GDPR.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Policy Updates -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Pembaruan Kebijakan</h2>
+
+          <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-8">
+            <p class="text-gray-700 mb-4">
+              Kami mungkin memperbarui kebijakan privasi ini dari waktu ke waktu. Perubahan akan:
+            </p>
+            <ul class="space-y-2 text-gray-700 mb-6">
+              <li class="flex items-start space-x-2">
+                <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span>Dikomunikasikan melalui email dan website</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span>Memberikan reasonable notice period (minimal 30 hari)</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span>Mencantumkan "Last Updated" date di bagian atas</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span>Menghormati hak Anda untuk menolak perubahan material</span>
+              </li>
+            </ul>
+
+            <div class="bg-white rounded-lg p-6 border border-gray-200">
+              <p class="text-sm text-gray-600">
+                <strong>Rekomendasi:</strong> Bookmark halaman ini dan review berkala untuk tetap up-to-date dengan praktik privasi kami.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</Layout>

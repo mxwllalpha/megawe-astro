@@ -23,7 +23,14 @@
       "WebFetch(domain:megawe-astro.pages.dev)",
       "Bash(npm run dev:*)",
       "WebFetch(domain:api.megawe.net)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(start http://localhost:4323/)",
+      "WebFetch(domain:localhost)",
+      "Bash(start http://localhost:4326/)",
+      "Bash(npm audit)",
+      "Bash(xargs:*)",
+      "Bash(npm audit fix:*)",
+      "mcp__cf-binding__kv_namespaces_list"
     ],
     "deny": [],
     "ask": []

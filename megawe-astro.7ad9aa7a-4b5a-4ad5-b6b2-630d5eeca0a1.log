@@ -1,0 +1,169 @@
+2025-11-14T06:37:04.663831Z	Cloning repository...
+2025-11-14T06:37:05.293141Z	From https://github.com/mxwllalpha/megawe-astro
+2025-11-14T06:37:05.293749Z	 * branch            1f41c2e1a7c39a774f63404aa6fb8727485d77c9 -> FETCH_HEAD
+2025-11-14T06:37:05.293874Z	
+2025-11-14T06:37:05.322534Z	HEAD is now at 1f41c2e feat(ui): implement comprehensive header/footer redesign with Indonesian-inspired aesthetic
+2025-11-14T06:37:05.322922Z	
+2025-11-14T06:37:05.398804Z	
+2025-11-14T06:37:05.399245Z	Using v2 root directory strategy
+2025-11-14T06:37:05.419387Z	Success: Finished cloning repository files
+2025-11-14T06:37:07.151845Z	Checking for configuration in a Wrangler configuration file (BETA)
+2025-11-14T06:37:07.152463Z	
+2025-11-14T06:37:07.153823Z	Found wrangler.toml file. Reading build configuration...
+2025-11-14T06:37:08.276414Z	A wrangler.toml file was found but it does not appear to be valid. Did you mean to use wrangler.toml to configure Pages? If so, then make sure the file is valid and contains the `pages_build_output_dir` property. Skipping file and continuing.
+2025-11-14T06:37:08.341996Z	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
+2025-11-14T06:37:08.34242Z	Installing project dependencies: npm clean-install --progress=false
+2025-11-14T06:37:17.32558Z	
+2025-11-14T06:37:17.325812Z	added 634 packages, and audited 635 packages in 9s
+2025-11-14T06:37:17.325931Z	
+2025-11-14T06:37:17.326052Z	288 packages are looking for funding
+2025-11-14T06:37:17.326195Z	  run `npm fund` for details
+2025-11-14T06:37:17.334518Z	
+2025-11-14T06:37:17.334671Z	1 low severity vulnerability
+2025-11-14T06:37:17.334844Z	
+2025-11-14T06:37:17.334961Z	To address all issues, run:
+2025-11-14T06:37:17.335094Z	  npm audit fix
+2025-11-14T06:37:17.335254Z	
+2025-11-14T06:37:17.335393Z	Run `npm audit` for details.
+2025-11-14T06:37:17.364803Z	Executing user command: npm run build
+2025-11-14T06:37:17.752543Z	
+2025-11-14T06:37:17.752819Z	> megawe-astro@1.0.0 build
+2025-11-14T06:37:17.752998Z	> astro build
+2025-11-14T06:37:17.753201Z	
+2025-11-14T06:37:19.691663Z	[2m06:37:19[22m [34m[@astrojs/cloudflare][39m Enabling sessions with Cloudflare KV with the "SESSION" KV binding.
+2025-11-14T06:37:19.691881Z	[2m06:37:19[22m [34m[@astrojs/cloudflare][39m If you see the error "Invalid binding `SESSION`" in your build output, you need to add the binding to your wrangler config file.
+2025-11-14T06:37:19.74524Z	[33m[1m06:37:19[22m [WARN] [adapter][39m Cloudflare does not support sharp at runtime. However, you can configure `imageService: "compile"` to optimize images with sharp on prerendered pages during build time.
+2025-11-14T06:37:19.874073Z	[2m06:37:19[22m [34m[content][39m Syncing content
+2025-11-14T06:37:19.878073Z	[2m06:37:19[22m [34m[content][39m Synced content
+2025-11-14T06:37:19.879909Z	[2m06:37:19[22m [34m[types][39m Generated [2m124ms[22m
+2025-11-14T06:37:19.880304Z	[2m06:37:19[22m [34m[build][39m output: [34m"static"[39m
+2025-11-14T06:37:19.880475Z	[2m06:37:19[22m [34m[build][39m mode: [34m"server"[39m
+2025-11-14T06:37:19.880676Z	[2m06:37:19[22m [34m[build][39m directory: [34m/opt/buildhome/repo/dist/[39m
+2025-11-14T06:37:19.880794Z	[2m06:37:19[22m [34m[build][39m adapter: [32m@astrojs/cloudflare[39m
+2025-11-14T06:37:19.880925Z	[2m06:37:19[22m [34m[build][39m Collecting build info...
+2025-11-14T06:37:19.881055Z	[2m06:37:19[22m [34m[build][39m [32m✓ Completed in 191ms.[39m
+2025-11-14T06:37:19.882177Z	[2m06:37:19[22m [34m[build][39m Building server entrypoints...
+2025-11-14T06:37:21.856884Z	[2m06:37:21[22m [34m[vite][39m [32m✓ built in 1.95s[39m
+2025-11-14T06:37:21.857132Z	[2m06:37:21[22m [34m[build][39m [32m✓ Completed in 1.97s.[39m
+2025-11-14T06:37:21.876593Z	
+2025-11-14T06:37:21.877045Z	[42m[30m prerendering static routes [39m[49m
+2025-11-14T06:37:21.882183Z	[2m06:37:21[22m [32m▶[39m src/pages/employers/index.astro
+2025-11-14T06:37:22.699437Z	[2m06:37:21[22m   [34m└─[39m [2m/employers/index.html[22mFailed to fetch https://api.megawe.net/api/companies: Error: API Error: 500 Internal Server Error
+2025-11-14T06:37:22.699753Z	    at ApiClient.fetchApi (file:///opt/buildhome/repo/dist/_worker.js/chunks/fetchers_Cxk0IWOR.mjs:15:15)
+2025-11-14T06:37:22.699866Z	    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-11-14T06:37:22.7Z	    at async ApiClient.getEmployers (file:///opt/buildhome/repo/dist/_worker.js/chunks/fetchers_Cxk0IWOR.mjs:47:24)
+2025-11-14T06:37:22.700115Z	    at async fetchEmployers (file:///opt/buildhome/repo/dist/_worker.js/chunks/fetchers_Cxk0IWOR.mjs:132:12)
+2025-11-14T06:37:22.700207Z	    at async file:///opt/buildhome/repo/dist/_worker.js/pages/employers.astro.mjs?time=1763102241876:16:17
+2025-11-14T06:37:22.700505Z	    at async callComponentAsTemplateResultOrResponse (file:///opt/buildhome/repo/node_modules/astro/dist/runtime/server/render/astro/render.js:91:25)
+2025-11-14T06:37:22.700636Z	    at async renderToAsyncIterable (file:///opt/buildhome/repo/node_modules/astro/dist/runtime/server/render/astro/render.js:133:26)
+2025-11-14T06:37:22.700758Z	    at async renderPage (file:///opt/buildhome/repo/node_modules/astro/dist/runtime/server/render/page.js:36:24)
+2025-11-14T06:37:22.700849Z	    at async lastNext (file:///opt/buildhome/repo/node_modules/astro/dist/core/render-context.js:201:25)
+2025-11-14T06:37:22.700962Z	    at async callMiddleware (file:///opt/buildhome/repo/node_modules/astro/dist/core/middleware/callMiddleware.js:11:10)
+2025-11-14T06:37:22.701181Z	Failed to fetch employers, using fallback data: Error: API Error: 500 Internal Server Error
+2025-11-14T06:37:22.701332Z	    at ApiClient.fetchApi (file:///opt/buildhome/repo/dist/_worker.js/chunks/fetchers_Cxk0IWOR.mjs:15:15)
+2025-11-14T06:37:22.70147Z	    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-11-14T06:37:22.701618Z	    at async ApiClient.getEmployers (file:///opt/buildhome/repo/dist/_worker.js/chunks/fetchers_Cxk0IWOR.mjs:47:24)
+2025-11-14T06:37:22.701723Z	    at async fetchEmployers (file:///opt/buildhome/repo/dist/_worker.js/chunks/fetchers_Cxk0IWOR.mjs:132:12)
+2025-11-14T06:37:22.701823Z	    at async file:///opt/buildhome/repo/dist/_worker.js/pages/employers.astro.mjs?time=1763102241876:16:17
+2025-11-14T06:37:22.701929Z	    at async callComponentAsTemplateResultOrResponse (file:///opt/buildhome/repo/node_modules/astro/dist/runtime/server/render/astro/render.js:91:25)
+2025-11-14T06:37:22.702063Z	    at async renderToAsyncIterable (file:///opt/buildhome/repo/node_modules/astro/dist/runtime/server/render/astro/render.js:133:26)
+2025-11-14T06:37:22.702173Z	    at async renderPage (file:///opt/buildhome/repo/node_modules/astro/dist/runtime/server/render/page.js:36:24)
+2025-11-14T06:37:22.702274Z	    at async lastNext (file:///opt/buildhome/repo/node_modules/astro/dist/core/render-context.js:201:25)
+2025-11-14T06:37:22.70247Z	    at async callMiddleware (file:///opt/buildhome/repo/node_modules/astro/dist/core/middleware/callMiddleware.js:11:10)
+2025-11-14T06:37:22.70941Z	 [31m(+827ms)[39m 
+2025-11-14T06:37:22.710751Z	[2m06:37:22[22m [32m▶[39m src/pages/jobs/search.astro
+2025-11-14T06:37:22.712902Z	[2m06:37:22[22m   [34m└─[39m [2m/jobs/search/index.html[22m [2m(+2ms)[22m 
+2025-11-14T06:37:22.714418Z	[2m06:37:22[22m [32m▶[39m src/pages/jobs/index.astro
+2025-11-14T06:37:23.663485Z	[2m06:37:22[22m   [34m└─[39m [2m/jobs/index.html[22m [31m(+949ms)[39m 
+2025-11-14T06:37:23.665449Z	[2m06:37:23[22m [32m▶[39m src/pages/index.astro
+2025-11-14T06:37:24.528507Z	[2m06:37:23[22m   [34m└─[39m [2m/index.html[22m [31m(+863ms)[39m 
+2025-11-14T06:37:24.528746Z	[2m06:37:24[22m [32m✓ Completed in 2.66s.
+2025-11-14T06:37:24.528913Z	[39m
+2025-11-14T06:37:24.53069Z	[2m06:37:24[22m [34m[build][39m Rearranging server assets...
+2025-11-14T06:37:24.546722Z	[2m06:37:24[22m [34m[@astrojs/sitemap][39m `sitemap-index.xml` created at `dist`
+2025-11-14T06:37:24.546909Z	[2m06:37:24[22m [34m[build][39m Server built in [1m4.86s[22m
+2025-11-14T06:37:24.547063Z	[2m06:37:24[22m [34m[build][39m [1mComplete![22m
+2025-11-14T06:37:24.5924Z	Finished
+2025-11-14T06:37:25.474383Z	Checking for configuration in a Wrangler configuration file (BETA)
+2025-11-14T06:37:25.475074Z	
+2025-11-14T06:37:25.475764Z	Found wrangler.toml file. Reading build configuration...
+2025-11-14T06:37:26.573118Z	A wrangler.toml file was found but it does not appear to be valid. Did you mean to use wrangler.toml to configure Pages? If so, then make sure the file is valid and contains the `pages_build_output_dir` property. Skipping file and continuing.
+2025-11-14T06:37:26.574127Z	Found _worker.js in output directory. Uploading.
+2025-11-14T06:37:26.580365Z	 ⛅️ wrangler 3.101.0
+2025-11-14T06:37:26.580588Z	-------------------
+2025-11-14T06:37:27.427186Z	Attaching additional modules:
+2025-11-14T06:37:27.441317Z	┌────────────────────────────────────────────────┬──────┬────────────┐
+2025-11-14T06:37:27.441525Z	│ Name                                           │ Type │ Size       │
+2025-11-14T06:37:27.441817Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.442079Z	│ _@astrojs-ssr-adapter.mjs                      │ esm  │ 0.14 KiB   │
+2025-11-14T06:37:27.442181Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.442446Z	│ _astro-internal_middleware.mjs                 │ esm  │ 0.45 KiB   │
+2025-11-14T06:37:27.442581Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.442748Z	│ chunks/Layout_yfOKOJv4.mjs                     │ esm  │ 17.74 KiB  │
+2025-11-14T06:37:27.442961Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.443153Z	│ chunks/_@astrojs-ssr-adapter_B5bwx631.mjs      │ esm  │ 38.37 KiB  │
+2025-11-14T06:37:27.443284Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.4434Z	│ chunks/_astro_assets_CstBKELi.mjs              │ esm  │ 59.37 KiB  │
+2025-11-14T06:37:27.443515Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.443696Z	│ chunks/astro/server_DG0Uc8yC.mjs               │ esm  │ 244.15 KiB │
+2025-11-14T06:37:27.443814Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.443948Z	│ chunks/astro-designed-error-pages_g_R7gU-e.mjs │ esm  │ 48.31 KiB  │
+2025-11-14T06:37:27.444106Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.444224Z	│ chunks/cloudflare-kv-binding_DMly_2Gl.mjs      │ esm  │ 2.94 KiB   │
+2025-11-14T06:37:27.444357Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.444476Z	│ chunks/default-company-logo_Dl6bJNHu.mjs       │ esm  │ 1.82 KiB   │
+2025-11-14T06:37:27.444608Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.444729Z	│ chunks/fetchers_Cxk0IWOR.mjs                   │ esm  │ 4.95 KiB   │
+2025-11-14T06:37:27.444844Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.444954Z	│ chunks/index_CSUc-PUv.mjs                      │ esm  │ 102.45 KiB │
+2025-11-14T06:37:27.445094Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.445246Z	│ chunks/noop-middleware_q9NLy7ZL.mjs            │ esm  │ 0.33 KiB   │
+2025-11-14T06:37:27.445361Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.445489Z	│ chunks/path_CH3auf61.mjs                       │ esm  │ 3.01 KiB   │
+2025-11-14T06:37:27.445609Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.445728Z	│ chunks/remote_BC1y8RCW.mjs                     │ esm  │ 2.15 KiB   │
+2025-11-14T06:37:27.445805Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.445888Z	│ chunks/sharp_Dk4TXZWJ.mjs                      │ esm  │ 3.12 KiB   │
+2025-11-14T06:37:27.44599Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.446173Z	│ manifest_CA448er6.mjs                          │ esm  │ 13.32 KiB  │
+2025-11-14T06:37:27.44627Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.446369Z	│ noop-entrypoint.mjs                            │ esm  │ 0.09 KiB   │
+2025-11-14T06:37:27.446481Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.446787Z	│ pages/404.astro.mjs                            │ esm  │ 3.68 KiB   │
+2025-11-14T06:37:27.447071Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.447254Z	│ pages/_image.astro.mjs                         │ esm  │ 1.13 KiB   │
+2025-11-14T06:37:27.447956Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.448594Z	│ pages/employers/_id_.astro.mjs                 │ esm  │ 17.84 KiB  │
+2025-11-14T06:37:27.448945Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.449158Z	│ pages/employers.astro.mjs                      │ esm  │ 0.06 KiB   │
+2025-11-14T06:37:27.449286Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.449421Z	│ pages/index.astro.mjs                          │ esm  │ 0.06 KiB   │
+2025-11-14T06:37:27.449616Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.449799Z	│ pages/jobs/_id_.astro.mjs                      │ esm  │ 18.27 KiB  │
+2025-11-14T06:37:27.449923Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.4501Z	│ pages/jobs/category/_category_.astro.mjs       │ esm  │ 14.34 KiB  │
+2025-11-14T06:37:27.450223Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.450418Z	│ pages/jobs/search.astro.mjs                    │ esm  │ 0.06 KiB   │
+2025-11-14T06:37:27.450531Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.45073Z	│ pages/jobs.astro.mjs                           │ esm  │ 0.06 KiB   │
+2025-11-14T06:37:27.450887Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.451072Z	│ renderers.mjs                                  │ esm  │ 0.10 KiB   │
+2025-11-14T06:37:27.45117Z	├────────────────────────────────────────────────┼──────┼────────────┤
+2025-11-14T06:37:27.451239Z	│ Total (27 modules)                             │      │ 598.30 KiB │
+2025-11-14T06:37:27.451365Z	└────────────────────────────────────────────────┴──────┴────────────┘
+2025-11-14T06:37:27.495142Z	✨ Compiled Worker successfully
+2025-11-14T06:37:28.61206Z	Found _routes.json in output directory. Uploading.
+2025-11-14T06:37:28.623671Z	Validating asset output directory
+2025-11-14T06:37:31.30819Z	Deploying your site to Cloudflare's global network...
+2025-11-14T06:37:33.735224Z	Parsed 3 valid redirect rules.
+2025-11-14T06:37:33.735599Z	Info: the redirect rule /home → 301 / could be made more performant by bringing it above any lines with splats or placeholders.
+2025-11-14T06:37:33.735702Z	Info: the redirect rule /index.html → 301 / could be made more performant by bringing it above any lines with splats or placeholders.
+2025-11-14T06:37:34.953612Z	Uploading... (6/10)
+2025-11-14T06:37:35.607248Z	Uploading... (7/10)
+2025-11-14T06:37:35.683725Z	Uploading... (8/10)
+2025-11-14T06:37:35.701701Z	Uploading... (10/10)
+2025-11-14T06:37:35.701895Z	✨ Success! Uploaded 4 files (6 already uploaded) (1.13 sec)
+2025-11-14T06:37:35.702069Z	
+2025-11-14T06:37:36.086409Z	✨ Upload complete!
+2025-11-14T06:37:40.559624Z	Success: Assets published!
+2025-11-14T06:37:43.231939Z	Success: Your site was deployed!

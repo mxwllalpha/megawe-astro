@@ -1,0 +1,554 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { SITE_URL } from '../lib/constants'
+
+// SEO Metadata
+const title = "Syarat & Ketentuan - Megawe | Agregator Lowongan Kerja Indonesia"
+const description = "Syarat dan ketentuan penggunaan platform Megawe aggregator lowongan kerja. Aturan main, hak, dan kewajiban pengguna dan perusahaan."
+const url = `${SITE_URL}/syarat-ketentuan`
+const image = `${SITE_URL}/images/terms-conditions.jpg`
+
+// Structured Data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Syarat & Ketentuan - Megawe",
+  "description": "Syarat dan ketentuan lengkap penggunaan platform aggregator lowongan kerja Megawe",
+  "url": url,
+  "dateModified": new Date().toISOString(),
+  "author": {
+    "@type": "Organization",
+    "name": "Megawe",
+    "url": SITE_URL
+  }
+}
+---
+
+<Layout title={title} description={description} url={url} image={image}>
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-red-50 via-white to-emerald-50 py-16 lg:py-24">
+    <div class="container mx-auto px-6">
+      <div class="text-center max-w-4xl mx-auto">
+        <div class="w-20 h-20 bg-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+          Syarat & <span class="bg-gradient-to-r from-red-600 to-emerald-600 bg-clip-text text-transparent">Ketentuan</span>
+        </h1>
+        <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+          Ketentuan penggunaan platform Megawe sebagai aggregator lowongan kerja yang
+          menghubungkan pencari kerja dengan perusahaan terpercaya.
+        </p>
+
+        <!-- Quick Links -->
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+          <a href="#user-terms" class="bg-white text-red-600 px-4 py-2 rounded-lg text-sm font-medium border border-red-200 hover:bg-red-50 transition-colors">
+            Untuk Pencari Kerja
+          </a>
+          <a href="#employer-terms" class="bg-white text-emerald-600 px-4 py-2 rounded-lg text-sm font-medium border border-emerald-200 hover:bg-emerald-50 transition-colors">
+            Untuk Perusahaan
+          </a>
+          <a href="#prohibited" class="bg-white text-orange-600 px-4 py-2 rounded-lg text-sm font-medium border border-orange-200 hover:bg-orange-50 transition-colors">
+            Larangan
+          </a>
+          <a href="#liability" class="bg-white text-blue-600 px-4 py-2 rounded-lg text-sm font-medium border border-blue-200 hover:bg-blue-50 transition-colors">
+            Tanggung Jawab
+          </a>
+          <a href="#disputes" class="bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-medium border border-purple-200 hover:bg-purple-50 transition-colors">
+            Sengketa
+          </a>
+        </div>
+
+        <!-- Agreement Badge -->
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 inline-flex items-center space-x-3">
+          <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <span class="text-sm font-medium text-gray-700">Last Updated: November 14, 2024</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Agreement Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-6">
+      <div class="max-w-4xl mx-auto">
+
+        <!-- Agreement Notice -->
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-12">
+          <div class="flex items-start space-x-3">
+            <svg class="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h3 class="font-semibold text-blue-900 mb-1">Persetujuan Syarat & Ketentuan</h3>
+              <p class="text-blue-800 text-sm">
+                Dengan mengakses dan menggunakan platform Megawe, Anda menyatakan bahwa Anda telah membaca,
+                memahami, dan menyetujui syarat dan ketentuan ini. Jika Anda tidak menyetujui syarat ini,
+                mohon jangan menggunakan platform kami.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Important Notice -->
+        <div class="bg-red-50 border border-red-200 rounded-xl p-8 mb-12">
+          <div class="flex items-start space-x-4">
+            <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0">
+              <span class="text-white font-bold text-xl">!</span>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-red-900 mb-4">PENTING: Posisi Kami sebagai Aggregator</h3>
+              <div class="space-y-3 text-red-800">
+                <p>
+                  <strong>Megawe adalah aggregator lowongan kerja</strong> yang bekerja sama dengan Karirhub Kemnaker.
+                  Kami <strong>BUKAN agen rekrutmen</strong> dan tidak melakukan proses rekrutmen langsung.
+                </p>
+                <ul class="space-y-2">
+                  <li>• Kami tidak memungut biaya apapun kepada pencari kerja</li>
+                  <li>• Proses aplikasi dilakukan langsung ke perusahaan</li>
+                  <li>• Kami tidak bertanggung jawab atas keputusan rekrutmen perusahaan</li>
+                  <li>• Kami hanya menyediakan platform untuk memfasilitasi konektivitas</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Terms -->
+        <div id="user-terms" class="mb-12 scroll-mt-24">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+            <span class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-red-600 font-bold text-sm">1</span>
+            </span>
+            Ketentuan untuk Pencari Kerja
+          </h2>
+
+          <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+            <div class="space-y-6">
+              <!-- Eligibility -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Kelayakan Penggunaan</h3>
+                <p class="text-gray-700 mb-4">
+                  Untuk menggunakan platform Megawe, Anda harus:
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Berumur minimal 17 tahun atau memiliki persetujuan orang tua</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Memiliki kapasitas hukum untuk mengikat kontrak</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Menyediakan informasi yang akurat dan lengkap</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Tidak berada di blacklist rekrutmen atau memiliki catatan kriminal</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Responsibilities -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Kewajiban Pengguna</h3>
+                <p class="text-gray-700 mb-4">
+                  Sebagai pengguna, Anda wajib:
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Menjaga keamanan akun dan tidak membagikan credentials</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Memberikan informasi yang akurat dan dapat diverifikasi</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Tidak menggunakan platform untuk tujuan yang tidak sah</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Update informasi secara berkala</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Job Applications -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Aplikasi Kerja</h3>
+                <p class="text-gray-700 mb-4">
+                  Terkait aplikasi kerja:
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-orange-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Aplikasi dikirim langsung ke perusahaan yang bersangkutan</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-orange-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Kami tidak menjamin respons dari perusahaan</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-orange-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Anda bertanggung jawab atas keaslian dokumen</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Employer Terms -->
+        <div id="employer-terms" class="mb-12 scroll-mt-24">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+            <span class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-emerald-600 font-bold text-sm">2</span>
+            </span>
+            Ketentuan untuk Perusahaan
+          </h2>
+
+          <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+            <div class="space-y-6">
+              <!-- Company Verification -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Verifikasi Perusahaan</h3>
+                <p class="text-gray-700 mb-4">
+                  Perusahaan yang memposting lowongan harus:
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Menyediakan dokumen legal yang valid (SIUP, NPWP, dll)</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Memiliki alamat kantor yang dapat diverifikasi</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Disetujui oleh tim verifikasi Megawe</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Job Posting Rules -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Aturan Posting Lowongan</h3>
+                <p class="text-gray-700 mb-4">
+                  Lowongan yang diposting harus:
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Informasi yang akurat dan lengkap</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Tidak diskriminatif (suku, agama, gender, dll)</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Mematuhi standar gaji minimum (UMR/UMP)</span>
+                  </li>
+                  <li class="flex items-start space-x-2">
+                    <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Include benefit yang jelas (BPJS, asuransi, dll)</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prohibited Activities -->
+        <div id="prohibited" class="mb-12 scroll-mt-24">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+            <span class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-orange-600 font-bold text-sm">3</span>
+            </span>
+            Aktivitas yang Dilarang
+          </h2>
+
+          <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl border border-red-200 p-8">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">Larangan Mutlak</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-4">
+                <div class="bg-white rounded-lg p-4">
+                  <h4 class="font-semibold text-red-900 mb-2">Untuk Semua Pengguna</h4>
+                  <ul class="text-gray-700 space-y-1 text-sm">
+                    <li>• Menggunakan data palsu atau informasi menyesatkan</li>
+                    <li>• Spam atau unsolicited communications</li>
+                    <li>• Reverse engineering platform kami</li>
+                    <li>• Menggunakan bots atau automated scripts</li>
+                    <li>• Mengungkapkan vulnerabilities tanpa notice</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="bg-white rounded-lg p-4">
+                  <h4 class="font-semibold text-red-900 mb-2">Khusus untuk Perusahaan</h4>
+                  <ul class="text-gray-700 space-y-1 text-sm">
+                    <li>• Posting lowongan palsu atau penipuan</li>
+                    <li>• Meminta biaya apapun kepada pencari kerja</li>
+                    <li>• Menggunakan platform untuk MLM atau investasi</li>
+                    <li>• Mengumpulkan data untuk tujuan lain</li>
+                    <li>• Posting lowongan yang sudah tidak valid</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-white rounded-lg border border-red-200">
+              <p class="text-sm text-gray-700">
+                <strong>Consequences:</strong> Pelanggaran dapat mengakibatkan suspensi akun,
+                banned permanen, atau tindakan hukum sesuai peraturan yang berlaku.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Intellectual Property -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Hak Kekayaan Intelektual</h2>
+
+          <div class="bg-purple-50 border border-purple-200 rounded-xl p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">📝 Hak Cipta Megawe</h3>
+                <ul class="space-y-2 text-gray-700">
+                  <li>• Platform design dan user interface</li>
+                  <li>• Algoritma matching dan recommendation</li>
+                  <li>• Database dan compiled information</li>
+                  <li>• Logo, branding, dan trademarks</li>
+                  <li>• Content dan materials yang dihasilkan</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">👤 Hak Pengguna</h3>
+                <ul class="space-y-2 text-gray-700">
+                  <li>• Anda memiliki hak atas CV dan data pribadi</li>
+                  <li>• Lisensi non-eksklusif untuk menggunakan platform</li>
+                  <li>• Hak untuk menghapus akun dan data kapan saja</li>
+                  <li>• Hak atas portabilitas data</li>
+                  <li>• Hak untuk memperbaiki data yang tidak akurat</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Liability -->
+        <div id="liability" class="mb-12 scroll-mt-24">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+            <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-bold text-sm">4</span>
+            </span>
+            Pembatasan Tanggung Jawab
+          </h2>
+
+          <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+            <div class="space-y-6">
+              <!-- Platform Limitations -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Keterbatasan Platform</h3>
+                <p class="text-gray-700 mb-4">
+                  Megawe tidak bertanggung jawab atas:
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li>• Keputusan rekrutmen atau penerimaan kerja</li>
+                  <li>• Kualitas atau keakuratan lowongan yang diposting perusahaan</li>
+                  <li>• Kerugian akibat aplikasi kerja yang tidak berhasil</li>
+                  <li>• Interaksi antara pencari kerja dan perusahaan</li>
+                  <li>• Downtime atau maintenance yang terjadwal</li>
+                  <li>• Force majeure events yang di luar kendali kami</li>
+                </ul>
+              </div>
+
+              <!-- Indemnification -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Indemnifikasi</h3>
+                <p class="text-gray-700 mb-4">
+                  Anda setuju untuk mengganti rugi, membebaskan dari tanggung jawab, dan melindungi Megawe dari:
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li>• Klaim atau demands dari pihak ketiga</li>
+                  <li>• Biaya hukum dan pengacara</li>
+                  <li>• Kerugian yang disebabkan oleh pelanggaran syarat ini</li>
+                  <li>• Pelanggaran hak kekayaan intelektual</li>
+                  <li>• Tindakan yang merusak reputasi Megawe</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dispute Resolution -->
+        <div id="disputes" class="mb-12 scroll-mt-24">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+            <span class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-purple-600 font-bold text-sm">5</span>
+            </span>
+            Penyelesaian Sengketa
+          </h2>
+
+          <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl border border-purple-200 p-8">
+            <div class="space-y-6">
+              <!-- Governing Law -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Hukum yang Berlaku</h3>
+                <p class="text-gray-700">
+                  Syarat dan ketentuan ini diatur oleh hukum Republik Indonesia.
+                  Setiap sengketa akan diselesaikan melalui peradilan di Jakarta, Indonesia.
+                </p>
+              </div>
+
+              <!-- Dispute Process -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Proses Penyelesaian</h3>
+                <ol class="space-y-3 text-gray-700">
+                  <li>
+                    <strong>1. Negosiasi:</strong> Upaya penyelesaian secara damai antar pihak
+                  </li>
+                  <li>
+                    <strong>2. Mediasi:</strong> Jika negosiasi gagal, dilakukan mediasi dengan mediator netral
+                  </li>
+                  <li>
+                    <strong>3. Arbitrase:</strong> Pihak dapat menempuh arbitrase di Badan Arbitrase Nasional Indonesia (BANI)
+                  </li>
+                  <li>
+                    <strong>4. Peradilan:</strong> Sebagai upaya terakhir melalui pengadilan negeri
+                  </li>
+                </ol>
+              </div>
+
+              <!-- Contact for Disputes -->
+              <div class="bg-white rounded-lg p-6 border border-purple-200">
+                <h4 class="font-semibold text-gray-900 mb-3">Hubungi Kami untuk Sengketa</h4>
+                <div class="space-y-2">
+                  <p><strong>Email:</strong> legal@megawe.net</p>
+                  <p><strong>Alamat:</strong> [Kantor Registered Indonesia]</p>
+                  <p><strong>Response Time:</strong> 14 hari kerja</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service Modifications -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Modifikasi dan Terminasi Layanan</h2>
+
+          <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-8">
+            <div class="space-y-4 text-gray-700">
+              <h3 class="text-xl font-semibold text-gray-900 mb-4">🔄 Perubahan Layanan</h3>
+              <p>
+                Megawe berhak untuk memodifikasi, suspend, atau menghentikan layanan:
+              </p>
+              <ul class="space-y-2 ml-6">
+                <li>• Untuk maintenance atau upgrade</li>
+                <li>• Jika required oleh hukum atau regulator</li>
+                <li>• Jika terjadi force majeure events</li>
+                <li>• Jika user melanggar syarat dan ketentuan</li>
+              </ul>
+
+              <div class="mt-6 p-4 bg-white rounded-lg border border-yellow-200">
+                <p class="text-sm">
+                  <strong>Notice:</strong> Kami akan memberikan pemberitahuan reasonable time
+                  sebelum menghentikan layanan, kecuali untuk keadaan darurat atau pelanggaran berat.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agreement to Terms -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Persetujuan Final</h2>
+
+          <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-8">
+            <p class="text-gray-700 mb-6">
+              Dengan menggunakan platform Megawe, Anda menyatakan bahwa:
+            </p>
+            <ul class="space-y-3 text-gray-700">
+              <li class="flex items-start space-x-3">
+                <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold">✓</span>
+                <span>Anda telah membaca, memahami, dan menyetujui seluruh syarat dan ketentuan ini</span>
+              </li>
+              <li class="flex items-start space-x-3">
+                <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold">✓</span>
+                <span>Anda memahami posisi Megawe sebagai aggregator, bukan agen rekrutmen</span>
+              </li>
+              <li class="flex items-start space-x-3">
+                <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold">✓</span>
+                <span>Anda setuju untuk tidak memegang Megawe bertanggung jawab atas keputusan rekrutmen perusahaan</span>
+              </li>
+              <li class="flex items-start space-x-3">
+                <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold">✓</span>
+                <span>Anda memahami bahwa penggunaan platform sepenuhnya tanggung jawab Anda</span>
+              </li>
+            </ul>
+
+            <div class="mt-8 text-center">
+              <p class="text-sm text-gray-600">
+                <strong>Last Updated:</strong> November 14, 2024 | <strong>Version:</strong> 2.0
+              </p>
+              <p class="text-sm text-gray-600 mt-2">
+                Jika Anda memiliki pertanyaan, hubungi kami di <strong>legal@megawe.net</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</Layout>

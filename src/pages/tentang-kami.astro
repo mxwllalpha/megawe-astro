@@ -1,0 +1,371 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { SITE_URL } from '../lib/constants'
+
+// SEO Metadata
+const title = "Tentang Kami - Megawe | Agregator Lowongan Kerja Indonesia"
+const description = "Megawe adalah aggregator lowongan kerja terpercaya dari Karirhub Kemnaker. Kami menyediakan akses mudah ke 164+ lowongan aktif dari 1000+ perusahaan di Indonesia."
+const url = `${SITE_URL}/tentang-kami`
+const image = `${SITE_URL}/images/about-hero.jpg`
+
+// Structured Data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "Tentang Megawe - Agregator Lowongan Kerja Indonesia",
+  "description": "Informasi lengkap tentang Megawe sebagai aggregator lowongan kerja terpercaya dari Karirhub Kemnaker",
+  "url": url,
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Megawe",
+    "url": SITE_URL,
+    "logo": `${SITE_URL}/logo.png`,
+    "description": "Agregator lowongan kerja terpercaya dari Karirhub Kemnaker Indonesia",
+    "foundingDate": "2024",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "availableLanguage": ["Indonesian", "English"],
+      "email": "support@megawe.net"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/megawe",
+      "https://www.facebook.com/megawe.id",
+      "https://www.instagram.com/megawe.id"
+    ]
+  }
+}
+---
+
+<Layout title={title} description={description} url={url} image={image}>
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-red-50 via-white to-emerald-50 py-16 lg:py-24">
+    <div class="container mx-auto px-6">
+      <div class="text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+          Tentang <span class="bg-gradient-to-r from-red-600 to-emerald-600 bg-clip-text text-transparent">Megawe</span>
+        </h1>
+        <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+          Agregator lowongan kerja terpercaya dari Karirhub Kemnaker yang menghubungkan
+          talenta Indonesia dengan peluang karir terbaik dari 1000+ perusahaan.
+        </p>
+
+        <!-- Key Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+            <div class="text-2xl font-bold text-red-600 mb-1">164+</div>
+            <div class="text-sm text-gray-600">Lowongan Aktif</div>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+            <div class="text-2xl font-bold text-emerald-600 mb-1">1000+</div>
+            <div class="text-sm text-gray-600">Perusahaan</div>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+            <div class="text-2xl font-bold text-orange-600 mb-1">50K+</div>
+            <div class="text-sm text-gray-600">Pencari Kerja</div>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+            <div class="text-2xl font-bold text-blue-600 mb-1">24/7</div>
+            <div class="text-sm text-gray-600">Update Harian</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision -->
+  <section class="py-16">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+
+        <!-- Mission -->
+        <div class="text-center lg:text-left">
+          <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6">
+            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">Misi Kami</h2>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            Menyediakan platform aggregator lowongan kerja yang <strong>terpercaya</strong>,
+            <strong>transparan</strong>, dan <strong>mudah diakses</strong> bagi seluruh pencari kerja di Indonesia.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            Kami berkomitmen untuk memfasilitasi konektivitas antara talenta berkualitas dengan
+            peluang karir terbaik melalui teknologi yang inovatif dan user-friendly.
+          </p>
+        </div>
+
+        <!-- Vision -->
+        <div class="text-center lg:text-left">
+          <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6">
+            <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">Visi Kami</h2>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            Menjadi <strong>platform aggregator lowongan kerja nomor 1</strong> di Indonesia
+            yang menjadi pilihan utama bagi pencari kerja dan perusahaan.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            Kami bercita-cita untuk menciptakan ekosistem karir yang inklusif dan merata
+            di seluruh Indonesia, mendukung pertumbuhan ekonomi dan pengembangan sumber daya manusia.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partnership Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center max-w-4xl mx-auto mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Partnership Resmi</h2>
+        <p class="text-xl text-gray-600">
+          Kami adalah aggregator resmi dari platform Karirhub Kementerian Ketenagakerjaan RI
+        </p>
+      </div>
+
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+          <div class="text-center mb-8">
+            <img src="/images/karirhub-logo.png" alt="Karirhub Kemnaker" class="h-20 object-contain mx-auto" />
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="font-bold text-lg text-gray-900 mb-4">Kenapa Karirhub Kemnaker?</h3>
+              <ul class="space-y-3">
+                <li class="flex items-start space-x-3">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-gray-600">Sumber resmi pemerintah Indonesia</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-gray-600">Lowongan terverifikasi dan valid</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-gray-600">Update real-time setiap hari</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-gray-600">Gratis tanpa biaya apapun</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="font-bold text-lg text-gray-900 mb-4">Keuntungan untuk Anda</h3>
+              <ul class="space-y-3">
+                <li class="flex items-start space-x-3">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-gray-600">Akses mudah ke 164+ lowongan aktif</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-gray-600">Filter dan pencarian yang akurat</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-gray-600">Notifikasi lowongan baru</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-gray-600">Aplikasi langsung ke perusahaan</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-6">
+      <div class="text-center max-w-4xl mx-auto mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Mengapa Memilih Megawe?</h2>
+        <p class="text-xl text-gray-600">
+          Platform aggregator lowongan kerja dengan keunggulan yang tidak ada di tempat lain
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <!-- Trust & Security -->
+        <div class="text-center">
+          <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Terpercaya & Aman</h3>
+          <p class="text-gray-600">
+            Semua lowongan diverifikasi oleh Karirhub Kemnaker. 100% gratis tanpa biaya tersembunyi.
+          </p>
+        </div>
+
+        <!-- Comprehensive -->
+        <div class="text-center">
+          <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Lengkap & Komprehensif</h3>
+          <p class="text-gray-600">
+            Ribuan lowongan dari berbagai industri dan lokasi di seluruh Indonesia.
+          </p>
+        </div>
+
+        <!-- Easy to Use -->
+        <div class="text-center">
+          <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Mudah & Cepat</h3>
+          <p class="text-gray-600">
+            Interface user-friendly dengan proses aplikasi yang langsung dan tidak ribet.
+          </p>
+        </div>
+
+        <!-- Real-time Updates -->
+        <div class="text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Update Real-time</h3>
+          <p class="text-gray-600">
+            Lowongan baru ditambahkan setiap hari dengan notifikasi langsung ke email Anda.
+          </p>
+        </div>
+
+        <!-- Smart Matching -->
+        <div class="text-center">
+          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Smart Matching</h3>
+          <p class="text-gray-600">
+            Algoritma pintar yang menyesuaikan lowongan dengan profil dan preferensi Anda.
+          </p>
+        </div>
+
+        <!-- Support -->
+        <div class="text-center">
+          <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Dukungan 24/7</h3>
+          <p class="text-gray-600">
+            Tim support siap membantu Anda setiap saat untuk pertanyaan dan bantuan teknis.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Stack -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center max-w-4xl mx-auto mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Teknologi Modern</h2>
+        <p class="text-xl text-gray-600">
+          Dibangun dengan teknologi terkini untuk pengalaman terbaik
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+        <div class="text-center">
+          <div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <span class="text-white font-bold text-sm">100</span>
+          </div>
+          <div class="text-sm font-medium text-gray-900">PageSpeed Score</div>
+          <div class="text-xs text-gray-600">Optimized Performance</div>
+        </div>
+
+        <div class="text-center">
+          <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <span class="text-white font-bold text-xs">A5</span>
+          </div>
+          <div class="text-sm font-medium text-gray-900">Astro Framework</div>
+          <div class="text-xs text-gray-600">Static Generation</div>
+        </div>
+
+        <div class="text-center">
+          <div class="w-12 h-12 bg-emerald-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <span class="text-white font-bold text-xs">TS</span>
+          </div>
+          <div class="text-sm font-medium text-gray-900">TypeScript</div>
+          <div class="text-xs text-gray-600">Type Safety</div>
+        </div>
+
+        <div class="text-center">
+          <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <span class="text-white font-bold text-xs">CF</span>
+          </div>
+          <div class="text-sm font-medium text-gray-900">Cloudflare</div>
+          <div class="text-xs text-gray-600">Global CDN</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-6">
+      <div class="bg-gradient-to-r from-red-600 to-emerald-600 rounded-2xl p-12 text-center max-w-4xl mx-auto">
+        <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">
+          Mulai Karir Impian Anda Sekarang
+        </h2>
+        <p class="text-xl text-white/90 mb-8">
+          Bergabunglah dengan 50,000+ pencari kerja yang telah menemukan pekerjaan impian mereka melalui Megawe.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/jobs"
+            class="bg-white text-red-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105"
+          >
+            Cari Lowongan
+          </a>
+          <a
+            href="/hubungi-kami"
+            class="border-2 border-white text-white font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-red-600 transition-all duration-200 transform hover:scale-105"
+          >
+            Hubungi Kami
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

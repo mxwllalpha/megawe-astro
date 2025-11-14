@@ -5,6 +5,17 @@ compatibility_flags = ["nodejs_compat"]
 # Cloudflare Pages configuration
 pages_build_output_dir = "dist"
 
+# KV bindings for session management and caching
+[[kv_namespaces]]
+binding = "SESSION"
+id = "0a77c7bec89b44e3a02a779ab516f24c"
+preview_id = "0a77c7bec89b44e3a02a779ab516f24c"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "0a77c7bec89b44e3a02a779ab516f24c"
+preview_id = "0a77c7bec89b44e3a02a779ab516f24c"
+
 # Environment variables
 [env.production.vars]
 NODE_ENV = "production"
