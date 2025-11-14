@@ -121,40 +121,51 @@ const structuredData = {
   image="/images/homepage-og.jpg"
   type="website"
 >
-  <!-- Hero Section dengan Critical CSS -->
-  <section class="bg-gradient-to-br from-cyan-50 to-blue-50 py-20 lg:py-32">
-    <div class="container">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 text-balance">
-          Temukan <span class="text-cyan-600">Lowongan Kerja</span> Terbaik di Indonesia
+  <!-- Modern Hero Section dengan Indonesian-inspired Design -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-red-50 via-white to-emerald-50">
+    <!-- Decorative Background Elements -->
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgb(0 0 0 / 0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
+    </div>
+    <div class="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-red-200 to-emerald-200 rounded-full filter blur-3xl opacity-30"></div>
+    <div class="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-br from-emerald-200 to-orange-200 rounded-full filter blur-3xl opacity-30"></div>
+
+    <div class="container relative z-10 py-20 lg:py-32">
+      <div class="max-w-5xl mx-auto text-center">
+        <!-- Enhanced Headline -->
+        <h1 class="text-5xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+          Temukan <span class="bg-gradient-to-r from-red-600 to-emerald-600 bg-clip-text text-transparent">Karir Impian</span> Anda di Indonesia
         </h1>
-        <p class="text-xl text-gray-600 mb-8 text-pretty max-w-2xl mx-auto">
-          Platform aggregator lowongan kerja terpercaya dengan ribuan peluang karir dari perusahaan ternama
+
+        <!-- Enhanced Subtitle -->
+        <p class="text-xl lg:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+          Platform terpercaya untuk <span class="font-semibold text-red-600">1.000+ lowongan kerja</span> dari perusahaan ternama Indonesia
         </p>
 
-        <!-- Search Form - Critical for user interaction -->
-        <form action="/jobs/search" method="GET" class="max-w-2xl mx-auto mb-12">
-          <div class="bg-white rounded-lg shadow-lg p-2 flex flex-col sm:flex-row gap-2">
-            <div class="flex-1 relative">
-              <label for="search-query" class="sr-only">Cari lowongan kerja</label>
-              <input
-                type="search"
-                id="search-query"
-                name="q"
-                placeholder="Cari posisi, perusahaan, atau kata kunci..."
-                class="w-full px-4 py-3 border-0 focus:ring-2 focus:ring-cyan-500 rounded-md"
-                autocomplete="off"
-                required
-                aria-describedby="search-help"
-              />
-              <div id="search-help" class="sr-only">
-                Masukkan kata kunci untuk mencari lowongan kerja
+        <!-- Enhanced Search Section -->
+        <form action="/jobs/search" method="GET" class="max-w-4xl mx-auto mb-12">
+          <div class="bg-white rounded-2xl shadow-2xl p-2 border border-gray-100">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-2">
+              <div class="relative lg:col-span-2">
+                <label for="search-query" class="sr-only">Cari lowongan kerja</label>
+                <input
+                  type="search"
+                  id="search-query"
+                  name="q"
+                  placeholder="Job title, kata kunci, atau perusahaan..."
+                  class="w-full px-4 py-4 border-0 focus:ring-2 focus:ring-red-500 rounded-xl bg-gray-50 focus:bg-white transition-colors"
+                  autocomplete="off"
+                  required
+                  aria-describedby="search-help"
+                />
+                <div id="search-help" class="sr-only">
+                  Masukkan kata kunci untuk mencari lowongan kerja
+                </div>
               </div>
-            </div>
-            <div class="flex gap-2">
+
               <select
                 name="location"
-                class="px-4 py-3 border-0 focus:ring-2 focus:ring-cyan-500 rounded-md bg-gray-50"
+                class="px-4 py-4 border-0 focus:ring-2 focus:ring-red-500 rounded-xl bg-gray-50 focus:bg-white transition-colors"
                 aria-label="Lokasi"
               >
                 <option value="">Semua Lokasi</option>
@@ -162,30 +173,31 @@ const structuredData = {
                   <option value={location}>{location}</option>
                 ))}
               </select>
+
               <button
                 type="submit"
-                class="px-6 py-3 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 transition-colors focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                class="px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold"
                 aria-label="Cari lowongan kerja"
               >
-                <span class="flex items-center gap-2">
+                <span class="flex items-center justify-center gap-2">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
-                  Cari
+                  Cari Lowongan
                 </span>
               </button>
             </div>
           </div>
         </form>
 
-        <!-- Stats Section -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-3xl mx-auto">
+        <!-- Enhanced Stats with Icons -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto">
           {stats.map(stat => (
-            <div class="text-center">
-              <div class="text-3xl lg:text-4xl font-bold text-cyan-600 mb-1">
+            <div class="text-center group">
+              <div class="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-red-600 to-emerald-600 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">
                 {stat.value}{stat.suffix}
               </div>
-              <div class="text-gray-600 text-sm">{stat.label}</div>
+              <div class="text-gray-600 font-medium">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -195,7 +207,7 @@ const structuredData = {
 
   <!-- Featured Jobs Section -->
   <section class="py-20 bg-white">
-    <div class="container">
+    <div class="featured-container">
       <div class="text-center mb-12">
         <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
           Lowongan Terbaru
@@ -205,57 +217,72 @@ const structuredData = {
         </p>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {featuredJobs.map(job => (
-          <article class="job-card card-hover" key={job.id}>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {featuredJobs.map((job, index) => (
+          <article class={`job-card group ${index === 0 ? 'job-card-featured' : ''} ${index < 2 ? 'job-card-new' : ''}`} key={job.id}>
             <div class="flex items-start justify-between mb-4">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+              <div class="flex items-center gap-4">
+                <!-- Enhanced Company Logo -->
+                <div class="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Image
                     src={job.logo}
                     alt={`${job.company} logo`}
-                    width={48}
-                    height={48}
+                    width={64}
+                    height={64}
                     loading="lazy"
                     decoding="async"
-                    class="w-full h-full object-cover"
+                    class="w-full h-full object-contain"
                     format="webp"
                     quality={85}
                   />
                 </div>
-                <div>
-                  <h3 class="font-semibold text-gray-900 mb-1">
+                <div class="flex-1">
+                  <h3 class="text-lg font-bold text-gray-900 mb-1 group-hover:text-red-600 transition-colors duration-200">
                     <a
                       href={`/jobs/${job.id}`}
-                      class="hover:text-cyan-600 transition-colors"
                       aria-label={`Lihat detail lowongan ${job.title}`}
                     >
                       {job.title}
                     </a>
                   </h3>
-                  <p class="text-sm text-gray-600">{job.company}</p>
+                  <div class="flex items-center gap-2 text-sm text-gray-600">
+                    <span class="font-medium">{job.company}</span>
+                    <span class="text-gray-400">•</span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                      </svg>
+                      {job.location}
+                    </span>
+                  </div>
                 </div>
               </div>
+
+              <!-- Enhanced Save Button -->
+              <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 opacity-0 group-hover:opacity-100" aria-label="Save job">
+                <svg class="w-5 h-5 text-gray-400 hover:text-red-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
             </div>
 
-            <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
-              <span class="flex items-center gap-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                {job.location}
-              </span>
+            <!-- Enhanced Job Metadata -->
+            <div class="flex items-center gap-2 mb-4 flex-wrap">
               <span class={`job-type-badge job-type-${job.type}`}>
                 {JOB_TYPES.find(t => t.value === job.type)?.label || job.type}
               </span>
+              <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full">
+                {job.category}
+              </span>
             </div>
 
-            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+            <!-- Enhanced Description -->
+            <p class="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">
               {job.description}
             </p>
 
-            <div class="flex items-center justify-between">
+            <!-- Enhanced Footer -->
+            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
               <time class="text-xs text-gray-500">
                 {new Date(job.postedAt).toLocaleDateString('id-ID', {
                   day: 'numeric',
@@ -265,10 +292,13 @@ const structuredData = {
               </time>
               <a
                 href={`/jobs/${job.id}`}
-                class="text-cyan-600 hover:text-cyan-700 text-sm font-medium transition-colors"
+                class="text-red-600 hover:text-red-700 text-sm font-bold transition-colors duration-200 flex items-center gap-1 group"
                 aria-label={`Lihat detail dan apply untuk ${job.title}`}
               >
-                Lihat Detail →
+                Lihat Detail
+                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
               </a>
             </div>
           </article>
@@ -287,9 +317,18 @@ const structuredData = {
     </div>
   </section>
 
+  <!-- Subtle Section Separator -->
+  <div class="bg-gray-50 py-2">
+    <div class="section-container">
+      <div class="relative flex justify-center">
+        <div class="w-24 h-px bg-gray-300"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Categories Section -->
   <section class="py-20 bg-gray-50">
-    <div class="container">
+    <div class="featured-container">
       <div class="text-center mb-12">
         <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
           Jelajahi Kategori
@@ -317,27 +356,95 @@ const structuredData = {
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="py-20 bg-cyan-600">
-    <div class="container">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">
-          Siap Memulai Karir Baru?
+  <!-- Subtle Section Separator -->
+  <div class="bg-gradient-to-br from-white to-red-50 py-4">
+    <div class="section-container">
+      <div class="relative flex justify-center items-center gap-4">
+        <div class="w-16 h-px bg-red-200"></div>
+        <span class="text-red-600 text-sm font-semibold uppercase tracking-wider">Career Resources</span>
+        <div class="w-16 h-px bg-red-200"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indonesian Career Guidance Section -->
+  <section class="py-20 bg-gradient-to-br from-red-50 to-emerald-50">
+    <div class="featured-container">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">
+          Panduan Karir untuk <span class="text-red-600">Profesional Indonesia</span>
         </h2>
-        <p class="text-xl text-cyan-100 mb-8">
-          Bergabung dengan ribuan profesional yang telah menemukan pekerjaan impian mereka melalui Megawe
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Tips dan saran karir yang disesuaikan dengan pasar kerja Indonesia
+        </p>
+      </div>
+
+      <!-- Career Advice Cards -->
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl p-6 hover:shadow-xl transition-all duration-300 group">
+          <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Tips Interview</h3>
+          <p class="text-gray-600 mb-4">Persiapan interview yang efektif untuk perusahaan Indonesia</p>
+          <a href="/career-advice/interview" class="text-red-600 font-semibold hover:text-red-700 transition-colors">Baca Selengkapnya →</a>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 hover:shadow-xl transition-all duration-300 group">
+          <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
+              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Salary Guide</h3>
+          <p class="text-gray-600 mb-4">Panduan gaji standar untuk berbagai posisi di Indonesia</p>
+          <a href="/career-advice/salary" class="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors">Baca Selengkapnya →</a>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 hover:shadow-xl transition-all duration-300 group">
+          <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95  0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+              <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">CV Template</h3>
+          <p class="text-gray-600 mb-4">Template CV yang menarik untuk recruiter Indonesia</p>
+          <a href="/career-advice/cv" class="text-orange-600 font-semibold hover:text-orange-700 transition-colors">Baca Selengkapnya →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced CTA Section -->
+  <section class="py-20 bg-gradient-to-r from-red-600 to-red-700 relative overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <div class="absolute top-10 right-10 w-32 h-32 bg-white opacity-5 rounded-full"></div>
+    <div class="absolute bottom-10 left-10 w-48 h-48 bg-white opacity-5 rounded-full"></div>
+
+    <div class="container relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+          Siap Memulai <span class="text-yellow-300">Karir Impian</span> Anda?
+        </h2>
+        <p class="text-xl text-red-100 mb-12 max-w-2xl mx-auto leading-relaxed">
+          Bergabung dengan <span class="font-semibold text-yellow-300">50.000+ profesional</span> yang telah menemukan pekerjaan impian mereka melalui Megawe
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="/jobs"
-            class="btn bg-white text-cyan-600 hover:bg-gray-50 px-8 py-3 text-lg"
+            class="px-8 py-4 bg-white text-red-600 rounded-xl hover:bg-gray-50 transition-all duration-200 font-bold text-lg shadow-lg hover:shadow-xl"
             aria-label="Cari lowongan kerja sekarang"
           >
             Cari Lowongan
           </a>
           <a
-            href="/employers/add"
-            class="btn border-2 border-white text-white hover:bg-white hover:text-cyan-600 px-8 py-3 text-lg"
+            href="/employers"
+            class="px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-red-600 rounded-xl transition-all duration-200 font-bold text-lg"
             aria-label="Pasang lowongan kerja untuk perusahaan"
           >
             Pasang Lowongan
@@ -346,6 +453,27 @@ const structuredData = {
       </div>
     </div>
   </section>
+
+  <!-- Professional Visual Separator between CTA and Footer -->
+  <div class="relative bg-gradient-to-b from-red-600 via-red-700 to-gray-950">
+    <!-- Subtle gradient transition -->
+    <div class="h-16 bg-gradient-to-b from-transparent via-black/10 to-black/20"></div>
+
+    <!-- Decorative separator line -->
+    <div class="relative">
+      <div class="absolute inset-0 flex items-center" aria-hidden="true">
+        <div class="w-full border-t border-white/20"></div>
+      </div>
+      <div class="relative flex justify-center">
+        <div class="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 rounded-full">
+          <span class="text-white/80 text-xs font-semibold tracking-wider uppercase">Trusted by 1000+ Companies</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional gradient transition -->
+    <div class="h-20 bg-gradient-to-b from-transparent to-gray-950"></div>
+  </div>
 </Layout>
 
 <!-- Structured Data for SEO -->
