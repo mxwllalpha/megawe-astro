@@ -1,0 +1,422 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import { Image } from 'astro:assets'
+import { SITE_TITLE, JOB_CATEGORIES } from '../../../lib/constants'
+import { fetchJobs, transformJobForDisplay } from '../../../lib/api/fetchers'
+import type { Job, JobFilter } from '../../../lib/types/jobs'
+
+export const prerender = false
+
+// Get category from URL params
+const { category } = Astro.params
+
+if (!category) {
+  return Astro.redirect('/jobs')
+}
+
+// Validate category
+const normalizedCategory = category.toLowerCase().replace(/-/g, ' ')
+const validCategory = JOB_CATEGORIES.find(
+  cat => cat.toLowerCase() === normalizedCategory
+)
+
+if (!validCategory) {
+  return Astro.redirect('/jobs')
+}
+
+// Get pagination and filters from URL
+const url = new URL(Astro.url.pathname + Astro.url.search, Astro.url.origin)
+const currentPage = parseInt(url.searchParams.get('page') || '1')
+const selectedLocation = url.searchParams.get('location') || ''
+const selectedType = url.searchParams.get('type') || ''
+
+// Build filters object
+const filters: JobFilter = {
+  category: validCategory.toLowerCase(),
+  location: selectedLocation,
+  type: selectedType,
+  page: currentPage,
+  limit: 12
+}
+
+// Fetch jobs for this category
+let jobsData = {
+  jobs: [] as Job[],
+  total: 0,
+  page: currentPage,
+  limit: 12,
+  hasMore: false
+}
+
+try {
+  jobsData = await fetchJobs(filters)
+  jobsData.jobs = jobsData.jobs.map(transformJobForDisplay)
+} catch (error) {
+  console.error(`Failed to fetch jobs for category ${validCategory}:`, error)
+}
+
+// SEO optimizations
+const pageTitle = `Lowongan Kerja ${validCategory} | ${SITE_TITLE}`
+const pageDescription = `Temukan ${jobsData.total} lowongan kerja ${validCategory.toLowerCase()} terbaru di seluruh Indonesia. Filter berdasarkan lokasi dan jenis pekerjaan.`
+
+// Category metadata
+const categoryMeta = {
+  'Teknologi': {
+    icon: '💻',
+    description: 'Lowongan kerja di bidang teknologi, IT, software development, dan digital.',
+    color: 'blue'
+  },
+  'Keuangan': {
+    icon: '💰',
+    description: 'Karir di bidang keuangan, perbankan, investasi, dan akuntansi.',
+    color: 'green'
+  },
+  'Kesehatan': {
+    icon: '🏥',
+    description: 'Lowongan di sektor kesehatan, rumah sakit, dan farmasi.',
+    color: 'red'
+  },
+  'Pendidikan': {
+    icon: '📚',
+    description: 'Karir di bidang pendidikan, mengajar, dan pengembangan kurikulum.',
+    color: 'purple'
+  },
+  'Marketing': {
+    icon: '📱',
+    description: 'Lowongan marketing, digital marketing, dan komunikasi.',
+    color: 'pink'
+  },
+  'Sales': {
+    icon: '📈',
+    description: 'Karir sales, business development, dan hubungan pelanggan.',
+    color: 'orange'
+  },
+  'Customer Service': {
+    icon: '🤝',
+    description: 'Lowongan customer service, support, dan hubungan pelanggan.',
+    color: 'teal'
+  },
+  'Administrasi': {
+    icon: '📋',
+    description: 'Karir administrasi, sekretaris, dan operasional kantor.',
+    color: 'gray'
+  },
+  'Engineering': {
+    icon: '⚙️',
+    description: 'Lowongan engineering, teknik, dan manufaktur.',
+    color: 'indigo'
+  },
+  'Design': {
+    icon: '🎨',
+    description: 'Karir design, UI/UX, graphic design, dan creative.',
+    color: 'yellow'
+  },
+  'Human Resources': {
+    icon: '👥',
+    description: 'Lowongan HR, recruitment, dan pengembangan SDM.',
+    color: 'rose'
+  },
+  'Legal': {
+    icon: '⚖️',
+    description: 'Karir hukum, legal counsel, dan kepatuhan.',
+    color: 'slate'
+  },
+  'Manajemen': {
+    icon: '📊',
+    description: 'Lowongan manajerial, leadership, dan strategic planning.',
+    color: 'emerald'
+  }
+}
+
+const meta = categoryMeta[validCategory as keyof typeof categoryMeta] || {
+  icon: '🏢',
+  description: `Lowongan kerja di bidang ${validCategory.toLowerCase()}.`,
+  color: 'cyan'
+}
+
+// Structured data for category page
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": pageTitle,
+  "description": pageDescription,
+  "url": `https://megawe.net/jobs/category/${category}`,
+  "numberOfItems": jobsData.total,
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": jobsData.total,
+    "itemListElement": jobsData.jobs.map((job, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "url": `https://megawe.net/jobs/${job.id}`,
+      "name": job.title,
+      "description": job.description
+    }))
+  }
+}
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  type="website"
+  canonical={`/jobs/category/${category}${Astro.url.search}`}
+>
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <main class="min-h-screen bg-gray-50">
+    <!-- Category Header -->
+    <section class={`bg-gradient-to-br from-${meta.color}-50 to-${meta.color}-100 py-12`}>
+      <div class="container">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="text-6xl mb-4">{meta.icon}</div>
+          <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            Lowongan Kerja {validCategory}
+          </h1>
+          <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            {meta.description}
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <div class="text-center">
+              <div class="text-3xl font-bold text-gray-900">{jobsData.total}</div>
+              <div class="text-sm text-gray-600">Lowongan Tersedia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Navigation -->
+    <section class="bg-white border-b sticky top-0 z-10 shadow-sm">
+      <div class="container py-4">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <!-- Back to Jobs -->
+          <a
+            href="/jobs"
+            class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Kembali ke Lowongan
+          </a>
+
+          <!-- Category Quick Links -->
+          <div class="flex gap-2">
+            {JOB_CATEGORIES.map(cat => (
+              <a
+                href={`/jobs/category/${cat.toLowerCase().replace(' ', '-')}`}
+                class={`px-3 py-1 rounded-full text-sm transition-colors ${
+                  cat === validCategory
+                    ? `bg-${meta.color}-500 text-white`
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {cat}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="bg-white border-b">
+      <div class="container py-4">
+        <form action="" method="GET" class="flex flex-col lg:flex-row gap-4">
+          <select
+            name="location"
+            class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
+            onchange="this.form.submit()"
+          >
+            <option value="">Semua Lokasi</option>
+            <option value="Jakarta" selected={selectedLocation === 'Jakarta'}>Jakarta</option>
+            <option value="Surabaya" selected={selectedLocation === 'Surabaya'}>Surabaya</option>
+            <option value="Bandung" selected={selectedLocation === 'Bandung'}>Bandung</option>
+            <option value="Medan" selected={selectedLocation === 'Medan'}>Medan</option>
+            <option value="Semarang" selected={selectedLocation === 'Semarang'}>Semarang</option>
+            <option value="Makassar" selected={selectedLocation === 'Makassar'}>Makassar</option>
+            <option value="Palembang" selected={selectedLocation === 'Palembang'}>Palembang</option>
+            <option value="Tangerang" selected={selectedLocation === 'Tangerang'}>Tangerang</option>
+            <option value="Depok" selected={selectedLocation === 'Depok'}>Depok</option>
+            <option value="Bekasi" selected={selectedLocation === 'Bekasi'}>Bekasi</option>
+            <option value="Bogor" selected={selectedLocation === 'Bogor'}>Bogor</option>
+            <option value="Batam" selected={selectedLocation === 'Batam'}>Batam</option>
+            <option value="Pekanbaru" selected={selectedLocation === 'Pekanbaru'}>Pekanbaru</option>
+            <option value="Bandar Lampung" selected={selectedLocation === 'Bandar Lampung'}>Bandar Lampung</option>
+            <option value="Malang" selected={selectedLocation === 'Malang'}>Malang</option>
+            <option value="Yogyakarta" selected={selectedLocation === 'Yogyakarta'}>Yogyakarta</option>
+            <option value="Remote" selected={selectedLocation === 'Remote'}>Remote</option>
+          </select>
+
+          <select
+            name="type"
+            class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
+            onchange="this.form.submit()"
+          >
+            <option value="">Semua Jenis</option>
+            <option value="full-time" selected={selectedType === 'full-time'}>Full Time</option>
+            <option value="part-time" selected={selectedType === 'part-time'}>Part Time</option>
+            <option value="contract" selected={selectedType === 'contract'}>Contract</option>
+            <option value="internship" selected={selectedType === 'internship'}>Internship</option>
+            <option value="remote" selected={selectedType === 'remote'}>Remote</option>
+          </select>
+
+          <button
+            type="submit"
+            class="px-6 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
+          >
+            Terapkan Filter
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Jobs Section -->
+    <section class="py-12">
+      <div class="container">
+        {jobsData.jobs.length > 0 ? (
+          <>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {jobsData.jobs.map(job => (
+                <article class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                        <Image
+                          src={job.logo}
+                          alt={`${job.company} logo`}
+                          width={48}
+                          height={48}
+                          loading="lazy"
+                          decoding="async"
+                          class="w-full h-full object-cover"
+                          format="webp"
+                          quality={85}
+                        />
+                      </div>
+                      <div>
+                        <h3 class="font-semibold text-gray-900 mb-1">
+                          <a
+                            href={`/jobs/${job.id}`}
+                            class="hover:text-cyan-600 transition-colors"
+                          >
+                            {job.title}
+                          </a>
+                        </h3>
+                        <p class="text-sm text-gray-600">{job.company}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      </svg>
+                      {job.location}
+                    </span>
+                    <span class="job-type-badge job-type-{job.type}">
+                      {job.type.replace('-', ' ')}
+                    </span>
+                  </div>
+
+                  <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                    {job.description}
+                  </p>
+
+                  <div class="flex items-center justify-between">
+                    <time class="text-xs text-gray-500">
+                      {new Date(job.postedAt).toLocaleDateString('id-ID', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                      })}
+                    </time>
+                    <a
+                      href={`/jobs/${job.id}`}
+                      class="text-cyan-600 hover:text-cyan-700 text-sm font-medium transition-colors"
+                    >
+                      Lihat Detail →
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <!-- Pagination -->
+            {jobsData.hasMore && (
+              <div class="text-center">
+                <a
+                  href={`/jobs/category/${category}?page=${currentPage + 1}${
+                    selectedLocation ? `&location=${selectedLocation}` : ''
+                  }${
+                    selectedType ? `&type=${selectedType}` : ''
+                  }`}
+                  class="btn btn-outline px-6 py-3"
+                >
+                  Muat Lebih Banyak
+                </a>
+              </div>
+            )}
+          </>
+        ) : (
+          <div class="text-center py-12">
+            <div class="w-24 h-24 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <div class="text-4xl">{meta.icon}</div>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              Belum Ada Lowongan {validCategory}
+            </h3>
+            <p class="text-gray-600 mb-6">
+              Belum ada lowongan kerja {validCategory.toLowerCase()} yang tersedia saat ini.
+            </p>
+            <div class="space-x-4">
+              <a href="/jobs" class="btn btn-primary px-6 py-3">
+                Lihat Semua Lowongan
+              </a>
+              <a href={`/jobs/category/${category}`} class="btn btn-outline px-6 py-3">
+                Reset Filter
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- Other Categories -->
+    <section class="py-12 bg-white">
+      <div class="container">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">
+            Jelajahi Kategori Lain
+          </h2>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {JOB_CATEGORIES.filter(cat => cat !== validCategory).map(cat => {
+              const catMeta = categoryMeta[cat as keyof typeof categoryMeta] || {
+                icon: '🏢',
+                color: 'cyan'
+              }
+              return (
+                <a
+                  href={`/jobs/category/${cat.toLowerCase().replace(' ', '-')}`}
+                  class="block p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors text-center group"
+                >
+                  <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">
+                    {catMeta.icon}
+                  </div>
+                  <h3 class="font-semibold text-gray-900">{cat}</h3>
+                  <p class="text-sm text-gray-500 mt-1">
+                    Lowongan {cat.toLowerCase()}
+                  </p>
+                </a>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

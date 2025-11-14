@@ -3,43 +3,69 @@ import Layout from '../layouts/Layout.astro'
 import { Image } from 'astro:assets'
 import defaultLogo from '../assets/images/default-company-logo.svg'
 import { SITE_TITLE, SITE_DESCRIPTION, JOB_TYPES, JOB_CATEGORIES, LOCATIONS } from '../lib/constants'
+import { fetchFeaturedJobs, transformJobForDisplay } from '../lib/api/fetchers'
+import type { Job } from '../lib/types/jobs'
 
-// Optimized: Pre-build static data at build time with optimized local logos
-const featuredJobs = [
-  {
-    id: '1',
-    title: 'Senior Frontend Developer',
-    company: 'Tech Company Indonesia',
-    location: 'Jakarta',
-    type: 'full-time',
-    description: 'Kami mencari Senior Frontend Developer untuk bergabung dengan tim kami...',
-    postedAt: new Date().toISOString(),
-    logo: defaultLogo,
-    category: 'Teknologi'
-  },
-  {
-    id: '2',
-    title: 'Product Manager',
-    company: 'Digital Agency',
-    location: 'Remote',
-    type: 'remote',
-    description: 'Product Manager dengan pengalaman dalam digital products...',
-    postedAt: new Date().toISOString(),
-    logo: defaultLogo,
-    category: 'Marketing'
-  },
-  {
-    id: '3',
-    title: 'UI/UX Designer',
-    company: 'Creative Studio',
-    location: 'Bandung',
-    type: 'full-time',
-    description: 'Creative UI/UX Designer untuk membuat pengalaman digital yang menakjubkan...',
-    postedAt: new Date().toISOString(),
-    logo: defaultLogo,
-    category: 'Design'
-  }
-]
+// API Integration: Fetch featured jobs from API with fallback
+let featuredJobs: Job[] = []
+try {
+  // Try to fetch from API first
+  const apiJobs = await fetchFeaturedJobs(6)
+  featuredJobs = apiJobs.map(transformJobForDisplay)
+} catch (error) {
+  console.error('Failed to fetch jobs from API, using fallback data:', error)
+  // Fallback data for development/resilience
+  featuredJobs = [
+    {
+      id: '1',
+      title: 'Senior Frontend Developer',
+      company: 'Tech Company Indonesia',
+      location: 'Jakarta',
+      type: 'full-time',
+      description: 'Kami mencari Senior Frontend Developer untuk bergabung dengan tim kami...',
+      postedAt: new Date().toISOString(),
+      logo: defaultLogo,
+      category: 'Teknologi',
+      applicationUrl: '#',
+      requirements: [],
+      benefits: [],
+      isActive: true,
+      source: 'megawe'
+    },
+    {
+      id: '2',
+      title: 'Product Manager',
+      company: 'Digital Agency',
+      location: 'Remote',
+      type: 'remote',
+      description: 'Product Manager dengan pengalaman dalam digital products...',
+      postedAt: new Date().toISOString(),
+      logo: defaultLogo,
+      category: 'Marketing',
+      applicationUrl: '#',
+      requirements: [],
+      benefits: [],
+      isActive: true,
+      source: 'megawe'
+    },
+    {
+      id: '3',
+      title: 'UI/UX Designer',
+      company: 'Creative Studio',
+      location: 'Bandung',
+      type: 'full-time',
+      description: 'Creative UI/UX Designer untuk membuat pengalaman digital yang menakjubkan...',
+      postedAt: new Date().toISOString(),
+      logo: defaultLogo,
+      category: 'Design',
+      applicationUrl: '#',
+      requirements: [],
+      benefits: [],
+      isActive: true,
+      source: 'megawe'
+    }
+  ]
+}
 
 const stats = [
   { label: 'Lowongan Aktif', value: '1,234', suffix: '+' },

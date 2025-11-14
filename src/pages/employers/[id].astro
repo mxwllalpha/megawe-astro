@@ -1,0 +1,383 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { Image } from 'astro:assets'
+import { fetchEmployer, fetchJobs } from '../../lib/api/fetchers'
+import type { Employer, Job } from '../../lib/types/jobs'
+
+export const prerender = false
+
+// Get employer ID from URL params
+const { id } = Astro.params
+
+if (!id) {
+  return Astro.redirect('/employers')
+}
+
+// Fetch employer details
+let employer: Employer | null = null
+let employerJobs: Job[] = []
+
+try {
+  employer = await fetchEmployer(id)
+
+  if (employer) {
+    // Fetch jobs from this employer
+    try {
+      const jobsData = await fetchJobs({
+        company: employer.name,
+        limit: 20
+      })
+      employerJobs = jobsData.jobs
+    } catch (error) {
+      console.error(`Failed to fetch jobs for employer ${id}:`, error)
+    }
+  }
+} catch (error) {
+  console.error(`Failed to fetch employer ${id}:`, error)
+}
+
+// Handle employer not found
+if (!employer) {
+  return Astro.redirect('/404')
+}
+
+// SEO optimizations
+const pageTitle = `${employer.name} | Perusahaan | Megawe`
+const pageDescription = `${employer.description.substring(0, 160).replace(/\.$/, '')}. Temukan informasi tentang ${employer.name}, ${employer.industry}, lokasi di ${employer.location}, dan ${employerJobs.length} lowongan kerja yang tersedia.`
+
+// Structured data for employer
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": employer.name,
+  "description": employer.description,
+  "url": employer.website,
+  "logo": employer.logo,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": employer.location,
+    "addressCountry": "ID"
+  },
+  "industry": employer.industry,
+  "size": employer.size,
+  "sameAs": [employer.website],
+  "jobPosting": employerJobs.map(job => ({
+    "@type": "JobPosting",
+    "title": job.title,
+    "description": job.description,
+    "datePosted": job.postedAt,
+    "employmentType": job.type,
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": employer.name,
+      "sameAs": employer.website
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": job.location,
+        "addressCountry": "ID"
+      }
+    },
+    "url": `https://megawe.net/jobs/${job.id}`
+  }))
+}
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  type="website"
+  canonical={`/employers/${id}`}
+>
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <main class="min-h-screen bg-gray-50">
+    <!-- Employer Header -->
+    <section class="bg-white border-b">
+      <div class="container py-8">
+        <div class="max-w-4xl mx-auto">
+          <!-- Breadcrumb -->
+          <nav aria-label="Breadcrumb" class="mb-6">
+            <ol class="flex items-center space-x-2 text-sm text-gray-600">
+              <li>
+                <a href="/" class="hover:text-purple-600 transition-colors">Beranda</a>
+              </li>
+              <li>
+                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+              </li>
+              <li>
+                <a href="/employers" class="hover:text-purple-600 transition-colors">Perusahaan</a>
+              </li>
+              <li>
+                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+              </li>
+              <li class="text-gray-900">{employer.name}</li>
+            </ol>
+          </nav>
+
+          <!-- Company Info -->
+          <div class="flex flex-col lg:flex-row gap-8">
+            <div class="flex-shrink-0">
+              <div class="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                <Image
+                  src={employer.logo}
+                  alt={`${employer.name} logo`}
+                  width={96}
+                  height={96}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover"
+                  format="webp"
+                  quality={85}
+                />
+              </div>
+            </div>
+            <div class="flex-1">
+              <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                {employer.name}
+              </h1>
+              <p class="text-lg text-gray-600 mb-4">
+                {employer.description}
+              </p>
+              <div class="flex flex-wrap gap-4 text-sm text-gray-600">
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  {employer.industry}
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  {employer.location}
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                  {employer.size}
+                </span>
+              </div>
+            </div>
+            <div class="flex-shrink-0">
+              <a
+                href={employer.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-primary px-6 py-3"
+                aria-label={`Kunjungi website ${employer.name}`}
+              >
+                Kunjungi Website
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Company Details -->
+    <section class="py-12">
+      <div class="container">
+        <div class="max-w-6xl mx-auto">
+          <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2 space-y-8">
+              <!-- Culture & Benefits -->
+              <div class="bg-white rounded-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Budaya Kerja</h2>
+                <p class="text-gray-700 mb-6">
+                  {employer.culture}
+                </p>
+
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Keuntungan & Fasilitas</h3>
+                <ul class="space-y-2">
+                  {employer.benefits.map((benefit, index) => (
+                    <li key={index} class="flex items-start gap-3">
+                      <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                      </svg>
+                      <span class="text-gray-700">{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- Jobs from this Employer -->
+              <div class="bg-white rounded-lg p-6">
+                <div class="flex items-center justify-between mb-6">
+                  <h2 class="text-xl font-semibold text-gray-900">
+                    Lowongan dari {employer.name}
+                  </h2>
+                  <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+                    {employerJobs.length} lowongan
+                  </span>
+                </div>
+
+                {employerJobs.length > 0 ? (
+                  <div class="space-y-4">
+                    {employerJobs.map(job => (
+                      <article class="border border-gray-200 rounded-lg p-4 hover:border-purple-300 hover:shadow-sm transition-all">
+                        <div class="flex items-start justify-between mb-3">
+                          <div>
+                            <h3 class="font-semibold text-gray-900 mb-1">
+                              <a
+                                href={`/jobs/${job.id}`}
+                                class="hover:text-purple-600 transition-colors"
+                              >
+                                {job.title}
+                              </a>
+                            </h3>
+                            <div class="flex items-center gap-4 text-sm text-gray-600">
+                              <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                {job.location}
+                              </span>
+                              <span class="job-type-badge job-type-{job.type}">
+                                {job.type.replace('-', ' ')}
+                              </span>
+                            </div>
+                          </div>
+                          <time class="text-xs text-gray-500">
+                            {new Date(job.postedAt).toLocaleDateString('id-ID', {
+                              day: 'numeric',
+                              month: 'long',
+                              year: 'numeric'
+                            })}
+                          </time>
+                        </div>
+
+                        <p class="text-gray-600 text-sm mb-3 line-clamp-2">
+                          {job.description}
+                        </p>
+
+                        <div class="flex items-center justify-between">
+                          <span class="text-xs text-gray-500">{job.category}</span>
+                          <a
+                            href={`/jobs/${job.id}`}
+                            class="text-purple-600 hover:text-purple-700 text-sm font-medium transition-colors"
+                          >
+                            Lihat Detail →
+                          </a>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                ) : (
+                  <div class="text-center py-8">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                      <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A9.002 9.002 0 0112 21a9.002 9.002 0 01-9-9.745C4.061 6.655 8.519 4 12 4c3.48 0 6.938 2.655 9 9.255z"></path>
+                      </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                      Tidak Ada Lowongan Aktif
+                    </h3>
+                    <p class="text-gray-600 mb-4">
+                      Saat ini {employer.name} tidak memiliki lowongan kerja yang aktif.
+                    </p>
+                    <a href="/jobs" class="btn btn-outline px-6 py-3">
+                      Cari Lowongan Lain
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+              <!-- Quick Actions -->
+              <div class="bg-white rounded-lg p-6 sticky top-4">
+                <h3 class="font-semibold text-gray-900 mb-4">Aksi Cepat</h3>
+                <div class="space-y-3">
+                  <a
+                    href={employer.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-primary w-full"
+                  >
+                    Kunjungi Website
+                  </a>
+                  <a
+                    href="/jobs"
+                    class="btn btn-outline w-full"
+                  >
+                    Lihat Semua Lowongan
+                  </a>
+                  <button
+                    class="btn btn-outline w-full"
+                    onclick="navigator.share ? navigator.share({title: '${employer.name}', url: window.location.href}) : navigator.clipboard.writeText(window.location.href)"
+                  >
+                    Bagikan Perusahaan
+                  </button>
+                </div>
+              </div>
+
+              <!-- Company Info Summary -->
+              <div class="bg-white rounded-lg p-6">
+                <h3 class="font-semibold text-gray-900 mb-4">Informasi Perusahaan</h3>
+                <dl class="space-y-3">
+                  <div>
+                    <dt class="text-sm text-gray-500">Industri</dt>
+                    <dd class="font-medium">{employer.industry}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm text-gray-500">Lokasi</dt>
+                    <dd class="font-medium">{employer.location}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm text-gray-500">Ukuran Perusahaan</dt>
+                    <dd class="font-medium">{employer.size}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm text-gray-500">Website</dt>
+                    <dd class="font-medium">
+                      <a
+                        href={employer.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-purple-600 hover:text-purple-700"
+                      >
+                        {new URL(employer.website).hostname}
+                      </a>
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Companies -->
+    <section class="py-12 bg-white">
+      <div class="container">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">
+            Perusahaan Serupa
+          </h2>
+          <div class="text-center py-8">
+            <p class="text-gray-600 mb-4">
+              Temukan perusahaan lain di industri {employer.industry}
+            </p>
+            <a href="/employers" class="btn btn-outline px-6 py-3">
+              Jelajahi Semua Perusahaan
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

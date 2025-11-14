@@ -1,0 +1,214 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { fetchJobs, transformJobForDisplay } from '../../lib/api/fetchers'
+import type { Job, JobFilter } from '../../lib/types/jobs'
+
+// Get search parameters from URL
+const url = new URL(Astro.url.pathname + Astro.url.search, Astro.url.origin)
+const searchQuery = url.searchParams.get('q') || ''
+const currentPage = parseInt(url.searchParams.get('page') || '1')
+const selectedLocation = url.searchParams.get('location') || ''
+const selectedType = url.searchParams.get('type') || ''
+const selectedCategory = url.searchParams.get('category') || ''
+
+// Redirect if no search query
+if (!searchQuery) {
+  return Astro.redirect('/jobs')
+}
+
+// Build filters object
+const filters: JobFilter = {
+  query: searchQuery,
+  location: selectedLocation,
+  type: selectedType,
+  category: selectedCategory,
+  page: currentPage,
+  limit: 12
+}
+
+// Fetch jobs from API
+let jobsData = {
+  jobs: [] as Job[],
+  total: 0,
+  page: currentPage,
+  limit: 12,
+  hasMore: false
+}
+
+try {
+  jobsData = await fetchJobs(filters)
+  jobsData.jobs = jobsData.jobs.map(transformJobForDisplay)
+} catch (error) {
+  console.error('Failed to search jobs:', error)
+}
+
+// SEO optimizations
+const pageTitle = `Hasil Pencarian "${searchQuery}" | Megawe`
+const pageDescription = `Temukan ${jobsData.total} lowongan kerja untuk "${searchQuery}" di seluruh Indonesia. Filter berdasarkan lokasi dan jenis pekerjaan.`
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  noIndex={true}
+>
+  <main class="min-h-screen bg-gray-50">
+    <!-- Search Header -->
+    <section class="bg-gradient-to-br from-cyan-50 to-blue-50 py-12">
+      <div class="container">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            Hasil Pencarian: "{searchQuery}"
+          </h1>
+          <p class="text-lg text-gray-600 mb-8">
+            {jobsData.total > 0
+              ? `Ditemukan ${jobsData.total} lowongan kerja`
+              : 'Tidak ada lowongan yang ditemukan'
+            }
+          </p>
+
+          <!-- Quick Search Form -->
+          <form action="/jobs/search" method="GET" class="max-w-2xl mx-auto">
+            <div class="flex gap-2">
+              <input
+                type="search"
+                name="q"
+                value={searchQuery}
+                placeholder="Cari lowongan kerja..."
+                class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
+              />
+              <button
+                type="submit"
+                class="px-6 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
+              >
+                Cari
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="py-12">
+      <div class="container">
+        {jobsData.jobs.length > 0 ? (
+          <>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {jobsData.jobs.map(job => (
+                <article class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                        <img
+                          src={job.logo}
+                          alt={`${job.company} logo`}
+                          width="48"
+                          height="48"
+                          loading="lazy"
+                          decoding="async"
+                          class="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 class="font-semibold text-gray-900 mb-1">
+                          <a
+                            href={`/jobs/${job.id}`}
+                            class="hover:text-cyan-600 transition-colors"
+                          >
+                            {job.title}
+                          </a>
+                        </h3>
+                        <p class="text-sm text-gray-600">{job.company}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      </svg>
+                      {job.location}
+                    </span>
+                    <span class="job-type-badge job-type-{job.type}">
+                      {job.type.replace('-', ' ')}
+                    </span>
+                  </div>
+
+                  <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                    {job.description}
+                  </p>
+
+                  <div class="flex items-center justify-between">
+                    <time class="text-xs text-gray-500">
+                      {new Date(job.postedAt).toLocaleDateString('id-ID', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                      })}
+                    </time>
+                    <a
+                      href={`/jobs/${job.id}`}
+                      class="text-cyan-600 hover:text-cyan-700 text-sm font-medium transition-colors"
+                    >
+                      Lihat Detail →
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <!-- Load More -->
+            {jobsData.hasMore && (
+              <div class="text-center">
+                <a
+                  href={`/jobs/search?q=${encodeURIComponent(searchQuery)}&page=${currentPage + 1}${
+                    selectedLocation ? `&location=${selectedLocation}` : ''
+                  }${
+                    selectedType ? `&type=${selectedType}` : ''
+                  }${
+                    selectedCategory ? `&category=${selectedCategory}` : ''
+                  }`}
+                  class="btn btn-outline px-6 py-3"
+                >
+                  Muat Lebih Banyak
+                </a>
+              </div>
+            )}
+          </>
+        ) : (
+          <div class="text-center py-12">
+            <div class="w-24 h-24 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Tidak Ada Hasil</h3>
+            <p class="text-gray-600 mb-6">
+              Tidak ada lowongan yang ditemukan untuk "{searchQuery}"
+            </p>
+            <div class="space-y-4">
+              <p class="text-sm text-gray-500">Coba:</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Gunakan kata kunci yang berbeda</li>
+                <li>• Periksa ejaan kata kunci</li>
+                <li>• Gunakan kata kunci yang lebih umum</li>
+                <li>• Hapus filter untuk melihat semua lowongan</li>
+              </ul>
+            </div>
+            <div class="mt-6 space-x-4">
+              <a href="/jobs" class="btn btn-primary px-6 py-3">
+                Lihat Semua Lowongan
+              </a>
+              <a href="/jobs/search" class="btn btn-outline px-6 py-3">
+                Pencarian Baru
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+</Layout>

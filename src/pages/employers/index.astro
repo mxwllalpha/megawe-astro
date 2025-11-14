@@ -1,0 +1,365 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { Image } from 'astro:assets'
+import defaultLogo from '../../assets/images/default-company-logo.svg'
+import { SITE_TITLE } from '../../lib/constants'
+import { fetchEmployers } from '../../lib/api/fetchers'
+import type { Employer } from '../../lib/types/jobs'
+
+// Fetch employers from API
+let employers: Employer[] = []
+
+try {
+  employers = await fetchEmployers()
+} catch (error) {
+  console.error('Failed to fetch employers:', error)
+  // Fallback data for development/resilience
+  employers = [
+    {
+      id: '1',
+      name: 'Tech Company Indonesia',
+      description: 'Perusahaan teknologi terkemuka di Indonesia dengan fokus pada pengembangan software dan solusi digital.',
+      industry: 'Teknologi',
+      size: '500-1000 karyawan',
+      logo: defaultLogo.src,
+      website: 'https://example.com',
+      location: 'Jakarta',
+      jobs: [],
+      benefits: ['Asuransi kesehatan', 'Bonus tahunan', 'Work from home'],
+      culture: 'Inovatif dan kolaboratif'
+    },
+    {
+      id: '2',
+      name: 'Digital Agency',
+      description: 'Agency digital kreatif yang melayani klien nasional dan internasional.',
+      industry: 'Marketing & Advertising',
+      size: '50-100 karyawan',
+      logo: defaultLogo.src,
+      website: 'https://example.com',
+      location: 'Bandung',
+      jobs: [],
+      benefits: ['Flexible working hours', 'Training programs', 'Team building'],
+      culture: 'Kreatif dan dinamis'
+    },
+    {
+      id: '3',
+      name: 'Financial Services',
+      description: 'Perusahaan jasa keuangan yang menyediakan solusi investasi dan perbankan.',
+      industry: 'Keuangan',
+      size: '1000+ karyawan',
+      logo: defaultLogo.src,
+      website: 'https://example.com',
+      location: 'Surabaya',
+      jobs: [],
+      benefits: ['BPJS Ketenagakerjaan', 'Jenjang karir', 'Bonus performa'],
+      culture: 'Profesional dan berorientasi hasil'
+    }
+  ]
+}
+
+// SEO optimizations
+const pageTitle = `Perusahaan | ${SITE_TITLE}`
+const pageDescription = `Temukan informasi tentang ${employers.length} perusahaan terbaik di Indonesia. Lihat profil perusahaan, lowongan kerja yang tersedia, dan budaya kerja.`
+
+// Group employers by industry
+const employersByIndustry = employers.reduce((acc, employer) => {
+  const industry = employer.industry || 'Lainnya'
+  if (!acc[industry]) {
+    acc[industry] = []
+  }
+  acc[industry].push(employer)
+  return acc
+}, {} as Record<string, Employer[]>)
+
+// Structured data for employer directory
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": pageTitle,
+  "description": pageDescription,
+  "url": "https://megawe.net/employers",
+  "numberOfItems": employers.length,
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": employers.length,
+    "itemListElement": employers.map((employer, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "url": `https://megawe.net/employers/${employer.id}`,
+      "name": employer.name,
+      "description": employer.description
+    }))
+  }
+}
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  type="website"
+  canonical="/employers"
+>
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <main class="min-h-screen bg-gray-50">
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-purple-50 to-indigo-50 py-12">
+      <div class="container">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            Temukan Perusahaan Impian Anda
+          </h1>
+          <p class="text-lg text-gray-600 mb-8">
+            Jelajahi {employers.length} perusahaan terbaik di Indonesia dan temukan lowongan kerja yang sesuai dengan karir Anda
+          </p>
+          <div class="flex justify-center gap-8 text-center">
+            <div>
+              <div class="text-3xl font-bold text-purple-600">{employers.length}</div>
+              <div class="text-sm text-gray-600">Perusahaan</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-purple-600">
+                {employers.reduce((total, emp) => total + (emp.jobs?.length || 0), 0)}
+              </div>
+              <div class="text-sm text-gray-600">Lowongan Aktif</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-purple-600">
+                {Object.keys(employersByIndustry).length}
+              </div>
+              <div class="text-sm text-gray-600">Industri</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="bg-white border-b">
+      <div class="container py-8">
+        <div class="max-w-2xl mx-auto">
+          <form action="/jobs/search" method="GET" class="relative">
+            <label for="employer-search" class="sr-only">Cari perusahaan</label>
+            <input
+              type="search"
+              id="employer-search"
+              name="q"
+              placeholder="Cari perusahaan atau industri..."
+              class="w-full px-6 py-4 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-lg"
+            />
+            <button
+              type="submit"
+              class="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600"
+              aria-label="Cari perusahaan"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Employers -->
+    <section class="py-12">
+      <div class="container">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 mb-8">Perusahaan Unggulan</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {employers.slice(0, 6).map(employer => (
+              <article class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                      <Image
+                        src={employer.logo}
+                        alt={`${employer.name} logo`}
+                        width={64}
+                        height={64}
+                        loading="lazy"
+                        decoding="async"
+                        class="w-full h-full object-cover"
+                        format="webp"
+                        quality={85}
+                      />
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-900 mb-1">
+                        <a
+                          href={`/employers/${employer.id}`}
+                          class="hover:text-purple-600 transition-colors"
+                        >
+                          {employer.name}
+                        </a>
+                      </h3>
+                      <p class="text-sm text-gray-600">{employer.industry}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                  {employer.description}
+                </p>
+
+                <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                  <span class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    {employer.location}
+                  </span>
+                  <span>{employer.size}</span>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <span class="text-xs text-gray-500">
+                    {employer.jobs?.length || 0} lowongan aktif
+                  </span>
+                  <a
+                    href={`/employers/${employer.id}`}
+                    class="text-purple-600 hover:text-purple-700 text-sm font-medium transition-colors"
+                  >
+                    Lihat Profil →
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {employers.length > 6 && (
+            <div class="text-center">
+              <a
+                href="#all-employers"
+                class="btn btn-outline px-6 py-3"
+              >
+                Lihat Semua Perusahaan
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- All Employers by Industry -->
+    <section id="all-employers" class="py-12 bg-white">
+      <div class="container">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 mb-8">Semua Perusahaan</h2>
+
+          {Object.entries(employersByIndustry).map(([industry, industryEmployers]) => (
+            <div class="mb-12">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+                {industry}
+                <span class="text-sm text-gray-500">({industryEmployers.length} perusahaan)</span>
+              </h3>
+              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {industryEmployers.map(employer => (
+                  <article class="border border-gray-200 rounded-lg p-4 hover:border-purple-300 hover:shadow-sm transition-all">
+                    <div class="flex items-center gap-3 mb-3">
+                      <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                        <Image
+                          src={employer.logo}
+                          alt={`${employer.name} logo`}
+                          width={48}
+                          height={48}
+                          loading="lazy"
+                          decoding="async"
+                          class="w-full h-full object-cover"
+                          format="webp"
+                          quality={85}
+                        />
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-900 mb-1">
+                          <a
+                            href={`/employers/${employer.id}`}
+                            class="hover:text-purple-600 transition-colors"
+                          >
+                            {employer.name}
+                          </a>
+                        </h4>
+                        <p class="text-xs text-gray-600">{employer.size}</p>
+                      </div>
+                    </div>
+
+                    <p class="text-gray-600 text-xs mb-3 line-clamp-2">
+                      {employer.description}
+                    </p>
+
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-3 text-xs text-gray-500">
+                        <span class="flex items-center gap-1">
+                          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                          </svg>
+                          {employer.location}
+                        </span>
+                        <span>{employer.jobs?.length || 0} lowongan</span>
+                      </div>
+                      <a
+                        href={`/employers/${employer.id}`}
+                        class="text-purple-600 hover:text-purple-700 text-xs font-medium transition-colors"
+                      >
+                        Detail →
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          {employers.length === 0 && (
+            <div class="text-center py-12">
+              <div class="w-24 h-24 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Belum Ada Perusahaan</h3>
+              <p class="text-gray-600 mb-6">
+                Belum ada perusahaan yang terdaftar saat ini.
+              </p>
+              <a href="/jobs" class="btn btn-primary px-6 py-3">
+                Cari Lowongan Kerja
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12 bg-purple-50">
+      <div class="container">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            Ingin Memposting Lowongan?
+          </h2>
+          <p class="text-gray-600 mb-8">
+            Hubungi kami untuk memposting lowongan kerja perusahaan Anda dan menjangkau ribuan pencari kerja berkualitas.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="mailto:info@megawe.net"
+              class="btn btn-primary px-6 py-3"
+            >
+              Hubungi Kami
+            </a>
+            <a
+              href="/about"
+              class="btn btn-outline px-6 py-3"
+            >
+              Pelajari Lebih Lanjut
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

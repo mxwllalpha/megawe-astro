@@ -1,0 +1,298 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { Image } from 'astro:assets'
+import { SITE_TITLE, JOB_TYPES, JOB_CATEGORIES, LOCATIONS } from '../../lib/constants'
+import { fetchJobs, transformJobForDisplay } from '../../lib/api/fetchers'
+import type { Job, JobFilter } from '../../lib/types/jobs'
+
+// Get filter parameters from URL
+const url = new URL(Astro.url.pathname + Astro.url.search, Astro.url.origin)
+const currentPage = parseInt(url.searchParams.get('page') || '1')
+const searchQuery = url.searchParams.get('q') || ''
+const selectedLocation = url.searchParams.get('location') || ''
+const selectedType = url.searchParams.get('type') || ''
+const selectedCategory = url.searchParams.get('category') || ''
+const salaryMin = url.searchParams.get('salaryMin') ? parseInt(url.searchParams.get('salaryMin')!) : undefined
+
+// Build filters object
+const filters: JobFilter = {
+  query: searchQuery,
+  location: selectedLocation,
+  type: selectedType,
+  category: selectedCategory,
+  salaryMin,
+  page: currentPage,
+  limit: 12
+}
+
+// Fetch jobs from API
+let jobsData = {
+  jobs: [] as Job[],
+  total: 0,
+  page: currentPage,
+  limit: 12,
+  hasMore: false
+}
+
+try {
+  jobsData = await fetchJobs(filters)
+  jobsData.jobs = jobsData.jobs.map(transformJobForDisplay)
+} catch (error) {
+  console.error('Failed to fetch jobs:', error)
+}
+
+// SEO optimizations
+const pageTitle = searchQuery
+  ? `Lowongan "${searchQuery}" | ${SITE_TITLE}`
+  : selectedLocation
+  ? `Lowongan Kerja ${selectedLocation} | ${SITE_TITLE}`
+  : selectedCategory
+  ? `Lowongan Kerja ${selectedCategory} | ${SITE_TITLE}`
+  : `Lowongan Kerja Indonesia | ${SITE_TITLE}`
+
+const pageDescription = searchQuery
+  ? `Temukan ${jobsData.total} lowongan kerja untuk "${searchQuery}" di seluruh Indonesia. Filter berdasarkan lokasi, jenis pekerjaan, dan kategori.`
+  : `Temukan ${jobsData.total} lowongan kerja terbaru dari berbagai perusahaan di Indonesia. Filter berdasarkan lokasi, jenis pekerjaan, dan kategori.`
+
+// Structured data for job listings
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": pageTitle,
+  "description": pageDescription,
+  "url": `https://megawe.net/jobs`,
+  "numberOfItems": jobsData.total,
+  "itemListElement": jobsData.jobs.map((job, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "url": `https://megawe.net/jobs/${job.id}`,
+    "name": job.title,
+    "description": job.description,
+    "datePosted": job.postedAt
+  }))
+}
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  type="website"
+  canonical={`/jobs${Astro.url.search}`}
+>
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <main class="min-h-screen bg-gray-50">
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-cyan-50 to-blue-50 py-12">
+      <div class="container">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            {searchQuery ? `Lowongan "${searchQuery}"` : 'Lowongan Kerja Indonesia'}
+          </h1>
+          <p class="text-lg text-gray-600 mb-8">
+            {jobsData.total > 0
+              ? `Temukan ${jobsData.total} lowongan kerja yang tersedia`
+              : 'Belum ada lowongan yang sesuai dengan kriteria Anda'
+            }
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="bg-white border-b sticky top-0 z-10 shadow-sm">
+      <div class="container py-4">
+        <form action="/jobs/search" method="GET" class="space-y-4">
+          <!-- Search Bar -->
+          <div class="flex flex-col lg:flex-row gap-4">
+            <div class="flex-1">
+              <label for="search" class="sr-only">Cari lowongan</label>
+              <input
+                type="search"
+                id="search"
+                name="q"
+                value={searchQuery}
+                placeholder="Cari posisi atau perusahaan..."
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+              />
+            </div>
+            <div class="flex gap-4">
+              <select
+                name="location"
+                class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
+              >
+                <option value="">Semua Lokasi</option>
+                {LOCATIONS.map(location => (
+                  <option value={location} selected={selectedLocation === location}>
+                    {location}
+                  </option>
+                ))}
+              </select>
+              <select
+                name="type"
+                class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
+              >
+                <option value="">Semua Jenis</option>
+                {JOB_TYPES.map(type => (
+                  <option value={type.value} selected={selectedType === type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="submit"
+                class="px-6 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
+              >
+                Cari
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="py-12">
+      <div class="container">
+        <div class="flex flex-col lg:flex-row gap-8">
+          <!-- Sidebar Filters -->
+          <aside class="lg:w-64 flex-shrink-0">
+            <div class="bg-white rounded-lg shadow-sm p-6">
+              <h3 class="font-semibold text-gray-900 mb-4">Filter Kategori</h3>
+              <ul class="space-y-2">
+                {JOB_CATEGORIES.map(category => (
+                  <li>
+                    <a
+                      href={`/jobs?category=${category.toLowerCase()}${searchQuery ? `&q=${searchQuery}` : ''}`}
+                      class={`block px-3 py-2 rounded-lg transition-colors ${
+                        selectedCategory === category.toLowerCase()
+                          ? 'bg-cyan-50 text-cyan-600 font-medium'
+                          : 'text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      {category}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+
+          <!-- Job Listings -->
+          <div class="flex-1">
+            {jobsData.jobs.length > 0 ? (
+              <>
+                <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
+                  {jobsData.jobs.map(job => (
+                    <article class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+                      <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                          <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                            <Image
+                              src={job.logo}
+                              alt={`${job.company} logo`}
+                              width={48}
+                              height={48}
+                              loading="lazy"
+                              decoding="async"
+                              class="w-full h-full object-cover"
+                              format="webp"
+                              quality={85}
+                            />
+                          </div>
+                          <div>
+                            <h3 class="font-semibold text-gray-900 mb-1">
+                              <a
+                                href={`/jobs/${job.id}`}
+                                class="hover:text-cyan-600 transition-colors"
+                              >
+                                {job.title}
+                              </a>
+                            </h3>
+                            <p class="text-sm text-gray-600">{job.company}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                        <span class="flex items-center gap-1">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                          </svg>
+                          {job.location}
+                        </span>
+                        <span class="job-type-badge job-type-{job.type}">
+                          {job.type.replace('-', ' ')}
+                        </span>
+                      </div>
+
+                      <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                        {job.description}
+                      </p>
+
+                      <div class="flex items-center justify-between">
+                        <time class="text-xs text-gray-500">
+                          {new Date(job.postedAt).toLocaleDateString('id-ID', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                          })}
+                        </time>
+                        <a
+                          href={`/jobs/${job.id}`}
+                          class="text-cyan-600 hover:text-cyan-700 text-sm font-medium transition-colors"
+                        >
+                          Lihat Detail →
+                        </a>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+
+                <!-- Pagination -->
+                {jobsData.hasMore && (
+                  <div class="text-center">
+                    <a
+                      href={`/jobs?page=${currentPage + 1}${
+                        searchQuery ? `&q=${searchQuery}` : ''
+                      }${
+                        selectedLocation ? `&location=${selectedLocation}` : ''
+                      }${
+                        selectedType ? `&type=${selectedType}` : ''
+                      }${
+                        selectedCategory ? `&category=${selectedCategory}` : ''
+                      }`}
+                      class="btn btn-outline px-6 py-3"
+                    >
+                      Muat Lebih Banyak
+                    </a>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div class="text-center py-12">
+                <div class="w-24 h-24 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.707.293L19.078 15.071A2 2 0 0117.915 16H9z" />
+                  </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Tidak Ada Lowongan</h3>
+                <p class="text-gray-600 mb-6">
+                  {searchQuery
+                    ? `Tidak ada lowongan yang ditemukan untuk "${searchQuery}"`
+                    : 'Belum ada lowongan yang tersedia saat ini'
+                  }
+                </p>
+                <a href="/jobs" class="btn btn-primary px-6 py-3">
+                  Reset Filter
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
