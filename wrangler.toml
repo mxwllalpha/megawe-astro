@@ -2,12 +2,8 @@ name = "megawe-astro"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
-# Cloudflare Pages compatibility
+# Cloudflare Pages configuration
 pages_build_output_dir = "dist"
-
-# Build configuration for Astro
-main = "_worker.js"
-workers_dev = false
 
 # Environment variables
 [env.production.vars]
