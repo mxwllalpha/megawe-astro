@@ -1,0 +1,443 @@
+---
+interface CookieConsentProps {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props();
+---
+
+<!-- GDPR Cookie Consent Banner -->
+<div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl transform translate-y-full transition-transform duration-300 z-50 {className}">
+  <div class="container mx-auto px-6 py-6">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <!-- Content -->
+      <div class="flex-1 max-w-2xl">
+        <div class="flex items-center gap-3 mb-3">
+          <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          <h3 class="text-lg font-semibold text-gray-900">Privacy & Cookies</h3>
+        </div>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+          Kami menggunakan cookies untuk meningkatkan pengalaman Anda, menganalisis traffic,
+          dan menampilkan konten yang dipersonalisasi. Dengan melanjutkan, Anda menyetujui
+          <a href="/kebijakan-privasi" class="text-blue-600 hover:text-blue-700 underline">Kebijakan Privasi</a>
+          dan <a href="/syarat-ketentuan" class="text-blue-600 hover:text-blue-700 underline">Syarat & Ketentuan</a> kami.
+        </p>
+
+        <!-- Cookie Details (Hidden by default) -->
+        <div id="cookieDetails" class="hidden bg-gray-50 rounded-lg p-4 mb-4">
+          <h4 class="font-semibold text-gray-900 mb-3">Pengaturan Cookies:</h4>
+
+          <div class="space-y-3">
+            <!-- Essential Cookies -->
+            <label class="flex items-start space-x-3 cursor-not-allowed opacity-60">
+              <input type="checkbox" checked disabled class="w-4 h-4 text-gray-400 rounded">
+              <div class="flex-1">
+                <div class="font-medium text-gray-900">Cookies Esensial</div>
+                <div class="text-sm text-gray-600">Diperlukan untuk fungsi dasar website (tidak dapat dinonaktifkan)</div>
+              </div>
+            </label>
+
+            <!-- Performance Cookies -->
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input type="checkbox" id="performanceCookies" checked class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+              <div class="flex-1">
+                <div class="font-medium text-gray-900">Cookies Performa</div>
+                <div class="text-sm text-gray-600">Membantu kami meningkatkan performa website</div>
+              </div>
+            </label>
+
+            <!-- Functional Cookies -->
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input type="checkbox" id="functionalCookies" checked class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+              <div class="flex-1">
+                <div class="font-medium text-gray-900">Cookies Fungsional</div>
+                <div class="text-sm text-gray-600">Mengingat preferensi dan pengaturan Anda</div>
+              </div>
+            </label>
+
+            <!-- Marketing Cookies -->
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input type="checkbox" id="marketingCookies" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+              <div class="flex-1">
+                <div class="font-medium text-gray-900">Cookies Pemasaran</div>
+                <div class="text-sm text-gray-600">Untuk personalisasi konten dan iklan</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex flex-col sm:flex-row gap-3 md:ml-6">
+        <button
+          id="acceptAll"
+          class="px-6 py-2 bg-gradient-to-r from-red-600 to-emerald-600 text-white font-medium rounded-lg hover:from-red-700 hover:to-emerald-700 transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+        >
+          Terima Semua
+        </button>
+
+        <button
+          id="acceptSelected"
+          class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Termai Pilihan
+        </button>
+
+        <button
+          id="showDetails"
+          class="px-6 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-all duration-200"
+        >
+          Pengaturan
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Privacy Settings Button (Hidden by default) -->
+<button
+  id="privacySettings"
+  class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-200 transform hover:scale-110 z-40 hidden"
+  title="Pengaturan Privasi"
+>
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+</button>
+
+<script>
+  // Cookie Consent Management System
+  class CookieConsentManager {
+    constructor() {
+      this.consentGiven = this.getConsent();
+      this.preferences = this.getPreferences();
+      this.init();
+    }
+
+    init() {
+      // Only show banner if consent not given
+      if (!this.consentGiven) {
+        this.showBanner();
+      } else {
+        this.hideBanner();
+        if (this.preferences.showSettings) {
+          this.showPrivacySettingsButton();
+        }
+      }
+
+      this.bindEvents();
+    }
+
+    // Storage methods (using localStorage as fallback for KV)
+    getConsent() {
+      // Try KV first, fallback to localStorage
+      return localStorage.getItem('megawe_cookie_consent') === 'true';
+    }
+
+    setConsent(consent) {
+      localStorage.setItem('megawe_cookie_consent', consent);
+      // Store in KV if available
+      if (typeof env !== 'undefined' && env.SESSION) {
+        const sessionId = this.getSessionId();
+        env.SESSION.put(`cookie_consent_${sessionId}`, consent.toString());
+      }
+    }
+
+    getPreferences() {
+      const stored = localStorage.getItem('megawe_cookie_preferences');
+      return stored ? JSON.parse(stored) : {
+        essential: true,
+        performance: true,
+        functional: true,
+        marketing: false,
+        showSettings: true
+      };
+    }
+
+    setPreferences(preferences) {
+      localStorage.setItem('megawe_cookie_preferences', JSON.stringify(preferences));
+      // Store in KV if available
+      if (typeof env !== 'undefined' && env.SESSION) {
+        const sessionId = this.getSessionId();
+        env.SESSION.put(`cookie_prefs_${sessionId}`, JSON.stringify(preferences));
+      }
+    }
+
+    getSessionId() {
+      let sessionId = sessionStorage.getItem('megawe_session');
+      if (!sessionId) {
+        sessionId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+        sessionStorage.setItem('megawe_session', sessionId);
+      }
+      return sessionId;
+    }
+
+    bindEvents() {
+      // Accept all cookies
+      document.getElementById('acceptAll').addEventListener('click', () => {
+        this.acceptAll();
+      });
+
+      // Accept selected cookies
+      document.getElementById('acceptSelected').addEventListener('click', () => {
+        this.acceptSelected();
+      });
+
+      // Show/hide details
+      document.getElementById('showDetails').addEventListener('click', () => {
+        this.toggleDetails();
+      });
+
+      // Privacy settings button
+      document.getElementById('privacySettings')?.addEventListener('click', () => {
+        this.showBanner();
+      });
+
+      // Cookie preference changes
+      ['performanceCookies', 'functionalCookies', 'marketingCookies'].forEach(id => {
+        document.getElementById(id)?.addEventListener('change', (e) => {
+          this.updatePreference(id.replace('Cookies', ''), e.target.checked);
+        });
+      });
+    }
+
+    showBanner() {
+      const banner = document.getElementById('cookieConsent');
+      banner.classList.remove('translate-y-full');
+      banner.classList.add('translate-y-0');
+    }
+
+    hideBanner() {
+      const banner = document.getElementById('cookieConsent');
+      banner.classList.add('translate-y-full');
+      banner.classList.remove('translate-y-0');
+    }
+
+    toggleDetails() {
+      const details = document.getElementById('cookieDetails');
+      const button = document.getElementById('showDetails');
+
+      if (details.classList.contains('hidden')) {
+        details.classList.remove('hidden');
+        button.textContent = 'Sembunyikan';
+      } else {
+        details.classList.add('hidden');
+        button.textContent = 'Pengaturan';
+      }
+    }
+
+    showPrivacySettingsButton() {
+      const button = document.getElementById('privacySettings');
+      button.classList.remove('hidden');
+    }
+
+    hidePrivacySettingsButton() {
+      const button = document.getElementById('privacySettings');
+      button.classList.add('hidden');
+    }
+
+    updatePreference(type, value) {
+      this.preferences[type] = value;
+      this.setPreferences(this.preferences);
+    }
+
+    acceptAll() {
+      const allPreferences = {
+        essential: true,
+        performance: true,
+        functional: true,
+        marketing: true,
+        showSettings: true
+      };
+
+      this.preferences = allPreferences;
+      this.setConsent(true);
+      this.setPreferences(this.preferences);
+      this.applyConsent();
+      this.hideBanner();
+      this.showPrivacySettingsButton();
+
+      // Track consent event
+      this.trackConsent('all');
+    }
+
+    acceptSelected() {
+      const selectedPreferences = {
+        essential: true,
+        performance: document.getElementById('performanceCookies')?.checked || false,
+        functional: document.getElementById('functionalCookies')?.checked || false,
+        marketing: document.getElementById('marketingCookies')?.checked || false,
+        showSettings: true
+      };
+
+      this.preferences = selectedPreferences;
+      this.setConsent(true);
+      this.setPreferences(this.preferences);
+      this.applyConsent();
+      this.hideBanner();
+      this.showPrivacySettingsButton();
+
+      // Track consent event
+      this.trackConsent('selected');
+    }
+
+    applyConsent() {
+      // Apply consent to cookie settings
+      this.applyCookieConsent();
+
+      // Load third-party scripts based on consent
+      this.loadThirdPartyScripts();
+
+      // Update tracking
+      this.updateTracking();
+    }
+
+    applyCookieConsent() {
+      // Set consent cookie
+      const consentCookie = `megawe_consent=${this.consentGiven}; path=/; max-age=${365 * 24 * 60 * 60}; secure; samesite=strict`;
+      document.cookie = consentCookie;
+
+      // Set preferences cookie
+      const prefsCookie = `megawe_prefs=${encodeURIComponent(JSON.stringify(this.preferences))}; path=/; max-age=${365 * 24 * 60 * 60}; secure; samesite=strict`;
+      document.cookie = prefsCookie;
+    }
+
+    loadThirdPartyScripts() {
+      // Only load scripts based on consent
+
+      if (this.preferences.performance) {
+        // Load analytics scripts
+        this.loadAnalytics();
+      }
+
+      if (this.preferences.marketing) {
+        // Load marketing scripts
+        this.loadMarketingScripts();
+      }
+
+      if (this.preferences.functional) {
+        // Load functional scripts
+        this.loadFunctionalScripts();
+      }
+    }
+
+    loadAnalytics() {
+      // Example: Google Analytics
+      if (!document.querySelector('script[data-ga]')) {
+        const script = document.createElement('script');
+        script.dataset.ga = 'true';
+        script.innerHTML = `
+          // Google Analytics would go here
+          console.log('Analytics loaded with consent');
+        `;
+        document.head.appendChild(script);
+      }
+    }
+
+    loadMarketingScripts() {
+      // Example: Facebook Pixel
+      if (!document.querySelector('script[data-fb-pixel]')) {
+        const script = document.createElement('script');
+        script.dataset.fbPixel = 'true';
+        script.innerHTML = `
+          // Facebook Pixel would go here
+          console.log('Marketing scripts loaded with consent');
+        `;
+        document.head.appendChild(script);
+      }
+    }
+
+    loadFunctionalScripts() {
+      // Example: Live chat, etc.
+      if (!document.querySelector('script[data-functional]')) {
+        const script = document.createElement('script');
+        script.dataset.functional = 'true';
+        script.innerHTML = `
+          // Functional scripts would go here
+          console.log('Functional scripts loaded with consent');
+        `;
+        document.head.appendChild(script);
+      }
+    }
+
+    updateTracking() {
+      // Update tracking based on consent
+      if (typeof gtag !== 'undefined' && this.preferences.performance) {
+        gtag('consent', 'default', {
+          'ad_storage': this.preferences.marketing ? 'granted' : 'denied',
+          'analytics_storage': 'granted',
+          'personalization_storage': this.preferences.functional ? 'granted' : 'denied'
+        });
+      }
+    }
+
+    trackConsent(type) {
+      // Track consent events for analytics
+      if (typeof gtag !== 'undefined' && this.preferences.performance) {
+        gtag('event', 'cookie_consent', {
+          'consent_type': type,
+          'preferences': this.preferences
+        });
+      }
+
+      // Store consent event in KV
+      if (typeof env !== 'undefined' && env.SESSION) {
+        const consentEvent = {
+          timestamp: new Date().toISOString(),
+          type: type,
+          preferences: this.preferences,
+          sessionId: this.getSessionId(),
+          userAgent: navigator.userAgent
+        };
+
+        const eventId = Date.now().toString();
+        env.SESSION.put(`consent_event_${eventId}`, JSON.stringify(consentEvent));
+      }
+    }
+
+    // Public method to check consent
+    hasConsent(type) {
+      return this.consentGiven && this.preferences[type] === true;
+    }
+  }
+
+  // Initialize cookie consent manager
+  document.addEventListener('DOMContentLoaded', () => {
+    window.cookieConsent = new CookieConsentManager();
+  });
+</script>
+
+<style>
+  #cookieConsent {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.98);
+  }
+
+  @media (max-width: 768px) {
+    #cookieConsent {
+      border-radius: 0;
+    }
+  }
+
+  #privacySettings {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  /* Smooth transitions */
+  .transition-transform {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>
