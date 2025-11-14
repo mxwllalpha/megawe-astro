@@ -1,33 +1,38 @@
-# Security headers
+# Enhanced security headers
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
-# Cache static assets
-/static/*
-  Cache-Control: public, max-age=31536000, immutable
-
+# Performance-optimized caching
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
 /images/*
   Cache-Control: public, max-age=31536000, immutable
 
-# HTML pages with short cache
-/*.html
-  Cache-Control: public, max-age=0, must-revalidate
+/static/*
+  Cache-Control: public, max-age=31536000, immutable
 
-# API endpoints (if any)
-/api/*
-  Cache-Control: public, max-age=300, s-maxage=600
-
-# Fonts
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Assets
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+# HTML pages - immediate revalidation for fresh content
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate, s-maxage=300
+
+# External API calls - stale-while-revalidate for resilience
+/api/*
+  Cache-Control: public, max-age=300, stale-while-revalidate=60, s-maxage=600
+
+# Performance and compression headers
+/*
+  Vary: Accept-Encoding, Accept
+  Server-Timing: cf;dur=1
+  X-DNS-Prefetch-Control: on

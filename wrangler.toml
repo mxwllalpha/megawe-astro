@@ -1,2 +1,36 @@
 name = "megawe-astro"
 compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Cloudflare Pages compatibility
+pages_build_output_dir = "dist"
+
+# Build configuration for Astro
+main = "_worker.js"
+workers_dev = false
+
+# Environment variables
+[env.production.vars]
+NODE_ENV = "production"
+SITE_URL = "https://megawe.net"
+API_URL = "https://api.megawe.net"
+
+# KV bindings (if needed for sessions)
+# [[kv_namespaces]]
+# binding = "SESSION"
+# id = "your-kv-namespace-id"
+
+# Analytics Engine (optional)
+# [[analytics_engine_datasets]]
+# binding = "ANALYTICS"
+
+# D1 Database (optional)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "megawe-db"
+# database_id = "your-database-id"
+
+# R2 Bucket (optional)
+# [[r2_buckets]]
+# binding = "ASSETS"
+# bucket_name = "megawe-assets"

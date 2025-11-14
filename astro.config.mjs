@@ -21,20 +21,37 @@ export default defineConfig({
       priority: 1.0,
     }),
   ],
-  adapter: cloudflare({
-    mode: 'directory'
-  }),
+  adapter: cloudflare(),
   vite: {
     build: {
       minify: 'terser',
+      target: 'esnext',
+      cssCodeSplit: true,
       rollupOptions: {
         output: {
-          manualChunks: undefined,
+          manualChunks: {
+            // Separate vendor chunks for better caching
+            vendor: ['astro'],
+            ui: ['@astrojs/cloudflare', '@astrojs/sitemap'],
+          },
+        },
+      },
+      // Optimize for faster builds
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
         },
       },
     },
+    // Enable build caching for faster subsequent builds
+    server: {
+      fs: {
+        strict: false,
+      },
+    },
   },
-  // Native image optimization with Sharp for Cloudflare Pages
+  // Optimized image configuration for build-time processing
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp',
@@ -44,7 +61,7 @@ export default defineConfig({
         fallbackFormat: 'jpg'
       }
     },
-    domains: ['megawe.net', 'api.megawe.net', 'images.unsplash.com'],
+    domains: ['megawe.net', 'api.megawe.net', 'images.unsplash.com']
   },
   devToolbar: {
     enabled: false,
@@ -52,4 +69,7 @@ export default defineConfig({
   experimental: {
     contentIntellisense: true,
   },
+  // Performance optimizations
+  prefetch: true,
+  compressHTML: true,
 });

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:production": "NODE_ENV=production astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
@@ -13,27 +14,31 @@
     "format": "prettier --write .",
     "type-check": "tsc --noEmit",
     "build:analyze": "astro build --analyze",
-    "pagespeed": "npm run build && npm run preview"
+    "build:profile": "ASTRO_BUILD_PROFILE=true astro build",
+    "pagespeed": "npm run build && npm run preview",
+    "optimize": "npm run build && npm run build:analyze",
+    "perf:check": "npm run build:production && npm run build:analyze"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.10",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/tailwind": "^6.0.2",
-    "@astrojs/cloudflare": "^12.6.10",
+    "astro": "^5.15.5",
     "sharp": "^0.34.5",
+    "tailwindcss": "^3.4.18"
+  },
+  "devDependencies": {
     "@eslint/compat": "^1.4.1",
     "@eslint/js": "^9.39.1",
     "@typescript-eslint/eslint-plugin": "^8.46.4",
     "@typescript-eslint/parser": "^8.46.4",
-    "astro": "^5.15.5",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.5.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "globals": "^16.5.0",
     "prettier": "^3.6.2",
-    "tailwindcss": "^3.4.18"
-  },
-  "devDependencies": {
-    "eslint-plugin-astro": "^1.5.0",
+    "terser": "^5.44.1",
     "typescript": "^5.9.3"
   }
 }

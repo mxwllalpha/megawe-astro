@@ -88,7 +88,7 @@ class ApiClient {
       console.error(`Failed to fetch employer ${id}, using fallback data:`, error)
       // Return fallback data
       return {
-        id: id,
+        id,
         name: 'Yuko Tesa Mirai',
         description: 'Perusahaan pengirim peserta magang ke Jepang yang telah berpengalaman selama 28 tahun. Dengan penempatan lebih dari 7000 orang di 14 bidang pekerjaan di Jepang.',
         industry: 'Bagian Umum',
