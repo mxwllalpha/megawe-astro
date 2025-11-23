@@ -5,50 +5,39 @@ compatibility_flags = ["nodejs_compat"]
 # Cloudflare Pages configuration
 pages_build_output_dir = "dist"
 
-# Environment variables
+# Environment variables for production
 [env.production.vars]
 NODE_ENV = "production"
 SITE_URL = "https://megawe.net"
 API_URL = "https://api.megawe.net"
-# KV namespace IDs - Configure these in Cloudflare Pages environment settings
-SESSION_KV_ID = ""
-CACHE_KV_ID = ""
-SESSION_KV_PREVIEW_ID = ""
-CACHE_KV_PREVIEW_ID = ""
 
+# Environment variables for preview
 [env.preview.vars]
 NODE_ENV = "preview"
 SITE_URL = "https://megawe-astro.pages.dev"
 API_URL = "https://api.megawe.net"
-# Preview environment KV IDs - Configure in Cloudflare Pages
-SESSION_KV_ID = ""
-CACHE_KV_ID = ""
-SESSION_KV_PREVIEW_ID = ""
-CACHE_KV_PREVIEW_ID = ""
 
-[env.development.vars]
-NODE_ENV = "development"
-SITE_URL = "http://localhost:4321"
-API_URL = "https://api.megawe.net"
-# Development environment KV IDs - Configure in local .env
-SESSION_KV_ID = ""
-CACHE_KV_ID = ""
-SESSION_KV_PREVIEW_ID = ""
-CACHE_KV_PREVIEW_ID = ""
-
-# KV bindings for session management and caching
-# These bindings are configured in Cloudflare Pages dashboard
-[[kv_namespaces]]
+# KV bindings for production environment
+[[env.production.kv_namespaces]]
 binding = "SESSION"
-# Configure ID in Cloudflare Pages environment settings
-id = "placeholder-session-kv-id"
-preview_id = "placeholder-session-kv-id"
+id = "0a77c7bec89b44e3a02a779ab516f24c"
+preview_id = "0a77c7bec89b44e3a02a779ab516f24c"
 
-[[kv_namespaces]]
+[[env.production.kv_namespaces]]
 binding = "CACHE"
-# Configure ID in Cloudflare Pages environment settings
-id = "placeholder-cache-kv-id"
-preview_id = "placeholder-cache-kv-id"
+id = "0a77c7bec89b44e3a02a779ab516f24c"
+preview_id = "0a77c7bec89b44e3a02a779ab516f24c"
+
+# KV bindings for preview environment
+[[env.preview.kv_namespaces]]
+binding = "SESSION"
+id = "0a77c7bec89b44e3a02a779ab516f24c"
+preview_id = "0a77c7bec89b44e3a02a779ab516f24c"
+
+[[env.preview.kv_namespaces]]
+binding = "CACHE"
+id = "0a77c7bec89b44e3a02a779ab516f24c"
+preview_id = "0a77c7bec89b44e3a02a779ab516f24c"
 
 # KV bindings (if needed for sessions)
 # [[kv_namespaces]]
