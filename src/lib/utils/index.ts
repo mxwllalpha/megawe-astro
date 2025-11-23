@@ -58,12 +58,25 @@ export function getJobUrlFromDb(dbSlug: string, id: string): string {
 /**
  * Generate job URL from job object (uses slug from API if available)
  */
-export function getJobUrlFromJob(job: { id: string; seo?: { slug?: string } }): string {
+export function getJobUrlFromJob(job: {
+  id: string;
+  seo?: {
+    slug?: string;
+    fallback?: {
+      title?: string;
+      company?: string;
+    };
+  };
+  title?: string;
+  company?: string;
+}): string {
   if (job.seo?.slug) {
     return getJobUrlFromDb(job.seo.slug, job.id);
   }
-  // Fallback to creating slug from title and company
-  return getJobUrl(job.title || '', job.company || '', job.id);
+  // Fallback to creating slug from title and company (with type safety)
+  const title = job.seo?.fallback?.title || job.title || '';
+  const company = job.seo?.fallback?.company || job.company || '';
+  return getJobUrl(title, company, job.id);
 }
 
 /**

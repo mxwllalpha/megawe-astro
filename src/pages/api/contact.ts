@@ -62,7 +62,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
                 'Retry-After': '3600',
                 'X-RateLimit-Limit': '10',
                 'X-RateLimit-Remaining': '0',
-                'X-RateLimit-Reset': (currentHour + 1) * 3600
+                'X-RateLimit-Reset': ((currentHour + 1) * 3600).toString()
               }
             }
           )

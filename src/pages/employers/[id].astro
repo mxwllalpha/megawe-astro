@@ -68,7 +68,7 @@ const structuredData = {
   "name": employer.name,
   "description": employer.description,
   "url": employer.website,
-  "logo": employer.logo,
+  "logo": employer.company_logo_uri,
   "address": {
     "@type": "PostalAddress",
     "addressLocality": employer.location,
@@ -143,7 +143,7 @@ const structuredData = {
             <div class="flex-shrink-0">
               <div class="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                 <Image
-                  src={employer.logo}
+                  src={employer.company_logo_uri}
                   alt={`${employer.name} logo`}
                   width={96}
                   height={96}

@@ -15,7 +15,7 @@ export interface Job {
   postedAt: string
   expiresAt?: string
   category: string
-  logo?: string
+  company_logo_uri?: string
   applicationUrl: string
   source: string
   isActive: boolean
@@ -24,6 +24,11 @@ export interface Job {
     description: string
     slug: string
     keywords: string[]
+    // Additional fields for fallback URL generation
+    fallback?: {
+      title?: string
+      company?: string
+    }
   }
 }
 
@@ -52,7 +57,7 @@ export interface Employer {
   description: string
   industry: string
   size: string
-  logo: string
+  company_logo_uri: string
   website: string
   location: string
   jobs: Job[]

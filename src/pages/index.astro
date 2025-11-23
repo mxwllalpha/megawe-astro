@@ -103,7 +103,7 @@ const structuredData = {
         hiringOrganization: {
           '@type': 'Organization',
           name: job.company,
-          logo: job.logo
+          logo: job.company_logo_uri
         },
         jobLocation: {
           '@type': 'Place',
@@ -228,7 +228,7 @@ const structuredData = {
                 <!-- Enhanced Company Logo -->
                 <div class="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Image
-                    src={job.logo}
+                    src={job.company_logo_uri}
                     alt={`${job.company} logo`}
                     width={64}
                     height={64}

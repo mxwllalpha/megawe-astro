@@ -88,7 +88,6 @@ export default defineConfig({
   // Optimized image configuration for Cloudflare Pages
   image: {
     // Use compile-time image optimization for Cloudflare Pages
-    imageService: 'compile',
     service: {
       entrypoint: 'astro/assets/services/sharp',
       config: {

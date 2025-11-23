@@ -174,9 +174,9 @@ const structuredData = {
                   <div class="flex items-center gap-4">
                     <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                       {
-                        employer.logo && employer.logo !== '' && employer.logo !== undefined ? (
+                        employer.company_logo_uri && employer.company_logo_uri !== '' && employer.company_logo_uri !== undefined ? (
                           <Image
-                            src={employer.logo}
+                            src={employer.company_logo_uri}
                             alt={`${employer.name} logo`}
                             width={64}
                             height={64}
@@ -272,9 +272,9 @@ const structuredData = {
                     <div class="flex items-center gap-3 mb-3">
                       <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                         {
-                          employer.logo && employer.logo !== '' && employer.logo !== undefined ? (
+                          employer.company_logo_uri && employer.company_logo_uri !== '' && employer.company_logo_uri !== undefined ? (
                             <Image
-                              src={employer.logo}
+                              src={employer.company_logo_uri}
                               alt={`${employer.name} logo`}
                               width={48}
                               height={48}

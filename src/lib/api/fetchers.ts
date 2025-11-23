@@ -74,7 +74,7 @@ export async function fetchEmployers(): Promise<Employer[]> {
       {
         id: 'tokopedia',
         name: 'Tokopedia',
-        logo: 'https://cdn.astro.build/logos/tokopedia.svg',
+        company_logo_uri: 'https://cdn.astro.build/logos/tokopedia.svg',
         description: 'Leading e-commerce platform in Indonesia',
         industry: 'E-commerce',
         size: '1000-5000 karyawan',
@@ -87,7 +87,7 @@ export async function fetchEmployers(): Promise<Employer[]> {
       {
         id: 'traveloka',
         name: 'Traveloka',
-        logo: 'https://cdn.astro.build/logos/traveloka.svg',
+        company_logo_uri: 'https://cdn.astro.build/logos/traveloka.svg',
         description: 'Travel and lifestyle booking platform',
         industry: 'Travel',
         size: '500-1000 karyawan',
@@ -100,7 +100,7 @@ export async function fetchEmployers(): Promise<Employer[]> {
       {
         id: 'gojek',
         name: 'Gojek',
-        logo: 'https://cdn.astro.build/logos/gojek.svg',
+        company_logo_uri: 'https://cdn.astro.build/logos/gojek.svg',
         description: 'Super app providing multiple services',
         industry: 'Technology',
         size: '1000-5000 karyawan',
@@ -113,7 +113,7 @@ export async function fetchEmployers(): Promise<Employer[]> {
       {
         id: 'shopee',
         name: 'Shopee',
-        logo: 'https://cdn.astro.build/logos/shopee.svg',
+        company_logo_uri: 'https://cdn.astro.build/logos/shopee.svg',
         description: 'Leading e-commerce platform in Southeast Asia',
         industry: 'E-commerce',
         size: '5000+ karyawan',
@@ -169,7 +169,7 @@ export function transformJobForDisplay(job: Job) {
     description: job.description,
     postedAt: job.postedAt,
     category: job.category,
-    logo: job.logo || '/src/assets/images/default-company-logo.svg',
+    company_logo_uri: job.company_logo_uri || '/src/assets/images/default-company-logo.svg',
     applicationUrl: job.applicationUrl,
     salary: job.salary,
     requirements: job.requirements,

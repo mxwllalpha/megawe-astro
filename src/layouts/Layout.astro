@@ -2,6 +2,7 @@
 import '../styles/global.css'
 import { SITE_TITLE, SITE_DESCRIPTION } from '../lib/constants'
 import CookieConsent from '../components/CookieConsent.astro'
+import MobileHeader from '../components/MobileHeader.astro'
 
 export interface Props {
   title?: string
@@ -10,6 +11,9 @@ export interface Props {
   type?: string
   noIndex?: boolean
   canonical?: string
+  showMobileHeader?: boolean
+  showSocialMeta?: boolean
+  structuredData?: any
 }
 
 const {
@@ -18,12 +22,90 @@ const {
   image = '/images/og-image.jpg',
   type = 'website',
   noIndex = false,
-  canonical = Astro.url.pathname
+  canonical = Astro.url.pathname,
+  showMobileHeader = true,
+  showSocialMeta = true,
+  structuredData
 } = Astro.props
 
 const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`
 const fullUrl = `https://megawe.net${canonical}`
 const imageUrl = `https://megawe.net${image}`
+
+// Enhanced social meta generation
+const generateSocialMeta = (pageTitle: string, pageDescription: string, pageImage: string, pageUrl: string) => {
+  return {
+    // Facebook/LinkedIn
+    'og:title': pageTitle,
+    'og:description': pageDescription,
+    'og:image': pageImage,
+    'og:image:width': '1200',
+    'og:image:height': '630',
+    'og:image:alt': pageTitle,
+    'og:url': pageUrl,
+    'og:type': type,
+    'og:locale': 'id_ID',
+    'og:site_name': SITE_TITLE,
+
+    // Twitter/X
+    'twitter:card': 'summary_large_image',
+    'twitter:title': pageTitle,
+    'twitter:description': pageDescription,
+    'twitter:image': pageImage,
+    'twitter:image:alt': pageTitle,
+    'twitter:site': '@megawe_id',
+    'twitter:creator': '@megawe_id',
+
+    // WhatsApp optimization
+    'og:platform': 'WhatsApp',
+
+    // Indonesian SEO
+    'article:author': SITE_TITLE,
+    'article:publisher': SITE_TITLE
+  }
+}
+
+const socialMeta = generateSocialMeta(fullTitle, description, imageUrl, fullUrl)
+
+// Default structured data with Indonesian context
+const defaultStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': type === 'jobposting' ? 'JobPosting' : 'WebSite',
+  name: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  url: 'https://megawe.net',
+  inLanguage: 'id-ID',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: 'https://megawe.net/jobs/search?q={search_term_string}',
+      inLanguage: 'id-ID'
+    },
+    'query-input': 'required name=search_term_string'
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Megawe',
+    url: 'https://megawe.net',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://megawe.net/logo.png',
+      width: 512,
+      height: 512
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'ID',
+      addressLocality: 'Jakarta'
+    },
+    sameAs: [
+      'https://www.facebook.com/megawe.id',
+      'https://www.linkedin.com/company/megawe',
+      'https://www.instagram.com/megawe.id'
+    ]
+  }
+}
 ---
 
 <!doctype html>
@@ -31,19 +113,43 @@ const imageUrl = `https://megawe.net${image}`
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Enhanced Mobile Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+
+    <!-- Theme and Appearance -->
+    <meta name="theme-color" content="#dc2626" />
+    <meta name="msapplication-TileColor" content="#dc2626" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+
+    <!-- Enhanced Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" sizes="16x16" href="/favicon-16x16.png" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Canonical and SEO -->
     <link rel="canonical" href={fullUrl} />
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- Preconnect to external domains -->
+    <!-- Enhanced Preconnect for Performance -->
     <link rel="preconnect" href="https://api.megawe.net" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.astro.build" crossorigin />
 
-    <!-- Inter Font -->
+    <!-- DNS Prefetch for external domains -->
+    <link rel="dns-prefetch" href="https://www.google.com" />
+    <link rel="dns-prefetch" href="https://www.facebook.com" />
+    <link rel="dns-prefetch" href="https://www.linkedin.com" />
+    <link rel="dns-prefetch" href="https://twitter.com" />
+    <link rel="dns-prefetch" href="https://api.whatsapp.com" />
+
+    <!-- Inter Font with font-display: swap -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" />
@@ -137,119 +243,128 @@ const imageUrl = `https://megawe.net${image}`
       }
     </style>
 
-    <!-- SEO Meta Tags -->
+    <!-- Enhanced SEO Meta Tags -->
     <title>{fullTitle}</title>
     <meta name="title" content={fullTitle} />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={imageUrl} />
-    <meta property="og:url" content={fullUrl} />
-    <meta property="og:type" content={type} />
-    <meta property="og:locale" content="id_ID" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={fullTitle} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={imageUrl} />
+    <meta name="author" content="Megawe" />
+    <meta name="keywords" content="lowongan kerja, karir indonesia, pekerjaan, job vacancy, megawe" />
+    <meta name="language" content="Indonesian" />
+    <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Megawe",
-        "description": "Indonesian Job Vacancy Aggregator",
-        "url": "https://megawe.net",
-        "inLanguage": "id-ID",
-        "publisher": {
-          "@type": "Organization",
-          "name": "Megawe",
-          "url": "https://megawe.net"
-        }
-      }
-    </script>
+    {showSocialMeta && (
+      <>
+        <!-- Open Graph Meta Tags -->
+        <meta property="og:title" content={socialMeta['og:title']} />
+        <meta property="og:description" content={socialMeta['og:description']} />
+        <meta property="og:image" content={socialMeta['og:image']} />
+        <meta property="og:image:width" content={socialMeta['og:image:width']} />
+        <meta property="og:image:height" content={socialMeta['og:image:height']} />
+        <meta property="og:image:alt" content={socialMeta['og:image:alt']} />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:url" content={socialMeta['og:url']} />
+        <meta property="og:type" content={socialMeta['og:type']} />
+        <meta property="og:locale" content={socialMeta['og:locale']} />
+        <meta property="og:site_name" content={socialMeta['og:site_name']} />
+        <meta property="og:platform" content={socialMeta['og:platform']} />
 
-    <!-- Non-critical CSS deferred -->
-    <link rel="stylesheet" href="/styles/components.css" media="print" onload="this.media='all'" />
+        <!-- Twitter/X Meta Tags -->
+        <meta name="twitter:card" content={socialMeta['twitter:card']} />
+        <meta name="twitter:title" content={socialMeta['twitter:title']} />
+        <meta name="twitter:description" content={socialMeta['twitter:description']} />
+        <meta name="twitter:image" content={socialMeta['twitter:image']} />
+        <meta name="twitter:image:alt" content={socialMeta['twitter:image:alt']} />
+        <meta name="twitter:site" content={socialMeta['twitter:site']} />
+        <meta name="twitter:creator" content={socialMeta['twitter:creator']} />
+
+        <!-- Additional Social Media Tags -->
+        <meta property="article:author" content={socialMeta['article:author']} />
+        <meta property="article:publisher" content={socialMeta['article:publisher']} />
+
+        <!-- WhatsApp Optimization -->
+        <meta property="og:image:secure_url" content={socialMeta['og:image']} />
+      </>
+    )}
+
+    <!-- Enhanced Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData || defaultStructuredData)} />
+
+    <!-- Non-critical CSS deferred with better loading strategy -->
+    <link rel="preload" href="/styles/components.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript>
       <link rel="stylesheet" href="/styles/components.css" />
     </noscript>
+
+    <!-- Critical CSS for mobile performance -->
+    <style>
+      /* Critical above-the-fold styles */
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+      .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+        overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+      }
+      .focus-visible:focus { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+
+      /* Mobile-first base styles */
+      @media (max-width: 640px) {
+        .container { padding: 0 0.75rem; }
+      }
+
+      /* Safe area support */
+      @supports (padding: max(0px)) {
+        body { padding-left: max(1rem, env(safe-area-inset-left)); }
+      }
+    </style>
   </head>
   <body>
     <a href="#main-content" class="sr-only focus-visible:not-sr-only">
       Skip to main content
     </a>
 
-    <header>
-      <nav class="sticky top-0 z-50 bg-white/98 backdrop-blur-md border-b border-gray-100/50 shadow-sm" role="navigation" aria-label="Main navigation">
-        <div class="container mx-auto px-8 py-6 lg:py-8">
-          <div class="flex items-center justify-between">
-            <!-- Professional Logo with better spacing -->
-            <a href="/" class="flex items-center gap-5 group transition-all duration-200 hover:scale-[1.02]" aria-label="Megawe Home">
-              <div class="w-14 h-14 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:-rotate-2 transition-all duration-300">
-                <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-                </svg>
+    <!-- Mobile-First Header -->
+    {showMobileHeader ? (
+      <MobileHeader currentPath={canonical} />
+    ) : (
+      <!-- Desktop Header Fallback -->
+      <header>
+        <nav class="sticky top-0 z-50 bg-white/98 backdrop-blur-md border-b border-gray-100/50 shadow-header" role="navigation" aria-label="Main navigation">
+          <div class="container mx-auto px-4 sm:px-6 py-4">
+            <div class="flex items-center justify-between">
+              <!-- Professional Logo -->
+              <a href="/" class="flex items-center gap-4 group transition-all duration-200 hover:scale-[1.02]" aria-label="Megawe Home">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:-rotate-2 transition-all duration-300">
+                  <svg class="w-7 h-7 sm:w-8 sm:h-8 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                  </svg>
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent leading-tight">
+                    Megawe
+                  </span>
+                  <span class="text-xs sm:text-sm text-gray-500 hidden sm:block">Lowongan Kerja Indonesia</span>
+                </div>
+              </a>
+
+              <!-- Desktop Navigation -->
+              <div class="hidden lg:flex items-center gap-6 sm:gap-8">
+                <a href="/jobs" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium text-base sm:text-lg">Lowongan</a>
+                <a href="/employers" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium text-base sm:text-lg">Perusahaan</a>
+                <a href="/karir" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium text-base sm:text-lg">Karir Tips</a>
               </div>
-              <div class="flex flex-col">
-                <span class="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent leading-tight">
-                  Megawe
-                </span>
-                <span class="text-sm text-gray-500 hidden sm:block">Lowongan Kerja Indonesia</span>
-              </div>
-            </a>
 
-            <!-- Well-spaced Desktop Navigation -->
-            <div class="hidden xl:flex items-center gap-16">
-              <div class="flex items-center gap-12">
-                <a href="/jobs" class="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium text-base lg:text-lg">Lowongan</a>
-                <a href="/employers" class="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium text-base lg:text-lg">Perusahaan</a>
-                <a href="/career-advice" class="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium text-base lg:text-lg">Karir Tips</a>
-              </div>
-            </div>
-
-            <!-- Professional Action Buttons -->
-            <div class="hidden lg:flex items-center gap-6">
-              <button class="px-6 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 font-medium text-base border border-red-200">
-                Masuk
-              </button>
-              <button class="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-200 font-semibold text-base shadow-md hover:shadow-lg">
-                Daftar
-              </button>
-            </div>
-
-            <!-- Mobile Menu Button - Larger touch target -->
-            <button
-              type="button"
-              class="lg:hidden p-4 rounded-lg hover:bg-gray-100 transition-all duration-200 touch-manipulation"
-              aria-label="Toggle navigation menu"
-              aria-expanded="false"
-              aria-controls="mobile-menu"
-            >
-              <svg class="w-7 h-7 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
-
-          <!-- Improved Mobile Menu with better spacing -->
-          <div id="mobile-menu" class="hidden lg:hidden mt-8 pt-8 border-t border-gray-200">
-            <div class="flex flex-col space-y-6">
-              <a href="/jobs" class="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium py-3 text-lg lg:text-xl">Lowongan Kerja</a>
-              <a href="/employers" class="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium py-3 text-lg lg:text-xl">Perusahaan</a>
-              <a href="/career-advice" class="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium py-3 text-lg lg:text-xl">Karir Tips</a>
-              <div class="flex gap-4 pt-6">
-                <button class="flex-1 px-6 py-4 text-red-600 bg-red-50 rounded-lg font-medium text-base border border-red-200">
+              <!-- Desktop Action Buttons -->
+              <div class="hidden lg:flex items-center gap-3 sm:gap-4">
+                <button class="px-4 sm:px-6 py-2 sm:py-3 text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200 font-medium text-sm sm:text-base border border-primary-200">
                   Masuk
                 </button>
-                <button class="flex-1 px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-semibold text-base">
+                <button class="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:from-primary-700 hover:to-primary-800 transition-all duration-200 font-semibold text-sm sm:text-base shadow-button hover:shadow-card">
                   Daftar
                 </button>
               </div>
             </div>
           </div>
-        </div>
-      </nav>
-    </header>
+        </nav>
+      </header>
+    )}
 
     <main id="main-content">
       <slot />
@@ -414,10 +529,26 @@ const imageUrl = `https://megawe.net${image}`
     <!-- GDPR Cookie Consent -->
     <div id="cookie-consent-root"></div>
 
-    <!-- Minimal JavaScript for essential functionality -->
+    <!-- Enhanced JavaScript for mobile performance and accessibility -->
     <script is:inline>
-      // Mobile menu toggle
+      // Mobile touch optimization
+      if ('ontouchstart' in window) {
+        document.body.classList.add('touch-device');
+      }
+
+      // Enhanced performance monitoring
+      if ('performance' in window) {
+        window.addEventListener('load', () => {
+          const perfData = performance.getEntriesByType('navigation')[0];
+          if (perfData && perfData.loadEventEnd - perfData.loadEventStart > 1000) {
+            console.warn('Page load time > 1s, consider optimization');
+          }
+        });
+      }
+
+      // Progressive enhancement for mobile menu
       document.addEventListener('DOMContentLoaded', () => {
+        // Handle mobile menu if it exists
         const toggleButton = document.querySelector('[aria-controls="mobile-menu"]');
         const mobileMenu = document.getElementById('mobile-menu');
 
@@ -428,12 +559,146 @@ const imageUrl = `https://megawe.net${image}`
             mobileMenu.classList.toggle('hidden');
           });
         }
+
+        // Enhanced form handling for mobile
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+          form.addEventListener('submit', (e) => {
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+              submitBtn.disabled = true;
+              submitBtn.textContent = 'Mengirim...';
+            }
+          });
+        });
+
+        // Lazy load images for mobile performance
+        if ('IntersectionObserver' in window) {
+          const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                  img.src = img.dataset.src;
+                  img.classList.remove('lazy');
+                  imageObserver.unobserve(img);
+                }
+              }
+            });
+          }, {
+            rootMargin: '50px 0px',
+            threshold: 0.1
+          });
+
+          document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+          });
+        }
       });
 
-      // Performance optimization: Preload critical resources
+      // PWA Installation prompt
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        // Show install banner for mobile
+        if (window.innerWidth < 768) {
+          const installBanner = document.createElement('div');
+          installBanner.className = 'fixed bottom-0 left-0 right-0 bg-primary-600 text-white p-4 text-center z-50 animate-slide-up';
+          installBanner.innerHTML = `
+            <p class="text-sm">Pasang aplikasi Megawe untuk pengalaman lebih baik!</p>
+            <button onclick="installApp()" class="mt-2 px-4 py-2 bg-white text-primary-600 rounded-lg font-medium text-sm">
+              Pasang Sekarang
+            </button>
+          `;
+          document.body.appendChild(installBanner);
+
+          window.installApp = () => {
+            if (deferredPrompt) {
+              deferredPrompt.prompt();
+              deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                  console.log('User accepted the install prompt');
+                }
+                deferredPrompt = null;
+                installBanner.remove();
+              });
+            }
+          };
+        }
+      });
+
+      // Service Worker registration for PWA
       if ('serviceWorker' in navigator) {
-        // Service worker registration can be added here if needed
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
       }
+
+      // Enhanced scroll behavior for mobile
+      let lastScrollTop = 0;
+      let scrollTimeout;
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        // Show/hide header on scroll for mobile
+        if (window.innerWidth < 768) {
+          const header = document.querySelector('.mobile-header');
+          if (header) {
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+              header.style.transform = 'translateY(-100%)';
+            } else {
+              header.style.transform = 'translateY(0)';
+            }
+          }
+        }
+
+        lastScrollTop = scrollTop;
+      }, { passive: true });
     </script>
+
+    <!-- Critical performance optimizations -->
+    <style>
+      /* Touch device optimizations */
+      .touch-device * {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+
+      .touch-device input,
+      .touch-device textarea {
+        -webkit-user-select: text;
+        user-select: text;
+      }
+
+      /* Improved smooth scrolling for mobile */
+      @media (hover: none) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      /* Safe area enhancements */
+      @supports (padding: max(0px)) {
+        .mobile-header {
+          padding-top: max(1rem, env(safe-area-inset-top));
+        }
+
+        body {
+          padding-left: max(0, env(safe-area-inset-left));
+          padding-right: max(0, env(safe-area-inset-right));
+          padding-bottom: max(0, env(safe-area-inset-bottom));
+        }
+      }
+    </style>
   </body>
 </html>
