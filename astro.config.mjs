@@ -7,7 +7,6 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://megawe.net',
-  output: 'static',
   trailingSlash: 'never',
   build: {
     format: 'directory',
@@ -29,26 +28,61 @@ export default defineConfig({
       cssCodeSplit: true,
       rollupOptions: {
         output: {
-          manualChunks: {
-            // Separate vendor chunks for better caching
-            vendor: ['astro'],
-            ui: ['@astrojs/cloudflare', '@astrojs/sitemap'],
+          manualChunks(id) {
+            // Split node_modules into optimized chunks
+            if (id.includes('node_modules')) {
+              if (id.includes('astro')) {
+                return 'astro-vendor';
+              }
+              if (id.includes('@astrojs')) {
+                return 'astro-integrations';
+              }
+              if (id.includes('tailwind')) {
+                return 'tailwind-vendor';
+              }
+              if (id.includes('sharp')) {
+                return 'image-processing';
+              }
+              return 'vendor';
+            }
+
+            // Split large application modules
+            if (id.includes('Layout')) {
+              return 'layout';
+            }
+            if (id.includes('client') || id.includes('fetchers')) {
+              return 'api';
+            }
+            if (id.includes('CookieConsent')) {
+              return 'cookies';
+            }
+            if (id.includes('logger')) {
+              return 'utilities';
+            }
           },
         },
       },
-      // Optimize for faster builds
+      // Production optimizations
       terserOptions: {
         compress: {
           drop_console: true,
           drop_debugger: true,
+          pure_funcs: ['console.log', 'console.info', 'console.debug'],
+        },
+        mangle: {
+          safari10: true,
         },
       },
     },
-    // Enable build caching for faster subsequent builds
+    // Development server configuration
     server: {
       fs: {
         strict: false,
       },
+    },
+    // Dependency optimization
+    optimizeDeps: {
+      exclude: ['sharp'],
     },
   },
   // Optimized image configuration for Cloudflare Pages

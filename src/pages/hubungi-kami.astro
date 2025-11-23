@@ -296,9 +296,12 @@ const structuredData = {
 </Layout>
 
 <script>
-  // Contact Form Handler
+  // Contact Form Handler with Server-side Validation
   document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Clear previous errors
+    clearValidationErrors();
 
     const formData = new FormData(e.target);
     const data = {
@@ -306,9 +309,15 @@ const structuredData = {
       email: formData.get('email'),
       subject: formData.get('subject'),
       message: formData.get('message'),
-      gdpr_consent: formData.get('gdpr_consent'),
-      timestamp: new Date().toISOString()
+      gdpr_consent: formData.get('gdpr_consent')
     };
+
+    // Client-side validation first
+    const clientErrors = validateClientSide(data);
+    if (Object.keys(clientErrors).length > 0) {
+      showValidationErrors(clientErrors);
+      return;
+    }
 
     // Show loading state
     const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -317,40 +326,117 @@ const structuredData = {
     submitBtn.disabled = true;
 
     try {
-      // Simulate form submission (replace with actual endpoint)
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Submit to secure API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify(data)
+      });
 
-      // Show success message
-      document.getElementById('successMessage').classList.remove('hidden');
-      document.getElementById('errorMessage').classList.add('hidden');
+      const result = await response.json();
 
-      // Reset form
-      e.target.reset();
-
-      // Log to KV for storage (implementation needed)
-      if (typeof env !== 'undefined' && env.SESSION) {
-        const messageId = Date.now().toString();
-        await env.SESSION.put(`contact_${messageId}`, JSON.stringify(data));
+      if (!response.ok) {
+        if (response.status === 400 && result.errors) {
+          // Show validation errors from server
+          showValidationErrors(result.errors);
+        } else if (response.status === 429) {
+          // Rate limited
+          showErrorMessage('Terlalu banyak pengiriman. Silakan coba lagi dalam 1 jam.');
+        } else {
+          throw new Error(result.message || 'Server error');
+        }
+        return;
       }
+
+      // Success
+      showSuccessMessage();
+      e.target.reset();
 
     } catch (error) {
       console.error('Form submission error:', error);
-
-      // Show error message
-      document.getElementById('successMessage').classList.add('hidden');
-      document.getElementById('errorMessage').classList.remove('hidden');
+      showErrorMessage('Terjadi kesalahan. Silakan coba lagi nanti.');
     } finally {
       // Reset button state
       submitBtn.textContent = originalText;
       submitBtn.disabled = false;
-
-      // Hide messages after 5 seconds
-      setTimeout(() => {
-        document.getElementById('successMessage').classList.add('hidden');
-        document.getElementById('errorMessage').classList.add('hidden');
-      }, 5000);
     }
   });
+
+  function validateClientSide(data: any): Record<string, string> {
+    const errors: Record<string, string> = {};
+
+    // Basic client validation
+    if (!data.name || data.name.trim().length < 2) {
+      errors.name = 'Nama minimal 2 karakter';
+    }
+    if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      errors.email = 'Format email tidak valid';
+    }
+    if (!data.subject || data.subject.trim().length < 5) {
+      errors.subject = 'Subjek minimal 5 karakter';
+    }
+    if (!data.message || data.message.trim().length < 10) {
+      errors.message = 'Pesan minimal 10 karakter';
+    }
+    if (!data.gdpr_consent) {
+      errors.gdpr_consent = 'Anda harus menyetujui kebijakan privasi';
+    }
+
+    return errors;
+  }
+
+  function showValidationErrors(errors: Record<string, string>) {
+    Object.entries(errors).forEach(([field, message]) => {
+      const input = document.querySelector(`[name="${field}"]`);
+      if (input) {
+        input.classList.add('border-red-500');
+
+        // Create or update error message
+        let errorDiv = input.parentNode.querySelector('.error-message');
+        if (!errorDiv) {
+          errorDiv = document.createElement('div');
+          errorDiv.className = 'error-message text-red-500 text-sm mt-1';
+          input.parentNode.appendChild(errorDiv);
+        }
+        errorDiv.textContent = message;
+      }
+    });
+
+    // Show general error message
+    showErrorMessage('Mohon perbaiki kesalahan di form ini.');
+  }
+
+  function clearValidationErrors() {
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    document.querySelectorAll('input, textarea').forEach(el => {
+      el.classList.remove('border-red-500');
+    });
+    hideMessages();
+  }
+
+  function showSuccessMessage() {
+    document.getElementById('successMessage').classList.remove('hidden');
+    document.getElementById('errorMessage').classList.add('hidden');
+    setTimeout(hideMessages, 5000);
+  }
+
+  function showErrorMessage(message: string) {
+    const errorEl = document.getElementById('errorMessage');
+    if (errorEl) {
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+    }
+    document.getElementById('successMessage').classList.add('hidden');
+    setTimeout(hideMessages, 5000);
+  }
+
+  function hideMessages() {
+    document.getElementById('successMessage').classList.add('hidden');
+    document.getElementById('errorMessage').classList.add('hidden');
+  }
 </script>
 
 <style>

@@ -296,13 +296,85 @@ const { class: className = "" } = Astro.props();
     }
 
     applyCookieConsent() {
-      // Set consent cookie
-      const consentCookie = `megawe_consent=${this.consentGiven}; path=/; max-age=${365 * 24 * 60 * 60}; secure; samesite=strict`;
+      // Enhanced secure cookie handling
+      const cookieOptions = {
+        path: '/',
+        maxAge: 365 * 24 * 60 * 60, // 1 year
+        secure: true,
+        sameSite: 'strict' as const,
+        httpOnly: false // Cannot set httpOnly for client-side cookies that need to be accessed by JavaScript
+      };
+
+      // Set consent cookie with additional security
+      const consentValue = this.sanitizeCookieValue(this.consentGiven.toString());
+      const consentCookie = `${this.getCookieName('megawe_consent')}=${consentValue}; ${this.buildCookieString(cookieOptions)}`;
       document.cookie = consentCookie;
 
-      // Set preferences cookie
-      const prefsCookie = `megawe_prefs=${encodeURIComponent(JSON.stringify(this.preferences))}; path=/; max-age=${365 * 24 * 60 * 60}; secure; samesite=strict`;
-      document.cookie = prefsCookie;
+      // Set preferences cookie with size limit and encoding
+      const prefsValue = this.sanitizeCookieValue(JSON.stringify(this.preferences));
+      if (prefsValue.length <= 4096) { // Cookie size limit
+        const prefsCookie = `${this.getCookieName('megawe_prefs')}=${encodeURIComponent(prefsValue)}; ${this.buildCookieString(cookieOptions)}`;
+        document.cookie = prefsCookie;
+      }
+
+      // Add CSRF protection token
+      this.setCSRFToken();
+    }
+
+    sanitizeCookieValue(value: string): string {
+      return value
+        .replace(/[;<>"']/g, '') // Remove potential injection characters
+        .substring(0, 4000); // Limit length to prevent overflow
+    }
+
+    getCookieName(baseName: string): string {
+      // Add hostname prefix to prevent cookie collisions
+      const hostname = window.location.hostname.replace(/[^a-zA-Z0-9]/g, '_');
+      return `${hostname}_${baseName}`;
+    }
+
+    buildCookieString(options: any): string {
+      return Object.entries(options)
+        .map(([key, value]) => `${key}=${value}`)
+        .join('; ');
+    }
+
+    setCSRFToken() {
+      // Generate and store a CSRF token for form protection
+      const existingToken = this.getCookie('csrf_token');
+      if (!existingToken) {
+        const token = this.generateSecureToken();
+        const csrfOptions = {
+          path: '/',
+          maxAge: 24 * 60 * 60, // 1 hour
+          secure: true,
+          sameSite: 'strict' as const,
+          httpOnly: true // This should be set server-side for maximum security
+        };
+
+        // For client-side, we can't set HttpOnly, but we can store it securely
+        document.cookie = `csrf_token=${token}; path=/; max-age=${csrfOptions.maxAge}; secure; samesite=strict`;
+      }
+    }
+
+    generateSecureToken(): string {
+      const array = new Uint8Array(32);
+      crypto.getRandomValues(array);
+      return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    }
+
+    getCookie(name: string): string | null {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) {
+        const cookieValue = parts.pop()?.split(';').shift();
+        return cookieValue ? decodeURIComponent(cookieValue) : null;
+      }
+      return null;
+    }
+
+    deleteCookie(name: string) {
+      document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; samesite=strict`;
     }
 
     loadThirdPartyScripts() {

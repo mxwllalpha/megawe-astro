@@ -1,5 +1,6 @@
 import apiClient from './client'
 import type { Job, JobResponse, Employer } from '../types/jobs'
+import { logger } from '../logger'
 
 // Server-side data fetching functions
 export async function fetchFeaturedJobs(limit: number = 6): Promise<Job[]> {
@@ -11,7 +12,10 @@ export async function fetchFeaturedJobs(limit: number = 6): Promise<Job[]> {
     })
     return response.jobs
   } catch (error) {
-    console.error('Failed to fetch featured jobs:', error)
+    logger.warn('Failed to fetch featured jobs, using empty array', {
+      limit,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    })
     // Fallback to empty array
     return []
   }
@@ -21,7 +25,10 @@ export async function fetchJobs(filters: import('../types/jobs').JobFilter = {})
   try {
     return await apiClient.getJobs(filters)
   } catch (error) {
-    console.error('Failed to fetch jobs:', error)
+    logger.warn('Failed to fetch jobs, using empty response', {
+      filters,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    })
     // Fallback to empty response
     return {
       jobs: [],
@@ -37,7 +44,10 @@ export async function fetchJob(id: string): Promise<Job | null> {
   try {
     return await apiClient.getJob(id)
   } catch (error) {
-    console.error(`Failed to fetch job ${id}:`, error)
+    logger.warn(`Failed to fetch job ${id}`, {
+      jobId: id,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    })
     return null
   }
 }
@@ -56,7 +66,9 @@ export async function fetchEmployers(): Promise<Employer[]> {
 
     return response
   } catch (error) {
-    console.error('Failed to fetch employers, using fallback data:', error)
+    logger.warn('Failed to fetch employers, using fallback data', {
+      error: error instanceof Error ? error.message : 'Unknown error'
+    })
     // Provide static fallback data for build stability
     return [
       {
@@ -119,7 +131,10 @@ export async function fetchEmployer(id: string): Promise<Employer | null> {
   try {
     return await apiClient.getEmployer(id)
   } catch (error) {
-    console.error(`Failed to fetch employer ${id}:`, error)
+    logger.warn(`Failed to fetch employer ${id}`, {
+      employerId: id,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    })
     return null
   }
 }
@@ -128,7 +143,11 @@ export async function searchJobs(query: string, filters: import('../types/jobs')
   try {
     return await apiClient.searchJobs(query, filters)
   } catch (error) {
-    console.error('Failed to search jobs:', error)
+    logger.warn('Failed to search jobs, using empty response', {
+      query,
+      filters,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    })
     return {
       jobs: [],
       total: 0,
